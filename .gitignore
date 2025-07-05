@@ -1,0 +1,49 @@
+# --------------------------
+# Unity generated folders
+# --------------------------
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Crash reports
+sysinfo.txt
+
+# --------------------------
+# Rider / Visual Studio
+# --------------------------
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+# JetBrains specific
+*.dotCover
+
+# VS Code local history
+.history/
+
+# --------------------------
+# OS-specific
+# --------------------------
+.DS_Store
+Thumbs.db
+
+# --------------------------
+# Unity Asset Store Tools
+# --------------------------
+Assets/AssetStoreTools*
+
+# --------------------------
+# Package Manager lock (optional)
+Packages/packages-lock.json
