@@ -5,24 +5,33 @@ public class TimeManager : Singleton<TimeManager>
         Day,
         Night
     }
-
-    public static float playTime = 0.0f;
+    private static float _playTime = 0.0f;
+    public static float PlayTime
+    {
+        get => _playTime;
+        set
+        {
+            if (_playTime == value) return;
+            _playTime = value;
+            TimerUI.Instance.UpdateTimerHand(_playTime);
+        }
+    }
 
     public static float AddPlayTime(float time)
     {
-        playTime += time;
-        return playTime;
+        PlayTime += time;
+        return PlayTime;
     }
 
     public static float SetPlayTime(int day, float time)
     {
-        playTime = GameConstant.fullDayLength * day + time;
-        return playTime;
+        PlayTime = GameConstant.fullDayLength * day + time;
+        return PlayTime;
     }
 
     public static TimeState GetTimeState()
     {
-        return playTime % GameConstant.fullDayLength < GameConstant.dayDuration ? TimeState.Day : TimeState.Night;
+        return PlayTime % GameConstant.fullDayLength < GameConstant.dayDuration ? TimeState.Day : TimeState.Night;
     }
 
     public static void SkipTime(TimeState timeState)
@@ -36,6 +45,6 @@ public class TimeManager : Singleton<TimeManager>
 
     public static (int, float) GetPlayTime()
     {
-        return ((int)(playTime / GameConstant.fullDayLength), playTime % GameConstant.fullDayLength);
+        return ((int)(PlayTime / GameConstant.fullDayLength), PlayTime % GameConstant.fullDayLength);
     }
 }

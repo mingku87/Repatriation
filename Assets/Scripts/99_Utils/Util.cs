@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public static class Util
 {
+    public static void Log(object message)
+    {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.Log(message);
+#endif
+    }
+
     public static T ParseEnumFromString<T>(string value)
     {
         return (T)Enum.Parse(typeof(T), value);
