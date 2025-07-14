@@ -5,6 +5,7 @@ public class TimeManager : Singleton<TimeManager>
         Day,
         Night
     }
+
     private static float _playTime = 0.0f;
     public static float PlayTime
     {

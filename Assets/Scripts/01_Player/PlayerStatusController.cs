@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerStatusController : MonoBehaviour
 {
     private PlayerStatus playerStatus;
+    private event Action<PlayerStatusType, float, float> OnStatChanged;
+    public void AddOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { this.OnStatChanged += OnStatChanged; }
+    public void RemoveOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { this.OnStatChanged -= OnStatChanged; }
 
     public void Initialize()
     {
