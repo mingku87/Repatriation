@@ -10,13 +10,13 @@ public class PlayerStatusController : MonoBehaviour
     {
         playerStatus = new PlayerStatus();
 
-        playerStatus.SetMaxStatus(PlayerStatusType.HP, PlayerConstant.MaxHP);
-        playerStatus.SetMaxStatus(PlayerStatusType.Thirst, PlayerConstant.MaxThirst);
-        playerStatus.SetMaxStatus(PlayerStatusType.Symptom, PlayerConstant.MaxSymptom);
+        playerStatus.SetMaxStatus(PlayerStatusType.HP, Player.settings.maxHP);
+        playerStatus.SetMaxStatus(PlayerStatusType.Thirst, Player.settings.maxThirst);
+        playerStatus.SetMaxStatus(PlayerStatusType.Symptom, Player.settings.maxSymptom);
 
-        playerStatus.SetCurrentStatus(PlayerStatusType.HP, PlayerConstant.MaxHP);
-        playerStatus.SetCurrentStatus(PlayerStatusType.Thirst, PlayerConstant.MaxThirst);
-        playerStatus.SetCurrentStatus(PlayerStatusType.Symptom, PlayerConstant.MaxSymptom);
+        playerStatus.SetCurrentStatus(PlayerStatusType.HP, Player.settings.maxHP);
+        playerStatus.SetCurrentStatus(PlayerStatusType.Thirst, Player.settings.maxThirst);
+        playerStatus.SetCurrentStatus(PlayerStatusType.Symptom, Player.settings.maxSymptom);
     }
 
     public float ChangeStatus(PlayerStatusType statusType, float change)

@@ -7,6 +7,6 @@ public class TimerUI : Singleton<TimerUI>
     public void UpdateTimerHand(float playTime)
     {
         if (timerHand == null) return;
-        timerHand.transform.localRotation = Quaternion.Euler(0, 0, -playTime / GameConstant.fullDayLength * 360);
+        timerHand.transform.localRotation = Quaternion.Euler(0, 0, -playTime / InGameManager.settings.fullDayLength * 360);
     }
 }

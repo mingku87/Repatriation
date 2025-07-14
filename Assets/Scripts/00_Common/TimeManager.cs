@@ -25,13 +25,13 @@ public class TimeManager : Singleton<TimeManager>
 
     public static float SetPlayTime(int day, float time)
     {
-        PlayTime = GameConstant.fullDayLength * day + time;
+        PlayTime = InGameManager.settings.fullDayLength * day + time;
         return PlayTime;
     }
 
     public static TimeState GetTimeState()
     {
-        return PlayTime % GameConstant.fullDayLength < GameConstant.dayDuration ? TimeState.Day : TimeState.Night;
+        return PlayTime % InGameManager.settings.fullDayLength < InGameManager.settings.dayDuration ? TimeState.Day : TimeState.Night;
     }
 
     public static void SkipTime(TimeState timeState)
@@ -39,12 +39,12 @@ public class TimeManager : Singleton<TimeManager>
         if (timeState != GetTimeState()) return;
 
         int day = GetPlayTime().Item1;
-        if (timeState == TimeState.Day) SetPlayTime(day, GameConstant.dayDuration);
+        if (timeState == TimeState.Day) SetPlayTime(day, InGameManager.settings.dayDuration);
         else SetPlayTime(day + 1, 0.0f);
     }
 
     public static (int, float) GetPlayTime()
     {
-        return ((int)(PlayTime / GameConstant.fullDayLength), PlayTime % GameConstant.fullDayLength);
+        return ((int)(PlayTime / InGameManager.settings.fullDayLength), PlayTime % InGameManager.settings.fullDayLength);
     }
 }

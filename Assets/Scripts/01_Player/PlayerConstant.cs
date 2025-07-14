@@ -1,12 +1,33 @@
-public static class PlayerConstant
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class PlayerSettings
 {
-    public const float Speed = 5.0f;
+    public float speed;
 
-    public const float MaxHP = 100.0f;
-    public const float MaxThirst = 100.0f;
-    public const float MaxSymptom = 100.0f;
+    public float maxHP;
+    public float maxThirst;
+    public float maxSymptom;
 
-    public const float HealthDecayRateWhenThirsty = 3.0f;
-    public const float ThirstDecayRate = 3.0f;
+    public float healthDecayRateWhenThirsty;
+    public float thirstDecayRate;
     //public const float SymptomDecayRate;
+}
+
+public class PlayerConstant : Singleton<PlayerConstant>
+{
+    [SerializeField] private PlayerSettings easySettings;
+    [SerializeField] private PlayerSettings hardSettings;
+
+    public static Dictionary<Difficulty, PlayerSettings> Settings;
+
+    protected override void Awake()
+    {
+        Settings = new Dictionary<Difficulty, PlayerSettings>
+        {
+            { Difficulty.Easy, easySettings },
+            { Difficulty.Hard, hardSettings }
+        };
+    }
 }
