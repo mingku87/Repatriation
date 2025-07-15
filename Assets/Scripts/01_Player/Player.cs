@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Singleton<Player>
 {
-    public static PlayerSettings settings => PlayerConstant.Settings[InGameManager.difficulty];
+    public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     public PlayerStatusController playerStatusController;
 
     void Start()
