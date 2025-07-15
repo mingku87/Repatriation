@@ -7,7 +7,6 @@ public enum Difficulty
     Hard
 }
 
-[System.Serializable]
 public class DifficultySettings
 {
     public float dayDuration;
@@ -15,21 +14,20 @@ public class DifficultySettings
     public float fullDayLength => dayDuration + nightDuration;
 }
 
-public class InGameConstant : Singleton<InGameConstant>
+public class InGameConstant
 {
     [SerializeField] private DifficultySettings easySettings;
     [SerializeField] private DifficultySettings hardSettings;
 
-    public static Dictionary<Difficulty, DifficultySettings> Settings;
-
-    protected override void Awake()
+    public static Dictionary<Difficulty, DifficultySettings> Settings = new()
     {
-        base.Awake();
-
-        Settings = new Dictionary<Difficulty, DifficultySettings>
-        {
-            { Difficulty.Easy, easySettings },
-            { Difficulty.Hard, hardSettings }
-        };
-    }
+        { Difficulty.Easy, new() {
+            dayDuration = 4 * 60.0f,
+            nightDuration = 6 * 60.0f
+        }},
+        { Difficulty.Hard, new() {
+            dayDuration = 4 * 60.0f,
+            nightDuration = 6 * 60.0f
+        }}
+    };
 }

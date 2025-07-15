@@ -4,9 +4,8 @@ using UnityEngine;
 public class PlayerStatusController : MonoBehaviour
 {
     private PlayerStatus playerStatus;
-    private event Action<PlayerStatusType, float, float> OnStatChanged;
-    public void AddOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { this.OnStatChanged += OnStatChanged; }
-    public void RemoveOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { this.OnStatChanged -= OnStatChanged; }
+    public void AddOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
+    public void RemoveOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
 
     public void Initialize()
     {
@@ -24,5 +23,9 @@ public class PlayerStatusController : MonoBehaviour
     public float ChangeStatus(PlayerStatusType statusType, float change)
     {
         return playerStatus.ChangeCurrentStatus(statusType, change);
+    }
+
+    private void UpdatePlayerStatus()
+    {
     }
 }
