@@ -12,8 +12,15 @@ public class PlayerStatusUI : MonoBehaviour
 {
     [SerializeField] private PlayerStatusUIElement[] playerStatusUIElements;
 
-    public void SetPlayerStatus(PlayerStatusType statusType, float currentValue, float maxValue)
+    void Start()
     {
+        Player.Instance.playerStatusController.AddOnStatChangedEvent(OnStatChanged);
+    }
+
+    private void OnStatChanged(PlayerStatusType statusType, float currentValue, float maxValue)
+    {
+        if (InGameManager.difficulty == Difficulty.Hard) return;
+
         foreach (var element in playerStatusUIElements)
         {
             if (element.statusType != statusType) continue;
