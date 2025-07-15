@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public class PlayerStatusUIElement
+{
+    public PlayerStatusType statusType;
+    public Image statusBar;
+}
 
 public class PlayerStatusUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private PlayerStatusUIElement[] playerStatusUIElements;
 
-    // Update is called once per frame
-    void Update()
+    public void SetPlayerStatus(PlayerStatusType statusType, float currentValue, float maxValue)
     {
-        
+        foreach (var element in playerStatusUIElements)
+        {
+            if (element.statusType != statusType) continue;
+
+            element.statusBar.fillAmount = currentValue / maxValue;
+            break;
+        }
     }
 }
