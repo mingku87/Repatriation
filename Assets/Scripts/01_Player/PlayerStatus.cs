@@ -6,7 +6,12 @@ public enum Status
 {
     HP,
     Thirst,
-    Symptom
+    Symptom,
+    Atk,
+    AtkRange,
+    Def,
+    Speed,
+    SightRange,
 }
 
 public class PlayerStatus
