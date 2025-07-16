@@ -8,7 +8,7 @@ public abstract class Item
     {
         this.id = id;
 
-        param = ItemStatList.GetItemStat(id);
+        param = ItemParameterList.GetItemStat(id);
         info = ItemInfoSO.GetItemInfo(param.itemName);
     }
 

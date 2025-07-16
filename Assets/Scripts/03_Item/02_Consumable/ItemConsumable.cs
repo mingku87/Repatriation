@@ -1,17 +1,10 @@
-public abstract class ItemConsumable : Item
+public class ItemConsumable : Item
 {
-    public Status status;
-    public float value;
-
-    public ItemConsumable(int id, Status status) : base(id)
-    {
-        this.id = id;
-        this.status = status;
-        value = (param as ItemParameterConsumable).value;
-    }
+    public new ItemParameterConsumable param => (ItemParameterConsumable)base.param;
+    public ItemConsumable(int id) : base(id) { }
 
     public override void Use()
     {
-        Player.ChangeCurrentStatus(status, value);
+        Player.ChangeCurrentStatus(param.status, param.value);
     }
 }

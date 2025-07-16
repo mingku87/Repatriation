@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class ItemStatList
+public class ItemParameterList
 {
     public static List<ItemParameter> itemStats = new()
     {

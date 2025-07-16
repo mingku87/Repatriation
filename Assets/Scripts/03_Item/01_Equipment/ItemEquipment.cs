@@ -1,27 +1,38 @@
-public abstract class ItemEquipment : Item
+public enum EquipPart
 {
-    public Status status;
-    public float value;
+    Head,
+    Body,
+    Arms,
+    Hands,
+    Bag,
+    Knees,
+    Feet,
+}
+
+public class ItemEquipment : Item
+{
+    public new ItemParameterEquipment param => (ItemParameterEquipment)base.param;
     public int durability;
 
-    public ItemEquipment(int id, Status status, float value, int durability = -1) : base(id)
+    public ItemEquipment(int id, int durability = -1) : base(id)
     {
-        this.id = id;
-        this.status = status;
-        this.value = value;
-
         if (durability == -1) this.durability = (param as ItemParameterEquipment).maxDurability;
         else this.durability = durability;
     }
 
     public virtual void Equip()
     {
-        Player.SetMaxStatus(status, value);
-        Player.SetCurrentStatus(status, value);
+        Player.SetMaxStatus(param.status, param.value);
+        Player.SetCurrentStatus(param.status, param.value);
     }
     public virtual void UnEquip()
     {
-        Player.SetMaxStatus(status, 0);
-        Player.SetCurrentStatus(status, 0);
+        Player.SetMaxStatus(param.status, 0);
+        Player.SetCurrentStatus(param.status, 0);
+    }
+
+    public override void Use()
+    {
+        durability -= param.durabilityDecayRate;
     }
 }
