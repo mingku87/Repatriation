@@ -5,6 +5,7 @@ public class Player : SingletonObject<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     private static PlayerStatusController playerStatusController;
+    private Inventory inventory;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class Player : SingletonObject<Player>
     {
         playerStatusController = new();
         playerStatusController.Initialize();
+
+        inventory = new();
     }
 
     private void UpdatePlayerStatus()
