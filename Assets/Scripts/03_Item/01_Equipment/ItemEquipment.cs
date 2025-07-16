@@ -2,13 +2,16 @@ public abstract class ItemEquipment : Item
 {
     public Status status;
     public float value;
-    public float durability;
+    public int durability;
 
-    public ItemEquipment(ItemName itemName, Status status, float value)
+    public ItemEquipment(int id, Status status, float value, int durability = -1) : base(id)
     {
-        this.itemName = itemName;
+        this.id = id;
         this.status = status;
         this.value = value;
+
+        if (durability == -1) this.durability = (param as ItemParameterEquipment).maxDurability;
+        else this.durability = durability;
     }
 
     public virtual void Equip()

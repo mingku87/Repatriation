@@ -1,9 +1,9 @@
 public class Water : ItemConsumable
 {
     public float quality;
-    public Water(ItemName itemName, float value, float quality) : base(itemName, Status.Thirst, value)
+    public Water(int id) : base(id, Status.Thirst)
     {
-        this.quality = quality;
+        quality = (param as ItemParameterWater).quality;
     }
 
     public override void Use()

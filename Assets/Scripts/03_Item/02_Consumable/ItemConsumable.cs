@@ -3,11 +3,11 @@ public abstract class ItemConsumable : Item
     public Status status;
     public float value;
 
-    public ItemConsumable(ItemName itemName, Status status, float value)
+    public ItemConsumable(int id, Status status) : base(id)
     {
-        this.itemName = itemName;
+        this.id = id;
         this.status = status;
-        this.value = value;
+        value = (param as ItemParameterConsumable).value;
     }
 
     public override void Use()

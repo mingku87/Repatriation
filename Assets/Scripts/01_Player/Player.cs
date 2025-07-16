@@ -45,10 +45,10 @@ public class Player : SingletonObject<Player>
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
 
-        var moveDirection = new Vector3(moveX, moveY, 0.0f);
         GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
         GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
 
+        var moveDirection = new Vector3(moveX, moveY, 0.0f);
         if (moveDirection != Vector3.zero)
         {
             moveDirection.Normalize();
