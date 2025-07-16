@@ -9,13 +9,16 @@ public class Player : SingletonObject<Player>
 
     void Start()
     {
-        Time.timeScale = 5;
+        InGameManager.Instance.Initialize();
         Initialize();
         InvokeRepeating(nameof(UpdatePlayerStatus), 0f, 1f);
     }
 
     void Update()
     {
+        // Test
+        if (Input.GetKeyDown(KeyCode.M)) Time.timeScale = Time.timeScale == 1 ? 15 : 1;
+
         Move();
     }
 

@@ -1,8 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimerUI : SingletonObject<TimerUI>
 {
+    [SerializeField] private Image dayImage;
     [SerializeField] private GameObject timerHand;
+
+    public void Initialize()
+    {
+        dayImage.fillAmount = InGameManager.settings.dayDuration / InGameManager.settings.fullDayLength;
+    }
 
     public void UpdateTimerHand(float playTime)
     {
