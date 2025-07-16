@@ -32,6 +32,16 @@ public class Player : Singleton<Player>
 
     private void Move()
     {
+        var moveDirection = Vector3.zero;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveRight))) moveDirection.x = 1;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveLeft))) moveDirection.x = -1;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveDirection.z = 1;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveDirection.z = -1;
 
+        if (moveDirection != Vector3.zero)
+        {
+            moveDirection.Normalize();
+            transform.position += moveDirection * constant.speed * Time.deltaTime;
+        }
     }
 }
