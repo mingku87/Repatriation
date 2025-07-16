@@ -2,11 +2,7 @@ using System.Collections.Generic;
 
 public class PlayerSettings
 {
-    public float speed;
-
-    public float maxHP;
-    public float maxThirst;
-    public float maxSymptom;
+    public Dictionary<Status, float> maxStatus = new();
 
     public float thirstDecayRate;
     public Dictionary<float, float> symptomDecayRate;
@@ -36,20 +32,16 @@ public class PlayerConstant
 
     public static Dictionary<Difficulty, PlayerSettings> Settings = new() {
         { Difficulty.Easy, new PlayerSettings() {
-            speed = 3.0f,
-            maxHP = 100.0f,
-            maxThirst = 100.0f,
-            maxSymptom = 100.0f,
+            maxStatus = new(){{ Status.HP, 100.0f }, { Status.Thirst, 100.0f }, { Status.Symptom, 100.0f },
+                { Status.Atk, 10.0f }, { Status.AtkRange, 1.0f }, { Status.Def, 5.0f }, { Status.Speed, 3.0f }, { Status.SightRange, 5.0f }},
             thirstDecayRate = 0.5f,
             symptomDecayRate = new(){{ 10, 1.0f }, { 20, 0.5f }, { 40, 0.33f }, { 60, 0.2f }, { 80, 0.12f }, { 100, 0.08f }},
             healthDecayRateByThirst = 3.0f,
             healthDecayRateBySymptomRate = new(){{ 0, 64 }, { 1, 32 }, { 5, 16 }, { 10, 8 }, { 20, 4 }, { 30, 2 }, { 60, 1 }, { 100, 0 }}
         }},
         { Difficulty.Hard, new PlayerSettings() {
-            speed = 3.0f,
-            maxHP = 80.0f,
-            maxThirst = 80.0f,
-            maxSymptom = 80.0f,
+            maxStatus = new(){{ Status.HP, 100.0f }, { Status.Thirst, 100.0f }, { Status.Symptom, 100.0f },
+                { Status.Atk, 10.0f }, { Status.AtkRange, 1.0f }, { Status.Def, 5.0f }, { Status.Speed, 3.0f }, { Status.SightRange, 5.0f }},
             thirstDecayRate = 0.5f,
             symptomDecayRate = new(){{ 10, 1.0f }, { 20, 0.5f }, { 40, 0.33f }, { 60, 0.2f }, { 80, 0.12f }, { 100, 0.08f }},
             healthDecayRateByThirst = 3.0f,

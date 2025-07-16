@@ -52,7 +52,7 @@ public class Player : SingletonObject<Player>
         if (moveDirection != Vector3.zero)
         {
             moveDirection.Normalize();
-            transform.position += moveDirection * constant.speed * Time.deltaTime;
+            transform.position += moveDirection * GetCurrentStatus(Status.Speed) * Time.deltaTime;
         }
     }
 

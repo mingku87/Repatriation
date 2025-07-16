@@ -9,13 +9,11 @@ public class PlayerStatusController
         playerStatus = new();
         playerStatus.Initialize();
 
-        SetMaxStatus(Status.HP, Player.constant.maxHP);
-        SetMaxStatus(Status.Thirst, Player.constant.maxThirst);
-        SetMaxStatus(Status.Symptom, Player.constant.maxSymptom);
-
-        SetCurrentStatus(Status.HP, Player.constant.maxHP);
-        SetCurrentStatus(Status.Thirst, Player.constant.maxThirst);
-        SetCurrentStatus(Status.Symptom, Player.constant.maxSymptom);
+        foreach (var type in Player.constant.maxStatus.Keys)
+        {
+            playerStatus.SetMaxStatus(type, Player.constant.maxStatus[type]);
+            playerStatus.SetCurrentStatus(type, Player.constant.maxStatus[type]);
+        }
     }
 
     private float thirstDecayRate => Player.constant.thirstDecayRate;
