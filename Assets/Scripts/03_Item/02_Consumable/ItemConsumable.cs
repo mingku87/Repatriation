@@ -3,9 +3,9 @@ public abstract class ItemConsumable : Item
     public Status status;
     public float value;
 
-    public ItemConsumable(ItemInfo itemInfo, Status status, float value)
+    public ItemConsumable(ItemName itemName, Status status, float value)
     {
-        this.itemInfo = itemInfo;
+        this.itemName = itemName;
         this.status = status;
         this.value = value;
     }

@@ -1,5 +1,10 @@
+public enum ItemName
+{
+
+}
+
 public abstract class Item
 {
-    public ItemInfo itemInfo;
+    public ItemName itemName;
     public abstract void Use();
 }

@@ -4,9 +4,9 @@ public abstract class ItemEquipment : Item
     public float value;
     public float durability;
 
-    public ItemEquipment(ItemInfo itemInfo, Status status, float value)
+    public ItemEquipment(ItemName itemName, Status status, float value)
     {
-        this.itemInfo = itemInfo;
+        this.itemName = itemName;
         this.status = status;
         this.value = value;
     }
