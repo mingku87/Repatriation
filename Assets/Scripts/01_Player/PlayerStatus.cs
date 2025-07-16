@@ -40,6 +40,7 @@ public class PlayerStatus
         if (maxStatus[status] == value) return maxStatus[status];
 
         maxStatus[status] = value;
+        if (currentStatus[status] > maxStatus[status]) { currentStatus[status] = maxStatus[status]; }
         OnStatChanged?.Invoke(status, currentStatus[status], maxStatus[status]);
         return maxStatus[status];
     }

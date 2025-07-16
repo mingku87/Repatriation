@@ -14,7 +14,7 @@ public class PlayerStatusUI : MonoBehaviour
 
     void Start()
     {
-        Player.Instance.playerStatusController.AddOnStatChangedEvent(OnStatChanged);
+        Player.AddOnStatChangedEvent(OnStatChanged);
     }
 
     private void OnStatChanged(Status statusType, float currentValue, float maxValue)

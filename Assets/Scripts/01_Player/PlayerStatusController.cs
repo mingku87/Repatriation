@@ -3,8 +3,6 @@ using System;
 public class PlayerStatusController
 {
     private PlayerStatus playerStatus;
-    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
-    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
 
     public void Initialize()
     {
@@ -20,12 +18,6 @@ public class PlayerStatusController
         SetCurrentStatus(Status.Symptom, Player.constant.maxSymptom);
     }
 
-    public float GetCurrentStatus(Status status) { return playerStatus.GetCurrentStatus(status); }
-    public float GetMaxStatus(Status status) { return playerStatus.GetMaxStatus(status); }
-    public float SetMaxStatus(Status status, float value) { return playerStatus.SetMaxStatus(status, value); }
-    public float SetCurrentStatus(Status status, float value) { return playerStatus.SetCurrentStatus(status, value); }
-    public float ChangeCurrentStatus(Status status, float change) { return playerStatus.ChangeCurrentStatus(status, change); }
-
     private float thirstDecayRate => Player.constant.thirstDecayRate;
     private float healthDecayRateByThirst => Player.constant.healthDecayRateByThirst;
     private float symptomDecayRate => Player.constant.GetSymptomDecayRate(GetCurrentStatus(Status.Symptom));
@@ -40,4 +32,12 @@ public class PlayerStatusController
         ChangeCurrentStatus(Status.Symptom, -symptomDecayRate);
         ChangeCurrentStatus(Status.HP, -healthDecayRateBySymptomRate);
     }
+
+    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
+    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
+    public float GetCurrentStatus(Status status) { return playerStatus.GetCurrentStatus(status); }
+    public float GetMaxStatus(Status status) { return playerStatus.GetMaxStatus(status); }
+    public float SetMaxStatus(Status status, float value) { return playerStatus.SetMaxStatus(status, value); }
+    public float SetCurrentStatus(Status status, float value) { return playerStatus.SetCurrentStatus(status, value); }
+    public float ChangeCurrentStatus(Status status, float change) { return playerStatus.ChangeCurrentStatus(status, change); }
 }

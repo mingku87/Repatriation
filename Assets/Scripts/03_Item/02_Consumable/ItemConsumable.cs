@@ -9,4 +9,9 @@ public abstract class ItemConsumable : Item
         this.status = status;
         this.value = value;
     }
+
+    public override void Use()
+    {
+        Player.ChangeCurrentStatus(status, value);
+    }
 }

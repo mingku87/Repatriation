@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Player : Singleton<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
-    [HideInInspector] public PlayerStatusController playerStatusController;
+    private static PlayerStatusController playerStatusController;
 
     void Start()
     {
@@ -44,4 +43,13 @@ public class Player : Singleton<Player>
             transform.position += moveDirection * constant.speed * Time.deltaTime;
         }
     }
+
+    // Player Status Controller Methods
+    public static void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatusController.AddOnStatChangedEvent(OnStatChanged); }
+    public static void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatusController.RemoveOnStatChangedEvent(OnStatChanged); }
+    public static float GetCurrentStatus(Status status) { return playerStatusController.GetCurrentStatus(status); }
+    public static float GetMaxStatus(Status status) { return playerStatusController.GetMaxStatus(status); }
+    public static float SetMaxStatus(Status status, float value) { return playerStatusController.SetMaxStatus(status, value); }
+    public static float SetCurrentStatus(Status status, float value) { return playerStatusController.SetCurrentStatus(status, value); }
+    public static float ChangeCurrentStatus(Status status, float change) { return playerStatusController.ChangeCurrentStatus(status, change); }
 }
