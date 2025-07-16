@@ -19,6 +19,10 @@ public class InGameConstant
     [SerializeField] private DifficultySettings easySettings;
     [SerializeField] private DifficultySettings hardSettings;
 
+    public static float dayLightIntensity = 0.5f;
+    public static float nightLightIntensity = 0.03f;
+    public static float lightTransitionDuration = 1.0f;
+
     public static Dictionary<Difficulty, DifficultySettings> Settings = new()
     {
         { Difficulty.Easy, new() {
