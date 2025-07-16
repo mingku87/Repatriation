@@ -8,6 +8,12 @@ public enum PlayerAction
     MoveLeft,
     MoveRight,
     Interaction,
+    Slot1,
+    Slot2,
+    Slot3,
+    Slot4,
+    Slot5,
+    Slot6,
 }
 
 public static class KeySetting
@@ -32,7 +38,8 @@ public static class KeySetting
 public class KeyManager : SingletonObject<KeyManager>
 {
     private KeyCode[] defaultKeys = new KeyCode[]
-    { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.F };
+    { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.F,
+      KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6 };
 
 
     protected override void Awake()
