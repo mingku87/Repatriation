@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class SceneController : Singleton<SceneController>
+public class SceneController : SingletonObject<SceneController>
 {
     public SceneName currentScene { get; private set; }
 

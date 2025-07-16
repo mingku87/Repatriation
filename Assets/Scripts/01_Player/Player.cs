@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : Singleton<Player>
+public class Player : SingletonObject<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     private static PlayerStatusController playerStatusController;

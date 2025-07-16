@@ -1,4 +1,4 @@
-public class TimeManager : Singleton<TimeManager>
+public class TimeManager : SingletonObject<TimeManager>
 {
     public enum TimeState
     {

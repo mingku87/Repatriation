@@ -29,7 +29,7 @@ public static class KeySetting
     }
 }
 
-public class KeyManager : Singleton<KeyManager>
+public class KeyManager : SingletonObject<KeyManager>
 {
     private KeyCode[] defaultKeys = new KeyCode[]
     { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.F };

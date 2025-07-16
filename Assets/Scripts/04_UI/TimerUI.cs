@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TimerUI : Singleton<TimerUI>
+public class TimerUI : SingletonObject<TimerUI>
 {
     [SerializeField] private GameObject timerHand;
 
