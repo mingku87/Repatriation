@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PlayerStatusUIElement
 {
-    public PlayerStatusType statusType;
+    public Status statusType;
     public Image statusBar;
 }
 
@@ -17,7 +17,7 @@ public class PlayerStatusUI : MonoBehaviour
         Player.Instance.playerStatusController.AddOnStatChangedEvent(OnStatChanged);
     }
 
-    private void OnStatChanged(PlayerStatusType statusType, float currentValue, float maxValue)
+    private void OnStatChanged(Status statusType, float currentValue, float maxValue)
     {
         if (InGameManager.difficulty == Difficulty.Hard) return;
 

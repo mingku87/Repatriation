@@ -1,38 +1,43 @@
 using System;
-using UnityEngine;
 
-public class PlayerStatusController : MonoBehaviour
+public class PlayerStatusController
 {
     private PlayerStatus playerStatus;
-    public void AddOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
-    public void RemoveOnStatChangedEvent(Action<PlayerStatusType, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
+    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
+    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
 
     public void Initialize()
     {
-        playerStatus = new PlayerStatus();
+        playerStatus = new();
+        playerStatus.Initialize();
 
-        playerStatus.SetMaxStatus(PlayerStatusType.HP, Player.constant.maxHP);
-        playerStatus.SetMaxStatus(PlayerStatusType.Thirst, Player.constant.maxThirst);
-        playerStatus.SetMaxStatus(PlayerStatusType.Symptom, Player.constant.maxSymptom);
+        SetMaxStatus(Status.HP, Player.constant.maxHP);
+        SetMaxStatus(Status.Thirst, Player.constant.maxThirst);
+        SetMaxStatus(Status.Symptom, Player.constant.maxSymptom);
 
-        playerStatus.SetCurrentStatus(PlayerStatusType.HP, Player.constant.maxHP);
-        playerStatus.SetCurrentStatus(PlayerStatusType.Thirst, Player.constant.maxThirst);
-        playerStatus.SetCurrentStatus(PlayerStatusType.Symptom, Player.constant.maxSymptom);
+        SetCurrentStatus(Status.HP, Player.constant.maxHP);
+        SetCurrentStatus(Status.Thirst, Player.constant.maxThirst);
+        SetCurrentStatus(Status.Symptom, Player.constant.maxSymptom);
     }
 
-    public float ChangeStatus(PlayerStatusType statusType, float change)
-    {
-        return playerStatus.ChangeCurrentStatus(statusType, change);
-    }
+    public float GetCurrentStatus(Status status) { return playerStatus.GetCurrentStatus(status); }
+    public float GetMaxStatus(Status status) { return playerStatus.GetMaxStatus(status); }
+    public float SetMaxStatus(Status status, float value) { return playerStatus.SetMaxStatus(status, value); }
+    public float SetCurrentStatus(Status status, float value) { return playerStatus.SetCurrentStatus(status, value); }
+    public float ChangeCurrentStatus(Status status, float change) { return playerStatus.ChangeCurrentStatus(status, change); }
 
-    private void UpdatePlayerStatus()
-    {
-        float thirst = playerStatus.ChangeCurrentStatus(PlayerStatusType.Thirst, -Player.constant.thirstDecayRate);
-        if (thirst <= 0) playerStatus.ChangeCurrentStatus(PlayerStatusType.HP, -Player.constant.healthDecayRateByThirst);
+    private float thirstDecayRate => Player.constant.thirstDecayRate;
+    private float healthDecayRateByThirst => Player.constant.healthDecayRateByThirst;
+    private float symptomDecayRate => Player.constant.GetSymptomDecayRate(GetCurrentStatus(Status.Symptom));
+    private float healthDecayRateBySymptomRate
+    => Player.constant.GetHealthDecayRateBySymptomRate(GetCurrentStatus(Status.Symptom) / GetMaxStatus(Status.Symptom) * 100);
 
-        float symptom = playerStatus.ChangeCurrentStatus(PlayerStatusType.Symptom,
-            -Player.constant.GetSymptomDecayRate(playerStatus.GetCurrentStatus(PlayerStatusType.Symptom)));
-        playerStatus.ChangeCurrentStatus(PlayerStatusType.HP,
-            -Player.constant.GetHealthDecayRateBySymptomRate(symptom / playerStatus.GetMaxStatus(PlayerStatusType.Symptom) * 100));
+    public void UpdatePlayerStatus()
+    {
+        float thirst = ChangeCurrentStatus(Status.Thirst, -thirstDecayRate);
+        if (thirst <= 0) ChangeCurrentStatus(Status.HP, -healthDecayRateByThirst);
+
+        ChangeCurrentStatus(Status.Symptom, -symptomDecayRate);
+        ChangeCurrentStatus(Status.HP, -healthDecayRateBySymptomRate);
     }
 }

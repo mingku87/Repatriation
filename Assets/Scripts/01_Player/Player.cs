@@ -5,11 +5,13 @@ using UnityEngine;
 public class Player : Singleton<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
-    public PlayerStatusController playerStatusController;
+    [HideInInspector] public PlayerStatusController playerStatusController;
 
     void Start()
     {
-
+        Time.timeScale = 5;
+        Initialize();
+        InvokeRepeating(nameof(UpdatePlayerStatus), 0f, 1f);
     }
 
     void Update()
@@ -19,7 +21,13 @@ public class Player : Singleton<Player>
 
     public void Initialize()
     {
+        playerStatusController = new();
         playerStatusController.Initialize();
+    }
+
+    private void UpdatePlayerStatus()
+    {
+        playerStatusController.UpdatePlayerStatus();
     }
 
     private void Move()
