@@ -16,7 +16,7 @@ public class ItemEquipment : Item
 
     public ItemEquipment(int id, int durability = -1) : base(id)
     {
-        if (durability == -1) this.durability = (param as ItemParameterEquipment).maxDurability;
+        if (durability == -1) this.durability = param.maxDurability;
         else this.durability = durability;
     }
 

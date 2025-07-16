@@ -4,31 +4,22 @@ using UnityEngine;
 
 public class Inventory
 {
-    private List<ItemInfo> items;
+    private List<Item> items;
 
     public void Initialize()
     {
         items = new();
     }
 
-    public void AddItem(ItemInfo item)
+    public void AddItem(Item item)
     {
-        if (item != null && !items.Contains(item))
-        {
-            items.Add(item);
-        }
+        if (item == null) return;
+        items.Add(item);
     }
 
-    public void RemoveItem(ItemInfo item)
+    public void RemoveItem(Item item)
     {
-        if (item != null && items.Contains(item))
-        {
-            items.Remove(item);
-        }
-    }
-
-    public List<ItemInfo> GetItems()
-    {
-        return new List<ItemInfo>(items);
+        if (item == null || items.Contains(item) == false) return;
+        items.Remove(item);
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 public static class ItemFactory
 {
-    public static Item Create(int id, int value = 0)
+    public static Item Create(int id, int value = -1)
     {
         var type = ItemParameterList.GetItemStat(id).type;
 
