@@ -37,7 +37,7 @@ public class PlayerConstant
 
     public static Dictionary<Difficulty, PlayerSettings> Settings = new() {
         { Difficulty.Easy, new PlayerSettings() {
-            speed = 5.0f,
+            speed = 3.0f,
             maxHP = 100.0f,
             maxThirst = 100.0f,
             maxSymptom = 100.0f,
@@ -47,7 +47,7 @@ public class PlayerConstant
             healthDecayRateBySymptomRate = new(){{ 0, 64 }, { 1, 32 }, { 5, 16 }, { 10, 8 }, { 20, 4 }, { 30, 2 }, { 60, 1 }, { 100, 0 }}
         }},
         { Difficulty.Hard, new PlayerSettings() {
-            speed = 4.0f,
+            speed = 3.0f,
             maxHP = 80.0f,
             maxThirst = 80.0f,
             maxSymptom = 80.0f,

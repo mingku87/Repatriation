@@ -33,6 +33,7 @@ public class PlayerStatusController
         ChangeCurrentStatus(Status.HP, -healthDecayRateBySymptomRate);
     }
 
+    // PlayerStatus Methods
     public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
     public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
     public float GetCurrentStatus(Status status) { return playerStatus.GetCurrentStatus(status); }

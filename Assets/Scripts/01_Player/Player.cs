@@ -15,7 +15,7 @@ public class Player : Singleton<Player>
 
     void Update()
     {
-
+        Move();
     }
 
     public void Initialize()
@@ -34,8 +34,8 @@ public class Player : Singleton<Player>
         var moveDirection = Vector3.zero;
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveRight))) moveDirection.x = 1;
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveLeft))) moveDirection.x = -1;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveDirection.z = 1;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveDirection.z = -1;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveDirection.y = 1;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveDirection.y = -1;
 
         if (moveDirection != Vector3.zero)
         {
@@ -44,7 +44,7 @@ public class Player : Singleton<Player>
         }
     }
 
-    // Player Status Controller Methods
+    // PlayerStatusController Methods
     public static void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatusController.AddOnStatChangedEvent(OnStatChanged); }
     public static void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatusController.RemoveOnStatChangedEvent(OnStatChanged); }
     public static float GetCurrentStatus(Status status) { return playerStatusController.GetCurrentStatus(status); }
