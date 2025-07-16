@@ -32,8 +32,8 @@ public class PlayerSettings
 
 public class PlayerConstant
 {
-    [SerializeField] private PlayerSettings easySettings;
-    [SerializeField] private PlayerSettings hardSettings;
+    public static string AnimatorFloatMoveX = "MoveX";
+    public static string AnimatorFloatMoveY = "MoveY";
 
     public static Dictionary<Difficulty, PlayerSettings> Settings = new() {
         { Difficulty.Easy, new PlayerSettings() {

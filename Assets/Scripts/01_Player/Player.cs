@@ -37,11 +37,17 @@ public class Player : SingletonObject<Player>
 
     private void Move()
     {
-        var moveDirection = Vector3.zero;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveRight))) moveDirection.x = 1;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveLeft))) moveDirection.x = -1;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveDirection.y = 1;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveDirection.y = -1;
+        float moveX = 0.0f;
+        float moveY = 0.0f;
+
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveRight))) moveX = 1.0f;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveLeft))) moveX = -1.0f;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
+        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
+
+        var moveDirection = new Vector3(moveX, moveY, 0.0f);
+        GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
+        GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
 
         if (moveDirection != Vector3.zero)
         {
