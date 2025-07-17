@@ -10,7 +10,7 @@ public enum PlayerAction
     Interaction,
     Inventory,
     UseItem,
-    QuickSlot,
+    Escape
 }
 
 public static class KeySetting
@@ -63,6 +63,7 @@ public class KeyManager : SingletonObject<KeyManager>
         KeyCode.F,
         KeyCode.Tab,
         KeyCode.Mouse0,
+        KeyCode.Escape
     };
 
     private readonly KeyCode[] defaultQuickSlotKeys = {

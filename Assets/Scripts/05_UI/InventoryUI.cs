@@ -11,7 +11,16 @@ public class InventoryUI : SingletonObject<InventoryUI>
 
     public void ShowInventory()
     {
-        if (Input.GetKeyDown(KeySetting.GetKey(PlayerAction.Inventory)) == false) return;
-        Util.SetActive(inventoryPanel, !inventoryPanel.activeSelf);
+        if (Input.GetKeyDown(KeySetting.GetKey(PlayerAction.Inventory)))
+        {
+            Util.SetActive(inventoryPanel, !inventoryPanel.activeSelf);
+            return;
+        }
+
+        if (inventoryPanel.activeSelf && Input.GetKeyDown(KeySetting.GetKey(PlayerAction.Escape)))
+        {
+            Util.SetActive(inventoryPanel, false);
+            return;
+        }
     }
 }
