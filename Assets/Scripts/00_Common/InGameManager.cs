@@ -8,6 +8,7 @@ public class InGameManager : SingletonObject<InGameManager>
     public void Initialize()
     {
         InGameUIManager.Instance.Initialize();
+        InventoryController.Instance.Initialize();
     }
 
     void Update()
