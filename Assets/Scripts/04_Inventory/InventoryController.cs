@@ -37,6 +37,6 @@ public class InventoryController : SingletonObject<InventoryController>
         }
     }
 
-    public void AddItem(Item item) { inventory.AddItem(item); }
-    public void RemoveItem(Item item) { inventory.RemoveItem(item); }
+    public void AddItem(Item item) => inventory.AddItem(item);
+    public void RemoveItem(Item item) => inventory.RemoveItem(item);
 }

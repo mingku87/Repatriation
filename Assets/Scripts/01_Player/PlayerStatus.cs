@@ -20,11 +20,10 @@ public class PlayerStatus
     private Dictionary<Status, float> maxStatus = new();
 
     private event Action<Status, float, float> OnStatChanged;
-    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { this.OnStatChanged += OnStatChanged; }
-    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { this.OnStatChanged -= OnStatChanged; }
-
-    public float GetCurrentStatus(Status status) { return currentStatus[status]; }
-    public float GetMaxStatus(Status status) { return maxStatus[status]; }
+    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) => this.OnStatChanged += OnStatChanged;
+    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) => this.OnStatChanged -= OnStatChanged;
+    public float GetCurrentStatus(Status status) => currentStatus[status];
+    public float GetMaxStatus(Status status) => maxStatus[status];
 
     public void Initialize()
     {

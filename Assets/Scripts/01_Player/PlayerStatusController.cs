@@ -32,11 +32,11 @@ public class PlayerStatusController
     }
 
     // PlayerStatus Methods
-    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.AddOnStatChangedEvent(OnStatChanged); }
-    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) { playerStatus.RemoveOnStatChangedEvent(OnStatChanged); }
-    public float GetCurrentStatus(Status status) { return playerStatus.GetCurrentStatus(status); }
-    public float GetMaxStatus(Status status) { return playerStatus.GetMaxStatus(status); }
-    public float SetMaxStatus(Status status, float value) { return playerStatus.SetMaxStatus(status, value); }
-    public float SetCurrentStatus(Status status, float value) { return playerStatus.SetCurrentStatus(status, value); }
-    public float ChangeCurrentStatus(Status status, float change) { return playerStatus.ChangeCurrentStatus(status, change); }
+    public void AddOnStatChangedEvent(Action<Status, float, float> OnStatChanged) => playerStatus.AddOnStatChangedEvent(OnStatChanged);
+    public void RemoveOnStatChangedEvent(Action<Status, float, float> OnStatChanged) => playerStatus.RemoveOnStatChangedEvent(OnStatChanged);
+    public float GetCurrentStatus(Status status) => playerStatus.GetCurrentStatus(status);
+    public float GetMaxStatus(Status status) => playerStatus.GetMaxStatus(status);
+    public float SetMaxStatus(Status status, float value) => playerStatus.SetMaxStatus(status, value);
+    public float SetCurrentStatus(Status status, float value) => playerStatus.SetCurrentStatus(status, value);
+    public float ChangeCurrentStatus(Status status, float change) => playerStatus.ChangeCurrentStatus(status, change);
 }
