@@ -1,28 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
+public enum EquipPart
+{
+    Head,
+    Body,
+    Arms,
+    Hands,
+    Bag,
+    Knees,
+    Feet,
+}
 
 public class Inventory
 {
     private List<Item> items;
-    private Dictionary<PlayerAction, Item> quickSlots;
+    private List<Item> quickSlots;
     private Item holdItem;
 
     public void Initialize()
     {
         items = new();
-        quickSlots = new() {
-            { PlayerAction.Slot1, null },
-            { PlayerAction.Slot2, null },
-            { PlayerAction.Slot3, null },
-            { PlayerAction.Slot4, null },
-            { PlayerAction.Slot5, null },
-            { PlayerAction.Slot6, null }
-        };
+        quickSlots = new();
+        for (int i = 0; i < InventoryConstant.MaxQuickSlots; i++) quickSlots.Add(null);
         holdItem = null;
     }
 
-    public Dictionary<PlayerAction, Item> GetQuickSlots() { return quickSlots; }
+    public List<Item> GetQuickSlots() { return quickSlots; }
     public Item GetHoldItem() { return holdItem; }
     public void SetHoldItem(Item item)
     {
@@ -40,5 +43,25 @@ public class Inventory
     {
         if (item == null || items.Contains(item) == false) return;
         items.Remove(item);
+        quickSlots.Remove(item);
+    }
+
+    public void UseItem(Item item)
+    {
+        if (item == null) return;
+        item.Use();
+    }
+
+    public void UseHoldItem()
+    {
+        if (holdItem == null) return;
+        UseItem(holdItem);
+    }
+
+    public void UseQuickSlotItem(int slotIndex)
+    {
+        var item = quickSlots[slotIndex];
+        if (slotIndex < 0 || slotIndex >= quickSlots.Count || item == null) return;
+        UseItem(item);
     }
 }

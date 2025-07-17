@@ -1,14 +1,3 @@
-public enum EquipPart
-{
-    Head,
-    Body,
-    Arms,
-    Hands,
-    Bag,
-    Knees,
-    Feet,
-}
-
 public class ItemEquipment : Item
 {
     public new ItemParameterEquipment param => (ItemParameterEquipment)base.param;

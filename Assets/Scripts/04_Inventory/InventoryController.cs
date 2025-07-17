@@ -27,15 +27,13 @@ public class InventoryController : SingletonObject<InventoryController>
 
     public void CheckHoldItem()
     {
-        var quickSlots = inventory.GetQuickSlots();
-
-        foreach (var kv in quickSlots)
+        int slotCount = InventoryConstant.MaxQuickSlots;
+        for (int i = 0; i < slotCount; i++)
         {
-            if (Input.GetKeyDown(KeySetting.GetKey(kv.Key)))
-            {
-                inventory.SetHoldItem(kv.Value);
-                break;
-            }
+            if (Input.GetKeyDown(KeySetting.GetQuickSlotKey(i)) == false) continue;
+
+            inventory.UseQuickSlotItem(i);
+            break;
         }
     }
 

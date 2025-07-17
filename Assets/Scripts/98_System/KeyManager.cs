@@ -10,48 +10,80 @@ public enum PlayerAction
     Interaction,
     Inventory,
     UseItem,
-    Slot1,
-    Slot2,
-    Slot3,
-    Slot4,
-    Slot5,
-    Slot6,
+    QuickSlot,
 }
 
 public static class KeySetting
 {
-    private static Dictionary<PlayerAction, KeyCode> keys = new();
+    private static readonly Dictionary<PlayerAction, KeyCode> actionKeys = new();
+    private static readonly List<KeyCode> quickSlotKeys = new();
 
     public static KeyCode GetKey(PlayerAction action)
     {
-        if (keys.ContainsKey(action)) return keys[action];
+        if (!actionKeys.TryGetValue(action, out var key))
+        {
+            Debug.LogError($"Key for {action} is not set.");
+            return KeyCode.None;
+        }
 
-        Debug.LogError("Key for " + action + " is not set.");
-        return KeyCode.None;
+        return key;
+    }
+
+    public static KeyCode GetQuickSlotKey(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= quickSlotKeys.Count)
+        {
+            Debug.LogError($"QuickSlot index {slotIndex} out of range.");
+            return KeyCode.None;
+        }
+
+        return quickSlotKeys[slotIndex];
     }
 
     public static void SetKey(PlayerAction action, KeyCode key)
     {
-        if (keys.ContainsKey(action)) keys[action] = key;
-        else keys.Add(action, key);
+        if (actionKeys.ContainsKey(action)) actionKeys[action] = key;
+        else actionKeys.Add(action, key);
+    }
+
+    public static void SetQuickSlotKey(int slotIndex, KeyCode key)
+    {
+        while (quickSlotKeys.Count <= slotIndex) quickSlotKeys.Add(KeyCode.None);
+        quickSlotKeys[slotIndex] = key;
     }
 }
 
 public class KeyManager : SingletonObject<KeyManager>
 {
-    private KeyCode[] defaultKeys = new KeyCode[]
-    { KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.F, KeyCode.Tab, KeyCode.Mouse0,
-      KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6 };
+    private readonly KeyCode[] defaultActionKeys ={
+        KeyCode.W,
+        KeyCode.S,
+        KeyCode.A,
+        KeyCode.D,
+        KeyCode.F,
+        KeyCode.Tab,
+        KeyCode.Mouse0,
+    };
 
+    private readonly KeyCode[] defaultQuickSlotKeys = {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+    };
+
+    public KeyCode[] GetActionKeyCodes() => defaultActionKeys;
+    public KeyCode[] GetQuickSlotKeyCodes() => defaultQuickSlotKeys;
 
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < defaultKeys.Length; i++)
-        {
-            KeySetting.SetKey((PlayerAction)i, defaultKeys[i]);
-        }
-    }
+        for (int i = 0; i < defaultActionKeys.Length; i++)
+            KeySetting.SetKey((PlayerAction)i, defaultActionKeys[i]);
 
-    public KeyCode[] GetKeyCodes() { return defaultKeys; }
+        for (int i = 0; i < defaultQuickSlotKeys.Length; i++)
+            KeySetting.SetQuickSlotKey(i, defaultQuickSlotKeys[i]);
+    }
 }
