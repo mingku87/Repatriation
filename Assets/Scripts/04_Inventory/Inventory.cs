@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : SingletonObject<Inventory>
+public class Inventory
 {
     private List<Item> items;
     private Dictionary<PlayerAction, Item> quickSlots;
@@ -22,30 +22,12 @@ public class Inventory : SingletonObject<Inventory>
         holdItem = null;
     }
 
-    void Update()
+    public Dictionary<PlayerAction, Item> GetQuickSlots() { return quickSlots; }
+    public Item GetHoldItem() { return holdItem; }
+    public void SetHoldItem(Item item)
     {
-        UseItem();
-        CheckHoldItem();
-    }
-
-    public void UseItem()
-    {
-        if (Input.GetKeyDown(KeySetting.GetKey(PlayerAction.UseItem)) == false) return;
-        if (holdItem == null) return;
-
-        holdItem.Use();
-    }
-
-    public void CheckHoldItem()
-    {
-        foreach (var kv in quickSlots)
-        {
-            if (Input.GetKeyDown(KeySetting.GetKey(kv.Key)))
-            {
-                holdItem = kv.Value;
-                break;
-            }
-        }
+        if (item == null) return;
+        holdItem = item;
     }
 
     public void AddItem(Item item)
