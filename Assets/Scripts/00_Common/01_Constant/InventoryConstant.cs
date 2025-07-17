@@ -2,15 +2,41 @@ using System.Collections.Generic;
 
 public static class InventoryConstant
 {
-    public static int MaxQuickSlots = 6;
-    public static readonly Dictionary<EquipPart, int> MaxPerSlot = new()
+    public static int MaxQuickSlotCount = 6;
+    public static readonly Dictionary<EquipmentPart, List<EquipmentSlot>> AllowedEquipmentSlotsPerPart = new()
     {
-        { EquipPart.Head, 1 },
-        { EquipPart.Body, 1 },
-        { EquipPart.Arms, 2 },
-        { EquipPart.Hands, 2 },
-        { EquipPart.Bag, 1 },
-        { EquipPart.Knees, 2 },
-        { EquipPart.Feet, 2 }
+        { EquipmentPart.Head,  new() { EquipmentSlot.Head } },
+        { EquipmentPart.Body,  new() { EquipmentSlot.Body } },
+        { EquipmentPart.Arms,  new() { EquipmentSlot.LeftArm, EquipmentSlot.RightArm } },
+        { EquipmentPart.Hands, new() { EquipmentSlot.LeftHand, EquipmentSlot.RightHand } },
+        { EquipmentPart.Bag,   new() { EquipmentSlot.Bag } },
+        { EquipmentPart.Knees, new() { EquipmentSlot.LeftKnee, EquipmentSlot.RightKnee } },
+        { EquipmentPart.Feet,  new() { EquipmentSlot.LeftFoot, EquipmentSlot.RightFoot } },
     };
+}
+
+public enum EquipmentPart
+{
+    Head,
+    Body,
+    Arms,
+    Hands,
+    Bag,
+    Knees,
+    Feet,
+}
+
+public enum EquipmentSlot
+{
+    Head,
+    Body,
+    LeftArm,
+    RightArm,
+    LeftHand,
+    RightHand,
+    Bag,
+    LeftKnee,
+    RightKnee,
+    LeftFoot,
+    RightFoot
 }

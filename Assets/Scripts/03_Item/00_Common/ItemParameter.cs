@@ -15,13 +15,13 @@ public class ItemParameter
 
 public class ItemParameterEquipment : ItemParameter
 {
-    public EquipPart equipPart;
+    public EquipmentPart equipPart;
     public Status status;
     public float value;
     public int maxDurability;
     public int durabilityDecayRate;
 
-    public ItemParameterEquipment(int id, ItemName itemName, float weight, EquipPart equipPart, Status status, float value, int maxDurability = 100, int durabilityDecayRate = 1)
+    public ItemParameterEquipment(int id, ItemName itemName, float weight, EquipmentPart equipPart, Status status, float value, int maxDurability = 100, int durabilityDecayRate = 1)
         : base(id, itemName, weight)
     {
         type = ItemType.Equipment;

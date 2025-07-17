@@ -1,16 +1,5 @@
 using System.Collections.Generic;
 
-public enum EquipPart
-{
-    Head,
-    Body,
-    Arms,
-    Hands,
-    Bag,
-    Knees,
-    Feet,
-}
-
 public class Inventory
 {
     private List<Item> items;
@@ -21,16 +10,16 @@ public class Inventory
     {
         items = new();
         quickSlots = new();
-        for (int i = 0; i < InventoryConstant.MaxQuickSlots; i++) quickSlots.Add(null);
+        for (int i = 0; i < InventoryConstant.MaxQuickSlotCount; i++) quickSlots.Add(null);
         holdItem = null;
     }
 
     public List<Item> GetQuickSlots() { return quickSlots; }
     public Item GetHoldItem() { return holdItem; }
-    public void SetHoldItem(Item item)
+    public void SetHoldItem(int slotIndex)
     {
-        if (item == null) return;
-        holdItem = item;
+        if (slotIndex < 0 || slotIndex >= quickSlots.Count) return;
+        holdItem = quickSlots[slotIndex];
     }
 
     public void AddItem(Item item)
@@ -63,5 +52,12 @@ public class Inventory
         var item = quickSlots[slotIndex];
         if (slotIndex < 0 || slotIndex >= quickSlots.Count || item == null) return;
         UseItem(item);
+    }
+
+    public float GetTotalWeight()
+    {
+        float totalWeight = 0f;
+        foreach (var item in items) totalWeight += item.param.weight;
+        return totalWeight;
     }
 }

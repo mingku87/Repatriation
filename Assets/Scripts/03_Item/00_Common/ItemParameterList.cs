@@ -4,7 +4,7 @@ public class ItemParameterList
 {
     public static List<ItemParameter> itemStats = new()
     {
-        new ItemParameterEquipment(10001, ItemName.OldHelmet, 5, EquipPart.Head, Status.Def, 10),
+        new ItemParameterEquipment(10001, ItemName.OldHelmet, 5, EquipmentPart.Head, Status.Def, 10),
     };
 
     public static ItemParameter GetItemStat(int id)
