@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,15 +11,9 @@ public static class Util
 #endif
     }
 
-    public static T ParseEnumFromString<T>(string value)
-    {
-        return (T)Enum.Parse(typeof(T), value);
-    }
+    public static T ParseEnumFromString<T>(string value) => (T)Enum.Parse(typeof(T), value);
 
-    public static bool SetActive(Button button, bool isOn)
-    {
-        return SetActive(button.gameObject, isOn);
-    }
+    public static bool SetActive(Button button, bool isOn) => SetActive(button.gameObject, isOn);
 
     public static bool SetActive(GameObject gameObject, bool isOn)
     {
@@ -31,6 +24,8 @@ public static class Util
         }
         return false;
     }
+
+    public static int GetEnumLength<T>() where T : Enum => Enum.GetValues(typeof(T)).Length;
 
     public static void FlipDirectionX(GameObject gameObject)
     {
