@@ -20,7 +20,7 @@ public class UserSettingsRuntimeData
 
 public static class UserSettingsIO
 {
-    const string SaveKey = "UserSettings_v1";
+    const string SaveKey = "UserSettings";
 
     public static void Save(UserSettingsSaveData data)
     {
@@ -30,7 +30,7 @@ public static class UserSettingsIO
 
     public static bool Load(out UserSettingsSaveData data)
     {
-        if (!PlayerPrefs.HasKey(SaveKey))
+        if (PlayerPrefs.HasKey(SaveKey) == false)
         {
             data = null;
             return false;

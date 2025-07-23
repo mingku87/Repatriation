@@ -12,6 +12,7 @@ public static class Util
     }
 
     public static T ParseEnumFromString<T>(string value) => (T)Enum.Parse(typeof(T), value);
+    public static int GetEnumLength<T>() where T : Enum => Enum.GetValues(typeof(T)).Length;
 
     public static bool SetActive(Button button, bool isOn) => SetActive(button.gameObject, isOn);
 
@@ -24,8 +25,6 @@ public static class Util
         }
         return false;
     }
-
-    public static int GetEnumLength<T>() where T : Enum => Enum.GetValues(typeof(T)).Length;
 
     public static void FlipDirectionX(GameObject gameObject)
     {

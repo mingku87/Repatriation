@@ -11,13 +11,13 @@ public class SettingsBootstrap : MonoBehaviour
 
         if (UserSettingsIO.Load(out var data))
         {
-            // 불러온 값이 있으면 덮어쓰기
-            SettingsBridge.ApplyToSystems(data, (m, b, s) =>
-            {
-                // audioMgr.SetMaster(m);
-                // audioMgr.SetBgm(b);
-                // audioMgr.SetSfx(s);
-            });
+            // // 불러온 값이 있으면 덮어쓰기
+            // SettingsBridge.ApplyToSystems(data, (m, b, s) =>
+            // {
+            //     // audioMgr.SetMaster(m);
+            //     // audioMgr.SetBgm(b);
+            //     // audioMgr.SetSfx(s);
+            // });
         }
         else
         {

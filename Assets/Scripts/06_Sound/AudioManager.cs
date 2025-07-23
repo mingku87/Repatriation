@@ -14,13 +14,6 @@ public class AudioManager : DDOLSingleton<AudioManager>
     public AudioMixer audioMixer;
     [SerializeField] private List<VolumeSlider> volumeSliders;
 
-    private Dictionary<AudioType, int> snapVolumes = new()
-    {
-        { AudioType.Master, 0 },
-        { AudioType.BGM, 0 },
-        { AudioType.SFX, 0 }
-    };
-
     protected override void Awake()
     {
         base.Awake();
