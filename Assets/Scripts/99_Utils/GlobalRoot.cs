@@ -1,4 +1,4 @@
-public class DDOLSingleton<T> : SingletonObject<T> where T : SingletonObject<T>
+public class GlobalRoot : SingletonObject<GlobalRoot>
 {
     protected override void Awake()
     {

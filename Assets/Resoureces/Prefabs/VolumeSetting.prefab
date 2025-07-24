@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 2445355211456040049}
   - component: {fileID: 3933976317142455867}
   m_Layer: 5
-  m_Name: MasterVolume
+  m_Name: VolumeSetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

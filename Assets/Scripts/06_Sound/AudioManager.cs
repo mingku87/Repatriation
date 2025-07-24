@@ -9,7 +9,7 @@ public enum AudioType
     SFX
 }
 
-public class AudioManager : DDOLSingleton<AudioManager>
+public class AudioManager : SingletonObject<AudioManager>
 {
     public AudioMixer audioMixer;
     [SerializeField] private List<VolumeSlider> volumeSliders;

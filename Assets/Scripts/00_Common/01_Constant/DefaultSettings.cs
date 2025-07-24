@@ -17,6 +17,7 @@ public static class DefaultSettings
         { PlayerAction.MoveDown, KeyCode.S },
         { PlayerAction.MoveLeft, KeyCode.A },
         { PlayerAction.MoveRight, KeyCode.D },
+        { PlayerAction.Attack, KeyCode.Mouse0 },
         { PlayerAction.Interaction, KeyCode.F },
         { PlayerAction.Inventory, KeyCode.Tab },
         { PlayerAction.UseItem, KeyCode.Mouse0 },
