@@ -4,4 +4,6 @@ using UnityEngine;
 
 public class SettingsUI : SingletonObject<SettingsUI>
 {
+    [SerializeField] private GameObject settingsPanel;
+    public void ShowSettings() => Util.SetActive(settingsPanel, true);
 }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 54032071}
   - component: {fileID: 54032070}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 54032071}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 526951825}
+        m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
+        m_MethodName: Settings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &54032071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -812,7 +824,7 @@ GameObject:
   - component: {fileID: 228652435}
   - component: {fileID: 228652434}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +893,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 228652435}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 526951825}
+        m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
+        m_MethodName: Exitgame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &228652435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,6 +1430,7 @@ GameObject:
   - component: {fileID: 526951823}
   - component: {fileID: 526951822}
   - component: {fileID: 526951821}
+  - component: {fileID: 526951825}
   m_Layer: 5
   m_Name: TitleUI
   m_TagString: Untagged
@@ -1498,6 +1523,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &526951825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526951820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721bb53f9e8c1cd49bd1c351e6155f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &531038771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1717,6 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c665965108129814f920cfc767793f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsPanel: {fileID: 0}
 --- !u!224 &563493384 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3202883538224418662, guid: 733e0993e39a0e7459e59575a4b744b9, type: 3}
@@ -2730,7 +2768,7 @@ GameObject:
   - component: {fileID: 1600772962}
   - component: {fileID: 1600772961}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LoadGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2799,7 +2837,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1600772962}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 526951820}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1600772962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4165,7 +4215,7 @@ GameObject:
   - component: {fileID: 2081337383}
   - component: {fileID: 2081337382}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: NewGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4235,9 +4285,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 772154604}
-        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 526951825}
+        m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
+        m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

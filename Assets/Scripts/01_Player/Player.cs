@@ -18,6 +18,7 @@ public class Player : SingletonObject<Player>
     {
         // Test
         if (Input.GetKeyDown(KeyCode.M)) Time.timeScale = Time.timeScale == 1 ? 15 : 1;
+        if (Input.GetKeyDown(KeyCode.N)) SceneController.Instance.ChangeSceneWithLoading(SceneName.Title);
 
         Move();
     }
