@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum Difficulty
 {
@@ -19,6 +18,10 @@ public class InGameConstant
     public static float dayLightIntensity = 0.5f;
     public static float nightLightIntensity = 0.03f;
     public static float lightTransitionDuration = 1.0f;
+
+    public static float cameraSpeed = 3.0f;
+    public static float cameraOffsetY = 0.0f;
+    public static float cameraOffsetZ = -10.0f;
 
     public static Dictionary<Difficulty, DifficultySettings> Settings = new()
     {
