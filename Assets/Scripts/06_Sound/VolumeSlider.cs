@@ -14,7 +14,7 @@ public class VolumeSlider : MonoBehaviour
     private const float MIN_LIN = 0.0001f;
     private const int STEP = 1;
 
-    public void Initialize(int volume)
+    public void Initialize()
     {
         volumeSlider.minValue = DefaultSettings.volumeMin;
         volumeSlider.maxValue = DefaultSettings.volumeMax;
@@ -24,8 +24,8 @@ public class VolumeSlider : MonoBehaviour
         volumeUpButton.onClick.AddListener(() => SetVolume(GetVolume() + STEP));
         volumeDownButton.onClick.AddListener(() => SetVolume(GetVolume() - STEP));
 
-        SetVolume(volume);
-        SnapVolume();
+        SetVolume(DefaultSettings.defaultVolumes[audioType]);
+        SaveVolume();
     }
 
     public void UpdateUI(int volume)
@@ -34,8 +34,8 @@ public class VolumeSlider : MonoBehaviour
         volumeSlider.SetValueWithoutNotify(volume);
     }
 
-    public void SnapVolume() => snapVolume = GetVolume();
-    public void RevertToSnapshot() => SetVolume(snapVolume);
+    public void SaveVolume() => snapVolume = GetVolume();
+    public void RevertVolume() => SetVolume(snapVolume);
     public int GetVolume() => (int)volumeSlider.value;
     public void SetVolume(int volume)
     {

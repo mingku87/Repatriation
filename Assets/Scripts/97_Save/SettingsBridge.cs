@@ -38,32 +38,20 @@ public static class SettingsBridge
         return save;
     }
 
-    // ---- 편의 함수 ----
-    // 바로 시스템에 적용
     public static void ApplyToSystems(UserSettingsRuntimeData r)
     {
-        // // 볼륨
-        // foreach (var kv in r.volumes)
-        //     AudioManager.Instance.SetAudioVolume(kv.Key, kv.Value, updateUI: true);
-
-        // 키
+        AudioManager.Instance.SetAudioVolume(r.volumes);
         foreach (var kv in r.actionKeys) KeySetting.SetKey(kv.Key, kv.Value);
         for (int i = 0; i < r.quickSlotKeys.Count; i++) KeySetting.SetQuickSlotKey(i, r.quickSlotKeys[i]);
     }
 
-    // 현재 상태 캡처 (AudioManager/KeyManager에서 값 얻기)
     public static UserSettingsRuntimeData CaptureRuntime(
-        int master, int bgm, int sfx,
         KeyCode[] actionKeyCodes,
         KeyCode[] quickSlots)
     {
         var r = new UserSettingsRuntimeData
         {
-            volumes = new(){
-                { AudioType.Master, master },
-                { AudioType.BGM, bgm },
-                { AudioType.SFX, sfx }
-            },
+            volumes = AudioManager.Instance.GetVolume(),
             actionKeys = new(),
             quickSlotKeys = new()
         };

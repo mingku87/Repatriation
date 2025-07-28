@@ -14,14 +14,15 @@ public class AudioManager : SingletonObject<AudioManager>
     public AudioMixer audioMixer;
     [SerializeField] private List<VolumeSlider> volumeSliders;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        Initialize();
-    }
+    public void Initialize() => volumeSliders.ForEach(vs => vs.Initialize());
+    public void SaveVolume() => volumeSliders.ForEach(vs => vs.SaveVolume());
+    public void RevertVolume() => volumeSliders.ForEach(vs => vs.RevertVolume());
+    public void SetAudioVolume(Dictionary<AudioType, int> volumes) => volumeSliders.ForEach(vs => vs.SetVolume(volumes[vs.audioType]));
 
-    void Initialize()
+    public Dictionary<AudioType, int> GetVolume()
     {
-        foreach (var vs in volumeSliders) vs.Initialize(50);
+        Dictionary<AudioType, int> volumes = new();
+        foreach (var vs in volumeSliders) volumes.Add(vs.audioType, vs.GetVolume());
+        return volumes;
     }
 }

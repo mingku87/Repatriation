@@ -13,6 +13,6 @@ public class TitleManager : SingletonObject<TitleManager>
     }
 
     public void NewGame() => SceneController.Instance.StartGame();
-    public void Settings() => SettingsUI.Instance.ShowSettings();
+    public void Settings() => SettingsUIController.Instance.ShowSettings();
     public void Exitgame() => Application.Quit();
 }

@@ -14,11 +14,15 @@ public class BootstrapController : SingletonObject<BootstrapController>
     private IEnumerator Initialize()
     {
         UserSettingsSaveData saveData;
-        if (!UserSettingsIO.Load(out saveData))
+        if (UserSettingsIO.Load(out saveData) == false)
         {
             saveData = CreateDefaultSaveData();
             UserSettingsIO.Save(saveData);
         }
+
+        var runtime = SettingsBridge.ToRuntime(saveData);
+        AudioManager.Instance.Initialize();
+        SettingsBridge.ApplyToSystems(runtime);
 
         yield return new WaitForSeconds(delay);
         SceneController.Instance.ChangeScene(SceneName.Title);
