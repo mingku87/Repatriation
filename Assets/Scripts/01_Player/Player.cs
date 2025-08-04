@@ -5,6 +5,7 @@ public class Player : SingletonObject<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     private static PlayerStatusController playerStatusController;
+    private Animator animator;
     private Inventory inventory;
 
     void Start()
@@ -27,7 +28,7 @@ public class Player : SingletonObject<Player>
     {
         playerStatusController = new();
         playerStatusController.Initialize();
-
+        animator = GetComponent<Animator>();
         inventory = new();
     }
 
@@ -46,8 +47,15 @@ public class Player : SingletonObject<Player>
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
 
-        GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
-        GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
+        if (moveX == 0 && moveY == 0)
+        {
+            animator.SetBool(PlayerConstant.AnimatorBoolIsMove, false);
+            return;
+        }
+
+        animator.SetBool(PlayerConstant.AnimatorBoolIsMove, true);
+        animator.SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
+        animator.SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
 
         var moveDirection = new Vector3(moveX, moveY, 0.0f);
         if (moveDirection != Vector3.zero)

@@ -29,6 +29,7 @@ public class PlayerConstant
 {
     public static string AnimatorFloatMoveX = "MoveX";
     public static string AnimatorFloatMoveY = "MoveY";
+    public static string AnimatorBoolIsMove = "isMove";
 
     public static Dictionary<Difficulty, PlayerSettings> Settings = new() {
         { Difficulty.Easy, new PlayerSettings(){

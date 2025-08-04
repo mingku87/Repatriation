@@ -9,7 +9,9 @@ public enum Difficulty
 public class DifficultySettings
 {
     public float dayDuration;
+    public float twilightDuration;
     public float nightDuration;
+    public float dawnDuration;
     public float fullDayLength => dayDuration + nightDuration;
 }
 
@@ -27,11 +29,15 @@ public class InGameConstant
     {
         { Difficulty.Easy, new() {
             dayDuration = 4 * 60.0f,
-            nightDuration = 6 * 60.0f
+            twilightDuration = 10.0f,
+            nightDuration = 6 * 60.0f,
+            dawnDuration = 10.0f
         }},
         { Difficulty.Hard, new() {
             dayDuration = 4 * 60.0f,
-            nightDuration = 6 * 60.0f
+            twilightDuration = 10.0f,
+            nightDuration = 6 * 60.0f,
+            dawnDuration = 10.0f
         }}
     };
 }
