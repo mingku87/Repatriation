@@ -4,7 +4,9 @@ using UnityEngine.Rendering.Universal;
 public enum TimeState
 {
     Day,
-    Night
+    Twilight,
+    Night,
+    Dawn
 }
 
 public class TimeManager : SingletonObject<TimeManager>
