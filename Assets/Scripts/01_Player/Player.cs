@@ -5,8 +5,9 @@ public class Player : SingletonObject<Player>
 {
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     private static PlayerStatusController playerStatusController;
-    private Animator animator;
+    private Animator _animator;
     private Inventory inventory;
+    private Rigidbody2D _rigidbody;
 
     void Start()
     {
@@ -28,7 +29,8 @@ public class Player : SingletonObject<Player>
     {
         playerStatusController = new();
         playerStatusController.Initialize();
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         inventory = new();
     }
 
@@ -49,20 +51,17 @@ public class Player : SingletonObject<Player>
 
         if (moveX == 0 && moveY == 0)
         {
-            animator.SetBool(PlayerConstant.AnimatorBoolIsMove, false);
+            _animator.SetBool(PlayerConstant.AnimatorBoolIsMove, false);
             return;
         }
 
-        animator.SetBool(PlayerConstant.AnimatorBoolIsMove, true);
-        animator.SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
-        animator.SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
+        _animator.SetBool(PlayerConstant.AnimatorBoolIsMove, true);
+        _animator.SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
+        _animator.SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
 
-        var moveDirection = new Vector3(moveX, moveY, 0.0f);
-        if (moveDirection != Vector3.zero)
-        {
-            moveDirection.Normalize();
-            transform.position += moveDirection * GetCurrentStatus(Status.Speed) * Time.deltaTime;
-        }
+        var moveDirection = new Vector2(moveX, moveY).normalized;
+        var targetPos = _rigidbody.position + moveDirection * GetCurrentStatus(Status.Speed) * Time.fixedDeltaTime;
+        _rigidbody.MovePosition(targetPos);
     }
 
     // PlayerStatusController Methods
