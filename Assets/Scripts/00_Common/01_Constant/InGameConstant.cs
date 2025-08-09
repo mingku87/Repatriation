@@ -17,8 +17,6 @@ public class DifficultySettings
 
 public class InGameConstant
 {
-    public static float dayLightIntensity = 0.5f;
-    public static float nightLightIntensity = 0.03f;
     public static float lightTransitionDuration = 1.0f;
 
     public static float cameraSpeed = 3.0f;

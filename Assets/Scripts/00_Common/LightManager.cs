@@ -2,35 +2,55 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+[System.Serializable]
+public class LightColor
+{
+    public TimeState timeState;
+    public Color color;
+    public float intensity;
+}
+
 public class LightManager : SingletonObject<LightManager>
 {
     private static Light2D globalLight;
+    [SerializeField] private LightColor[] lights;
+
     protected override void Awake()
     {
         base.Awake();
         if (globalLight == null) globalLight = GetComponent<Light2D>();
     }
 
-    public static void ChangeToDayOrNight(TimeState timeState)
+    public static void ChangeTimeState(TimeState timeState)
     {
-        var targetIntensity = timeState == TimeState.Day ? InGameConstant.dayLightIntensity : InGameConstant.nightLightIntensity;
-        Instance.StartCoroutine(ChangeLightIntensity(targetIntensity, InGameConstant.lightTransitionDuration));
+        var target = Instance.GetPreset(timeState);
+        Instance.StopAllCoroutines();
+        Instance.StartCoroutine(ChangeLight(target));
     }
 
-    private static IEnumerator ChangeLightIntensity(float targetIntensity, float duration)
+    private LightColor GetPreset(TimeState state)
     {
-        if (globalLight == null) yield break;
+        foreach (var light in lights) if (light.timeState == state) return light;
+        return null;
+    }
 
-        float startIntensity = globalLight.intensity;
-        float elapsedTime = 0f;
+    private static IEnumerator ChangeLight(LightColor targetLightColor)
+    {
+        var startColor = globalLight.color;
+        var startIntensity = globalLight.intensity;
 
-        while (elapsedTime < duration)
+        float timer = 0.0f;
+        float duration = InGameConstant.lightTransitionDuration;
+
+        while (timer < duration)
         {
-            globalLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
+            globalLight.color = Color.Lerp(startColor, targetLightColor.color, timer / duration);
+            globalLight.intensity = Mathf.Lerp(startIntensity, targetLightColor.intensity, timer / duration);
+            timer += Time.deltaTime;
             yield return null;
         }
 
-        globalLight.intensity = targetIntensity;
+        globalLight.color = targetLightColor.color;
+        globalLight.intensity = targetLightColor.intensity;
     }
 }

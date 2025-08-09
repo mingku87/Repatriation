@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -21,7 +22,7 @@ public class TimeManager : SingletonObject<TimeManager>
         {
             if (_timeState == value) return;
             _timeState = value;
-            LightManager.ChangeToDayOrNight(_timeState);
+            LightManager.ChangeTimeState(_timeState);
         }
     }
 
@@ -33,12 +34,14 @@ public class TimeManager : SingletonObject<TimeManager>
         {
             if (_playTime == value) return;
             _playTime = value;
-            TimeState = PlayTime % fullDayLength < dayDuration ? TimeState.Day : TimeState.Night;
+            SetTimeState();
             TimerUI.Instance.UpdateTimerHand(_playTime);
         }
     }
     private static float dayDuration => InGameManager.settings.dayDuration;
+    private static float twilightDuration => InGameManager.settings.twilightDuration;
     private static float nightDuration => InGameManager.settings.nightDuration;
+    private static float dawnDuration => InGameManager.settings.dawnDuration;
     private static float fullDayLength => InGameManager.settings.fullDayLength;
 
     public static float AddPlayTime(float time)
@@ -53,15 +56,17 @@ public class TimeManager : SingletonObject<TimeManager>
         return PlayTime;
     }
 
-    public static TimeState GetTimeState()
+    public static void SetTimeState()
     {
-        return PlayTime % fullDayLength < dayDuration ? TimeState.Day : TimeState.Night;
+        float time = GetPlayTime().Item2;
+        if (time < dayDuration - twilightDuration) TimeState = TimeState.Day;
+        else if (time < dayDuration) TimeState = TimeState.Twilight;
+        else if (time < fullDayLength - dawnDuration) TimeState = TimeState.Night;
+        else TimeState = TimeState.Dawn;
     }
 
     public static void SkipTime(TimeState timeState)
     {
-        if (timeState != GetTimeState()) return;
-
         int day = GetPlayTime().Item1;
         if (timeState == TimeState.Day) SetPlayTime(day, dayDuration);
         else SetPlayTime(day + 1, 0.0f);
