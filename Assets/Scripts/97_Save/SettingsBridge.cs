@@ -40,25 +40,18 @@ public static class SettingsBridge
 
     public static void ApplyToSystems(UserSettingsRuntimeData r)
     {
-        AudioManager.Instance.SetAudioVolume(r.volumes);
+        AudioManager.Instance.SetAudioVolumes(r.volumes);
         KeyManager.SetKeys(r.actionKeys);
         KeyManager.SetQuickSlotKeys(r.quickSlotKeys);
     }
 
-    public static UserSettingsRuntimeData CaptureRuntime(
-        KeyCode[] actionKeyCodes,
-        KeyCode[] quickSlots)
+    public static UserSettingsRuntimeData CaptureRuntime()
     {
-        var r = new UserSettingsRuntimeData
+        return new UserSettingsRuntimeData
         {
-            volumes = AudioManager.Instance.GetVolume(),
-            actionKeys = new(),
-            quickSlotKeys = new()
+            volumes = AudioManager.GetVolumes(),
+            actionKeys = KeyManager.GetKeys(),
+            quickSlotKeys = KeyManager.GetQuickSlotKeys()
         };
-
-        for (int i = 0; i < actionKeyCodes.Length; i++) r.actionKeys[(PlayerAction)i] = actionKeyCodes[i];
-        for (int i = 0; i < quickSlots.Length; i++) r.quickSlotKeys.Add(quickSlots[i]);
-
-        return r;
     }
 }

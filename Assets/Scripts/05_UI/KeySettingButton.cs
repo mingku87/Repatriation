@@ -13,8 +13,8 @@ public class KeySettingButton : MonoBehaviour
 
     public void Initialize()
     {
-        UpdateKeyText();
         button.onClick.AddListener(() => isListeningForInput = true);
+        UpdateKeyText();
     }
 
     void Update()

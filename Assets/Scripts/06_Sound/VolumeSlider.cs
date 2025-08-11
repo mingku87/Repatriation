@@ -9,10 +9,10 @@ public class VolumeSlider : MonoBehaviour
     [SerializeField] private Button volumeUpButton;
     [SerializeField] private Button volumeDownButton;
     [SerializeField] private Slider volumeSlider;
-    private int snapVolume;
     private const float MUTE_DB = -80f;
     private const float MIN_LIN = 0.0001f;
     private const int STEP = 1;
+    private int sliderValue => (int)volumeSlider.value;
 
     public void Initialize()
     {
@@ -20,28 +20,24 @@ public class VolumeSlider : MonoBehaviour
         volumeSlider.maxValue = DefaultSettings.volumeMax;
         volumeSlider.wholeNumbers = true;
 
-        volumeSlider.onValueChanged.AddListener(val => SetVolume((int)val));
-        volumeUpButton.onClick.AddListener(() => SetVolume(GetVolume() + STEP));
-        volumeDownButton.onClick.AddListener(() => SetVolume(GetVolume() - STEP));
+        volumeSlider.onValueChanged.AddListener(val => ApplyVolume((int)val));
+        volumeUpButton.onClick.AddListener(() => ApplyVolume(sliderValue + STEP));
+        volumeDownButton.onClick.AddListener(() => ApplyVolume(sliderValue - STEP));
 
-        SetVolume(DefaultSettings.defaultVolumes[audioType]);
-        SaveVolume();
+        ApplyVolume(AudioManager.GetVolume(audioType));
     }
-
-    public void UpdateUI(int volume)
-    {
-        volumeText.text = volume.ToString();
-        volumeSlider.SetValueWithoutNotify(volume);
-    }
-
-    public void SaveVolume() => snapVolume = GetVolume();
-    public void RevertVolume() => SetVolume(snapVolume);
-    public int GetVolume() => (int)volumeSlider.value;
-    public void SetVolume(int volume)
+    public void ApplyVolume(int volume)
     {
         volume = Mathf.Clamp(volume, DefaultSettings.volumeMin, DefaultSettings.volumeMax);
         UpdateUI(volume);
         ApplyVolumeToMixer(volume);
+    }
+    public void SaveVolume() => AudioManager.Instance.SetAudioVolume(audioType, sliderValue);
+    public void RevertVolume() => ApplyVolume(AudioManager.GetVolume(audioType));
+    public void UpdateUI(int volume)
+    {
+        volumeText.text = volume.ToString();
+        volumeSlider.SetValueWithoutNotify(volume);
     }
     private void ApplyVolumeToMixer(int volume)
     {

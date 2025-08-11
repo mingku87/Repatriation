@@ -21,8 +21,9 @@ public class BootstrapController : SingletonObject<BootstrapController>
         }
 
         var runtime = SettingsBridge.ToRuntime(saveData);
-        AudioManager.Instance.Initialize();
         SettingsBridge.ApplyToSystems(runtime);
+        AudioManager.Instance.Initialize();
+        KeyManager.Instance.Initialize();
 
         yield return new WaitForSeconds(delay);
         SceneController.Instance.ChangeScene(SceneName.Title);
