@@ -41,8 +41,8 @@ public static class SettingsBridge
     public static void ApplyToSystems(UserSettingsRuntimeData r)
     {
         AudioManager.Instance.SetAudioVolume(r.volumes);
-        foreach (var kv in r.actionKeys) KeySetting.SetKey(kv.Key, kv.Value);
-        for (int i = 0; i < r.quickSlotKeys.Count; i++) KeySetting.SetQuickSlotKey(i, r.quickSlotKeys[i]);
+        KeyManager.SetKeys(r.actionKeys);
+        KeyManager.SetQuickSlotKeys(r.quickSlotKeys);
     }
 
     public static UserSettingsRuntimeData CaptureRuntime(

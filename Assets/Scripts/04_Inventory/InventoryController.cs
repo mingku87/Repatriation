@@ -18,7 +18,7 @@ public class InventoryController : SingletonObject<InventoryController>
 
     public void UseItem()
     {
-        if (Input.GetKeyDown(KeySetting.GetKey(PlayerAction.UseItem)) == false) return;
+        if (Input.GetKeyDown(KeyManager.GetKey(PlayerAction.UseItem)) == false) return;
         inventory.UseHoldItem();
     }
 
@@ -27,7 +27,7 @@ public class InventoryController : SingletonObject<InventoryController>
         int slotCount = InventoryConstant.MaxQuickSlotCount;
         for (int i = 0; i < slotCount; i++)
         {
-            if (Input.GetKeyDown(KeySetting.GetQuickSlotKey(i)) == false) continue;
+            if (Input.GetKeyDown(KeyManager.GetQuickSlotKey(i)) == false) continue;
             inventory.SetHoldItem(i);
             break;
         }

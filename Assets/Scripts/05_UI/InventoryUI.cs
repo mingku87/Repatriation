@@ -11,13 +11,13 @@ public class InventoryUI : SingletonObject<InventoryUI>
 
     public void ShowInventory()
     {
-        if (Input.GetKeyDown(KeySetting.GetKey(PlayerAction.Inventory)))
+        if (Input.GetKeyDown(KeyManager.GetKey(PlayerAction.Inventory)))
         {
             Util.SetActive(inventoryPanel, !inventoryPanel.activeSelf);
             return;
         }
 
-        if (inventoryPanel.activeSelf && Input.GetKeyDown(KeySetting.GetKey(PlayerAction.Escape)))
+        if (inventoryPanel.activeSelf && Input.GetKeyDown(KeyManager.GetKey(PlayerAction.Escape)))
         {
             Util.SetActive(inventoryPanel, false);
             return;

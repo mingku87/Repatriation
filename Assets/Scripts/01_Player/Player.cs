@@ -44,10 +44,10 @@ public class Player : SingletonObject<Player>
         float moveX = 0.0f;
         float moveY = 0.0f;
 
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveRight))) moveX = 1.0f;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveLeft))) moveX = -1.0f;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
-        if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
+        if (Input.GetKey(KeyManager.GetKey(PlayerAction.MoveRight))) moveX = 1.0f;
+        if (Input.GetKey(KeyManager.GetKey(PlayerAction.MoveLeft))) moveX = -1.0f;
+        if (Input.GetKey(KeyManager.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
+        if (Input.GetKey(KeyManager.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
 
         if (moveX == 0 && moveY == 0)
         {

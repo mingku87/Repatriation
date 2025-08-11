@@ -11,7 +11,7 @@ public class KeySettingButton : MonoBehaviour
     [SerializeField] private Button button;
     private bool isListeningForInput = false;
 
-    void Start()
+    public void Initialize()
     {
         UpdateKeyText();
         button.onClick.AddListener(() => isListeningForInput = true);
@@ -33,13 +33,13 @@ public class KeySettingButton : MonoBehaviour
         }
     }
 
-    void SetKeyCode(KeyCode keyCode)
+    private void SetKeyCode(KeyCode keyCode)
     {
         isListeningForInput = false;
-        KeySetting.SetKey(action, keyCode);
+        KeyManager.SetKey(action, keyCode);
         UpdateKeyText();
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    public void UpdateKeyText() => KeyText.text = KeySetting.GetKey(action).ToString();
+    public void UpdateKeyText() => KeyText.text = KeyManager.GetKey(action).ToString();
 }
