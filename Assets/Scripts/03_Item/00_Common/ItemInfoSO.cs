@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/ItemInfo")]
 public class ItemInfoSO : SingletonScriptableObject<ItemInfoSO>
 {
-    [SerializeField] List<ItemInfo> itemInfo;
-    public static List<ItemInfo> itemInfos;
+    [SerializeField] private List<ItemInfo> itemInfo;
+    private static List<ItemInfo> itemInfos;
 
     void Awake()
     {
