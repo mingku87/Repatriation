@@ -18,7 +18,7 @@ public class AudioManager : SingletonObject<AudioManager>
     public void Initialize() => volumeSliders.ForEach(vs => vs.Initialize());
     public void SetAudioVolumes(Dictionary<AudioType, int> volumes)
     {
-        volumes = new(volumes);
+        AudioManager.volumes = new(volumes);
         volumeSliders.ForEach(vs => vs.ApplyVolume(volumes[vs.audioType]));
     }
     public void SetAudioVolume(AudioType audioType, int volume) => volumes[audioType] = volume;

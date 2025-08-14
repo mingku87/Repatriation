@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class VolumeSlider : MonoBehaviour
 {
-    public AudioType audioType;
+    [SerializeField] public AudioType audioType;
     [SerializeField] private TextMeshProUGUI volumeText;
     [SerializeField] private Button volumeUpButton;
     [SerializeField] private Button volumeDownButton;

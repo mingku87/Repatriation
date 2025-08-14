@@ -121,22 +121,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8969527936615192944}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 5101074551116142276}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 8997006521417936119}
+        m_TargetAssemblyTypeName: SettingsUIController, Assembly-CSharp
+        m_MethodName: SaveSettings
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1126,6 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5812b88f1ca194b9cf16d0cb3542bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keySettingButtons: []
 --- !u!1 &4538762593934233201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,6 +2152,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3933976317142455867, guid: c562ac494d821a648a4b048e933570dc, type: 3}
+      propertyPath: audioType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4020153581807124127, guid: c562ac494d821a648a4b048e933570dc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2952,6 +2945,10 @@ PrefabInstance:
     - target: {fileID: 2866021122089333229, guid: c562ac494d821a648a4b048e933570dc, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933976317142455867, guid: c562ac494d821a648a4b048e933570dc, type: 3}
+      propertyPath: audioType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4020153581807124127, guid: c562ac494d821a648a4b048e933570dc, type: 3}
       propertyPath: m_AnchorMax.y

@@ -45,6 +45,13 @@ public static class SettingsBridge
         KeyManager.SetQuickSlotKeys(r.quickSlotKeys);
     }
 
+    public static void SaveSettings()
+    {
+        UserSettingsRuntimeData runtimeData = CaptureRuntime();
+        UserSettingsSaveData saveData = ToSave(runtimeData);
+        UserSettingsIO.Save(saveData);
+    }
+
     public static UserSettingsRuntimeData CaptureRuntime()
     {
         return new UserSettingsRuntimeData
