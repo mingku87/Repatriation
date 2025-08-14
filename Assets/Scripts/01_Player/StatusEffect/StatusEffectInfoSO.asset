@@ -12,4 +12,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9250da7b016a52b43b7aca4f6b794248, type: 3}
   m_Name: StatusEffectInfoSO
   m_EditorClassIdentifier: 
-  statusEffectInfo: []
+  statusEffectInfo:
+  - id: 0
+    name: "\uCCB4\uB825 \uC190\uC2E4"
+    description: "\uCCB4\uB825\uC774 {value} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 1
+    name: "\uC218\uBD84 \uC190\uC2E4"
+    description: "\uAC08\uC99D \uC218\uCE58\uAC00 {value} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 2
+    name: "\uAC74\uAC15 \uC190\uC2E4"
+    description: "\uAC74\uAC15 \uC218\uCE58\uAC00 {value} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 3
+    name: "\uCCB4\uB825 \uC1E0\uC57D"
+    description: "\uCCB4\uB825\uC774 {duration}\uCD08 \uB3D9\uC548 {value} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 4
+    name: "\uC218\uBD84 \uACE0\uAC08"
+    description: "\uAC08\uC99D \uC218\uCE58\uAC00 {duration}\uCD08 \uB3D9\uC548 {value}
+      \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 5
+    name: "\uAC74\uAC15 \uCE68\uC2DD"
+    description: "\uAC74\uAC15 \uC218\uCE58\uAC00 {duration}\uCD08 \uB3D9\uC548 {value}
+      \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 6
+    name: "\uC6B4\uB3D9 \uC800\uD558"
+    description: "\uC774\uB3D9 \uC18D\uB3C4\uAC00 {duration}\uCD08 \uB3D9\uC548 {value}%
+      \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 7
+    name: "\uC2E0\uCCB4 \uACFC\uD765\uBD84"
+    description: "\uAC74\uAC15 \uC218\uCE58\uAC00 {value} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 8
+    name: "\uC2E0\uACBD \uAD50\uB780"
+    description: "{duration}\uCD08 \uB3D9\uC548 "
+    sprite: {fileID: 0}
+  - id: 9
+    name: "\uC74C\uC2DD \uAC70\uBD80"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uC74C\uC2DD\uC744 \uC12D\uCDE8\uD560
+      \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 10
+    name: "\uC218\uBD84 \uAC70\uBD80"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uBB3C\uC744 \uC12D\uCDE8\uD560 \uC218
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 11
+    name: "\uC57D\uBB3C \uAC70\uBD80"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uC57D\uC744 \uC12D\uCDE8\uD560 \uC218
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 12
+    name: "\uC74C\uC2DD \uD761\uC218 \uC800\uD558"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uC74C\uC2DD\uC758 \uC12D\uCDE8 \uD6A8\uACFC\uAC00
+      {value}% \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 13
+    name: "\uC218\uBD84 \uD761\uC218 \uC800\uD558"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uBB3C\uC758 \uC12D\uCDE8 \uD6A8\uACFC\uAC00
+      {value}% \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
+  - id: 14
+    name: "\uC57D\uBB3C \uD761\uC218 \uC800\uD558"
+    description: "{duration}\uCD08 \uB3D9\uC548 \uC57D\uBB3C\uC758 \uC12D\uCDE8 \uD6A8\uACFC\uAC00
+      {value}% \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    sprite: {fileID: 0}
