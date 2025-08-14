@@ -6,7 +6,7 @@ public enum Status
 {
     HP,
     Thirst,
-    Symptom,
+    Wellness,
     Atk,
     AtkRange,
     Def,

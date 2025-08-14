@@ -14,12 +14,12 @@ public enum StatusEffectID
     // Stat loss
     HealthLoss,
     ThirstLoss,
-    SymptomLoss,
+    WellnessLoss,
 
     // Stat reduction
     Weakness,
     SevereThirst,
-    SevereSymptoms,
+    PoorHealth,
 
     // Movement effects
     MovementSlow,

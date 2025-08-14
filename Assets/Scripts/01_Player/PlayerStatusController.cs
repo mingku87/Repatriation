@@ -18,17 +18,17 @@ public class PlayerStatusController
 
     private float thirstDecayRate => Player.constant.thirstDecayRate;
     private float healthDecayRateByThirst => Player.constant.healthDecayRateByThirst;
-    private float symptomDecayRate => Player.constant.GetSymptomDecayRate(GetCurrentStatus(Status.Symptom));
-    private float healthDecayRateBySymptomRate
-    => Player.constant.GetHealthDecayRateBySymptomRate(GetCurrentStatus(Status.Symptom) / GetMaxStatus(Status.Symptom) * 100);
+    private float wellnessDecayRate => Player.constant.GetWellnessDecayRate(GetCurrentStatus(Status.Wellness));
+    private float healthDecayRateByWellnessRate
+    => Player.constant.GetHealthDecayRateByWellnessRate(GetCurrentStatus(Status.Wellness) / GetMaxStatus(Status.Wellness) * 100);
 
     public void UpdatePlayerStatus()
     {
         float thirst = ChangeCurrentStatus(Status.Thirst, -thirstDecayRate);
         if (thirst <= 0) ChangeCurrentStatus(Status.HP, -healthDecayRateByThirst);
 
-        ChangeCurrentStatus(Status.Symptom, -symptomDecayRate);
-        ChangeCurrentStatus(Status.HP, -healthDecayRateBySymptomRate);
+        ChangeCurrentStatus(Status.Wellness, -wellnessDecayRate);
+        ChangeCurrentStatus(Status.HP, -healthDecayRateByWellnessRate);
     }
 
     // PlayerStatus Methods

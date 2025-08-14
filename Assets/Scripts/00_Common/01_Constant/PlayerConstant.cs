@@ -5,22 +5,22 @@ public class PlayerSettings
     public Dictionary<Status, float> maxStatus = new();
 
     public float thirstDecayRate;
-    public Dictionary<float, float> symptomDecayRate;
+    public Dictionary<float, float> wellnessDecayRate;
 
     public float healthDecayRateByThirst;
-    public Dictionary<float, float> healthDecayRateBySymptomRate;
+    public Dictionary<float, float> healthDecayRateByWellnessRate;
 
-    public float GetSymptomDecayRate(float symptom)
+    public float GetWellnessDecayRate(float wellness)
     {
-        foreach (var entry in symptomDecayRate)
-            if (symptom <= entry.Key) return entry.Value;
+        foreach (var entry in wellnessDecayRate)
+            if (wellness <= entry.Key) return entry.Value;
         return 0.0f;
     }
 
-    public float GetHealthDecayRateBySymptomRate(float symptomRate)
+    public float GetHealthDecayRateByWellnessRate(float wellnessRate)
     {
-        foreach (var entry in healthDecayRateBySymptomRate)
-            if (symptomRate <= entry.Key) return entry.Value;
+        foreach (var entry in healthDecayRateByWellnessRate)
+            if (wellnessRate <= entry.Key) return entry.Value;
         return 0.0f;
     }
 }
@@ -36,7 +36,7 @@ public class PlayerConstant
             maxStatus = new(){
                 { Status.HP, 100.0f },
                 { Status.Thirst, 100.0f },
-                { Status.Symptom, 100.0f },
+                { Status.Wellness, 100.0f },
                 { Status.Atk, 10.0f },
                 { Status.AtkRange, 1.0f },
                 { Status.Def, 5.0f },
@@ -44,7 +44,7 @@ public class PlayerConstant
                 { Status.SightRange, 5.0f }
             },
             thirstDecayRate = 0.5f,
-            symptomDecayRate = new(){
+            wellnessDecayRate = new(){
                 { 10.0f, 1.0f },
                 { 20.0f, 0.5f },
                 { 40.0f, 0.33f },
@@ -53,7 +53,7 @@ public class PlayerConstant
                 { 100.0f, 0.08f }
             },
             healthDecayRateByThirst = 3.0f,
-            healthDecayRateBySymptomRate = new(){
+            healthDecayRateByWellnessRate = new(){
                 { 0, 64 },
                 { 1, 32 },
                 { 5, 16 },
@@ -68,7 +68,7 @@ public class PlayerConstant
             maxStatus = new(){
                 { Status.HP, 100.0f },
                 { Status.Thirst, 100.0f },
-                { Status.Symptom, 100.0f },
+                { Status.Wellness, 100.0f },
                 { Status.Atk, 10.0f },
                 { Status.AtkRange, 1.0f },
                 { Status.Def, 5.0f },
@@ -76,7 +76,7 @@ public class PlayerConstant
                 { Status.SightRange, 5.0f }
             },
             thirstDecayRate = 0.5f,
-            symptomDecayRate = new(){
+            wellnessDecayRate = new(){
                 { 10.0f, 1.0f },
                 { 20.0f, 0.5f },
                 { 40.0f, 0.33f },
@@ -85,7 +85,7 @@ public class PlayerConstant
                 { 100.0f, 0.08f }
             },
             healthDecayRateByThirst = 3.0f,
-            healthDecayRateBySymptomRate = new(){
+            healthDecayRateByWellnessRate = new(){
                 { 0, 64 },
                 { 1, 32 },
                 { 5, 16 },
