@@ -1,7 +1,7 @@
 public enum ItemName
 {
     OldHelmet,
-    None,
+    ConstructionSiteHelmet,
     Food,
     Medicine,
     Water,
