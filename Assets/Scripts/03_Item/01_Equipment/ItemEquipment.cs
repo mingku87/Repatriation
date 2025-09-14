@@ -11,13 +11,19 @@ public class ItemEquipment : Item
 
     public virtual void Equip()
     {
-        Player.SetMaxStatus(param.status, param.value);
-        Player.SetCurrentStatus(param.status, param.value);
+        foreach (Status status in param.equipStatus.Keys)
+        {
+            Player.SetMaxStatus(status, param.equipStatus[status]);
+            Player.SetCurrentStatus(status, param.equipStatus[status]);
+        }
     }
     public virtual void UnEquip()
     {
-        Player.SetMaxStatus(param.status, 0);
-        Player.SetCurrentStatus(param.status, 0);
+        foreach (Status status in param.equipStatus.Keys)
+        {
+            Player.SetMaxStatus(status, 0);
+            Player.SetCurrentStatus(status, 0);
+        }
     }
 
     public override void Use()
