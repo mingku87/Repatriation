@@ -128,13 +128,13 @@ TextureImporter:
       name: wall_02_0
       rect:
         serializedVersion: 2
-        x: 230
+        x: 231
         y: 659
-        width: 299
+        width: 298
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -153,9 +153,9 @@ TextureImporter:
         y: 723
         width: 299
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 1, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -174,9 +174,9 @@ TextureImporter:
         y: 738
         width: 299
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 1, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -195,9 +195,9 @@ TextureImporter:
         y: 136
         width: 299
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 1, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -216,9 +216,9 @@ TextureImporter:
         y: 231
         width: 299
         height: 453
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 1, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -232,7 +232,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1c6e018e84c53b24db1ea107902364dc
     internalID: 0
     vertices: []
     indices: 
