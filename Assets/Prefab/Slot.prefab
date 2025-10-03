@@ -229,6 +229,9 @@ MonoBehaviour:
   countText: {fileID: 3561755252969981810}
   durabilityRoot: {fileID: 5689998935124576403}
   durabilityFill: {fileID: 37421756879321153}
+  lockedSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  dragGhost: {fileID: 0}
+  index: 0
 --- !u!1 &5689998935124576403
 GameObject:
   m_ObjectHideFlags: 0

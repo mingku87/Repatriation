@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\inventoryuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventoryuimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\04_inventory\\hudquickbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\inventoryslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventoryslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\04_inventory\\inventorydraghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventorydraghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\04_inventory\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\hudquickbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\hudquickbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\04_inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\04_inventory\\inventoryslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\04_inventory\\inventoryslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -90,11 +94,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "InventoryDragHandler.cs",
+              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryDragHandler.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\InventoryDragHandler.cs",
+              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryDragHandler.cs",
+              "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\InventoryDragHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T13:49:18.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "HudQuickBarUI.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\HudQuickBarUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\HudQuickBarUI.cs",
@@ -102,12 +119,11 @@
               "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\HudQuickBarUI.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T13:35:08.845Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T13:35:08.845Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ItemConsumableWater.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\02_Consumable\\ItemConsumableWater.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\02_Consumable\\ItemConsumableWater.cs",
@@ -119,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ItemFactory.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemFactory.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemFactory.cs",
@@ -131,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "SingletonObject.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\00_Common\\SingletonObject.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\00_Common\\SingletonObject.cs",
@@ -143,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "DebugGiveItemEditor.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Editor\\DebugGiveItemEditor.cs",
               "RelativeDocumentMoniker": "Assets\\Editor\\DebugGiveItemEditor.cs",
@@ -155,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "DebugGiveItem.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\DebugGiveItem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\DebugGiveItem.cs",
@@ -167,7 +183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "WeightUI.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\WeightUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\WeightUI.cs",
@@ -179,20 +195,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "InventoryUIManager.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryUIManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\InventoryUIManager.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryUIManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\InventoryUIManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-03T10:25:47.915Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ItemParameter.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
@@ -204,19 +220,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "InventorySlotUI.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventorySlotUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\InventorySlotUI.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventorySlotUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\InventorySlotUI.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAwIcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T10:22:42.54Z"
+              "WhenOpened": "2025-10-03T10:22:42.54Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ItemParameterList.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
@@ -228,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "EquipmentModel.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\EquipmentModel.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\EquipmentModel.cs",
@@ -240,7 +257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ItemPresentationDB.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
@@ -252,20 +269,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "InventoryController.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\InventoryController.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\InventoryController.cs",
               "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\InventoryController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwCkAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwCkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-03T08:26:11.905Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ItemEquipment.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\01_Equipment\\ItemEquipment.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\01_Equipment\\ItemEquipment.cs",
@@ -277,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ItemConsumable.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\02_Consumable\\ItemConsumable.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\02_Consumable\\ItemConsumable.cs",
@@ -289,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Inventory.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\04_Inventory\\Inventory.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\04_Inventory\\Inventory.cs",
@@ -297,12 +314,11 @@
               "RelativeToolTip": "Assets\\Scripts\\04_Inventory\\Inventory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T08:24:30.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T08:24:30.132Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Item.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\Item.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\Item.cs",
@@ -314,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ItemDatabaseViewer.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Editor\\ItemDatabaseViewer.cs",
               "RelativeDocumentMoniker": "Assets\\Editor\\ItemDatabaseViewer.cs",
@@ -326,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "SoundManager.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\96_Sound\\SoundManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\96_Sound\\SoundManager.cs",
