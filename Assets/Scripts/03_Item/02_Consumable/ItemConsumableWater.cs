@@ -1,11 +1,4 @@
-public class ItemConsumableWater : ItemConsumable
+public class ItemConsumableWater : Item
 {
-    public new ItemParameterWater param => (ItemParameterWater)base.param;
     public ItemConsumableWater(int id) : base(id) { }
-
-    public override void Use()
-    {
-        base.Use();
-        Player.ChangeCurrentStatus(Status.HP, param.quality - 100);
-    }
 }

@@ -4,6 +4,7 @@ public class ItemParameter
     public ItemType type;
     public ItemName itemName;
     public float weight;
+    public int maxstack = 1;
 
     public ItemParameter(int id, ItemName itemName, float weight)
     {

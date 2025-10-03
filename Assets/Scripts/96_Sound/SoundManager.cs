@@ -18,7 +18,7 @@ public class SoundManager : SingletonObject<SoundManager>
     private const int MAX_CONCURRENT_SOUNDS = 5;
     private const float VOLUME_REDUCTION_FACTOR = 1f; // TODO: 적정 값을 찾아야 함
     private List<AudioClip> activeClips = new List<AudioClip>();
-    void Awake()
+    protected new void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         importantSoundList = new ImportantSoundList();

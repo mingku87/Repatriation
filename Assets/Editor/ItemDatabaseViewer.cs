@@ -59,7 +59,7 @@ public class ItemDatabaseViewer : EditorWindow
 
                 // Name(표시용): ItemPresentationDB 우선, 없으면 enum 키
                 var pres = ItemPresentationDB.Get(p.id);
-                string nameToShow = pres?.displayName;
+                string nameToShow = pres?.name;
                 if (string.IsNullOrEmpty(nameToShow))
                     nameToShow = p.itemName.ToString(); // fallback (None일 수 있음)
                 Cell(nameToShow, 160);
@@ -131,7 +131,7 @@ public class ItemDatabaseViewer : EditorWindow
         if (p.itemName.ToString().ToLowerInvariant().Contains(key)) return true;
 
         var pres = ItemPresentationDB.Get(p.id);
-        if (!string.IsNullOrEmpty(pres?.displayName) && pres.displayName.ToLowerInvariant().Contains(key)) return true;
+        if (!string.IsNullOrEmpty(pres?.name) && pres.name.ToLowerInvariant().Contains(key)) return true;
 
         if (p is ItemParameterEquipment eq)
             return eq.status.ToString().ToLowerInvariant().Contains(key);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -25,7 +26,7 @@ public static class ItemParameterList
     public static void LoadFromTSV(string fileName = "Item_data.tsv")
     {
         itemStats.Clear();
-        effect2ById.Clear();   // ← 추가
+        effect2ById.Clear();
 
         var path = Path.Combine(Application.streamingAssetsPath, fileName);
         if (!File.Exists(path))
@@ -53,42 +54,34 @@ public static class ItemParameterList
             int id = ParseInt(Safe(c, 1), -1);     // item_id
             if (id < 0) { Warn(i, "item_id"); continue; }
 
-            string itemNameStr = Safe(c, 2);               // item_name(표시용 텍스트 또는 enum 키)
-            string itemTypeStr = Safe(c, 3);               // equip/use/water/etc
-            string detailStr = Safe(c, 4);               // body/elbow/glove/knee/shoes/bag/hat...
-            string eff1Str = Safe(c, 5);               // hp/def/spd/wgh/slot/thirst/symptom...
+            string itemNameStr = Safe(c, 2);                // item_name(표시용 텍스트 또는 enum 키)
+            string itemTypeStr = Safe(c, 3);                // equip/use/water/etc
+            string detailStr = Safe(c, 4);                // body/elbow/glove/knee/shoes/bag/hat...
+            string eff1Str = Safe(c, 5);                // hp/def/spd/wgh/slot/thirst/symptom...
             float eff1Val = ParseFloat(Safe(c, 6), 0f);
             string eff2Str = Safe(c, 7);
             float eff2Val = ParseFloat(Safe(c, 8), 0f);
+            int maxstackTSV = ParseInt(Safe(c, 9), 1);
+            float weight = ParseFloat(Safe(c, 10), 0f);
+            int quality = ParseInt(Safe(c, 11), 0);
+            string description = Safe(c, 14);
+            string iconPath = (c.Length > 15) ? Safe(c, 15) : string.Empty;
+
+            // 효과2(뷰어 표시용) 저장
             if (!string.IsNullOrEmpty(eff2Str))
             {
                 var s2 = MapStatus(eff2Str);
                 if (!s2.Equals(default(Status)))
                     effect2ById[id] = (s2, eff2Val);
             }
-            int maxstack = ParseInt(Safe(c, 9), 1);
-            float weight = ParseFloat(Safe(c, 10), 0f);
-            int quality = ParseInt(Safe(c, 11), 0);
-            string description = Safe(c, 14);
-            string iconPath = (c.Length > 15) ? Safe(c, 15) : string.Empty;
 
             // 표시정보(ID 기반) 등록: 아이콘은 시트/슬라이스 규칙으로 자동 로드
             ItemPresentationDB.Register(id, itemNameStr, description, iconPath);
 
-            // 등록 직후
-            #if ICON_TEST
-            var key = "Images/ItemIcon/Item_Icon_Hat";
-            var test = Resources.LoadAll<Sprite>(key);
-            Debug.Log($"[IconTest] '{key}' sprites = {test?.Length ?? 0}");
-            if (test != null)
-            {
-                foreach (var s in test) Debug.Log("[IconTest] slice: " + s.name);
-            }
-
-            // 원래 디버그
+#if ICON_TEST
             var icon = ItemPresentationDB.Get(id)?.icon;
             Debug.Log($"[TSV->Icon] id={id}, path='{iconPath}', sprite={(icon != null ? icon.name : "NULL")}");
-            #endif
+#endif
 
             // ItemName enum 매핑(없으면 None 유지)
             ItemName itemName = TryEnum(itemNameStr, out ItemName parsedName) ? parsedName : ItemName.None;
@@ -100,12 +93,14 @@ public static class ItemParameterList
                 case ItemType.Equipment:
                     {
                         var part = MapEquipmentPart(detailStr);
-                        var stat1 = MapStatus(eff1Str); // 네가 enum에 def/spd/wgh/slot/symptom 추가했으니 그대로 파싱됨
+                        var stat1 = MapStatus(eff1Str);
 
-                        // 생성자: (id, itemName, weight, EquipmentPart, Status, value, maxDurability=100, decay=1)
+                        // (id, itemName, weight, EquipmentPart, Status, value, maxDurability=100, decay=1)
                         var p = new ItemParameterEquipment(id, itemName, weight, part, stat1, eff1Val);
                         p.type = ItemType.Equipment;
-                        // 필요 시 p.maxstack = 1 로 고정할 수도 있음
+                        p.maxstack = 1;                                  // 장비는 고정 1
+                                                                         // weight 는 생성자에서 이미 세팅됨
+
                         itemStats.Add(p);
                         break;
                     }
@@ -113,28 +108,34 @@ public static class ItemParameterList
                 case ItemType.Consumable:
                     {
                         var stat1 = MapStatus(eff1Str);
-                        // 생성자: (id, itemName, weight, Status, value)
                         var p = new ItemParameterConsumable(id, itemName, weight, stat1, eff1Val);
                         p.type = ItemType.Consumable;
-                        // maxstack, weight 등은 필요 시 별도 저장 클래스로 확장 가능
+                        p.maxstack = Mathf.Max(1, maxstackTSV);          // TSV 스택 적용
+                                                                         // weight 는 생성자에서 이미 세팅됨
+
                         itemStats.Add(p);
                         break;
                     }
 
                 case ItemType.Water:
                     {
-                        // 생성자: (id, itemName, weight, value, quality)  ※ Status는 내부에서 Thirst로 고정
+                        // (id, itemName, weight, value, quality)  ※ Status는 내부에서 Thirst 고정
                         var p = new ItemParameterWater(id, itemName, weight, eff1Val, quality);
                         p.type = ItemType.Water;
+                        p.maxstack = Mathf.Max(1, maxstackTSV);
+                        // weight 는 생성자에서 이미 세팅됨
+
                         itemStats.Add(p);
                         break;
                     }
 
                 default:
                     {
-                        // 기타(etc) → 로직은 없지만 목록에는 유지
+                        // 기타(etc) → 목록 유지용(로직 없음)
                         var p = new ItemParameter(id, itemName, weight);
                         p.type = ItemType.None;
+                        p.maxstack = Mathf.Max(1, maxstackTSV);
+
                         itemStats.Add(p);
                         break;
                     }
@@ -166,6 +167,7 @@ public static class ItemParameterList
         v = default;
         return !string.IsNullOrEmpty(s) && System.Enum.TryParse<T>(s, true, out v);
     }
+
     static void Warn(int rowIndex, string field)
         => Debug.LogWarning($"[ItemParameterList] line {rowIndex + 1}: invalid {field}");
 
@@ -181,7 +183,7 @@ public static class ItemParameterList
         }
     }
 
-    // detail_type → EquipmentPart 매핑(네 시트 용어에 맞춤)
+    // detail_type → EquipmentPart 매핑(시트 용어에 맞춤)
     static EquipmentPart MapEquipmentPart(string s)
     {
         switch ((s ?? "").Trim().ToLowerInvariant())
@@ -197,23 +199,21 @@ public static class ItemParameterList
         }
     }
 
-    // effect_type → Status 매핑
-    // (Status enum에 HP/Thirst/Defense/MoveSpeed/Wgh/Slot/Symptom 등이 정의돼 있으면 TryParse로 바로 매칭됨)
+    // effect_type → Status 매핑 (네 enum 이름에 맞춤)
     static Status MapStatus(string s)
     {
         if (TryEnum(s, out Status parsed)) return parsed;
 
-        // 과거 축약/별칭 대응(안전망)
         switch ((s ?? "").Trim().ToLowerInvariant())
         {
             case "hp": return Status.HP;
             case "thirst": return Status.Thirst;
             case "symptom":
             case "symptoms": return Status.Symptom;
-            case "def": return Status.Def;
-            case "spd": return Status.Speed;
-            case "wgh": return Status.WGH;   // 들 수 있는 최대 무게
-            case "slot": return Status.Slot;  // 인벤토리 칸 수
+            case "def": return Status.Def;     // 방어력
+            case "spd": return Status.Speed;   // 이동속도
+            case "wgh": return Status.WGH;     // 최대 하중(가방 등)
+            case "slot": return Status.Slot;    // 인벤토리 칸 수
             default: return default;
         }
     }

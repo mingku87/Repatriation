@@ -1,4 +1,4 @@
-public abstract class Item
+﻿public class Item
 {
     public int id;
     public ItemParameter param;
@@ -7,10 +7,9 @@ public abstract class Item
     public Item(int id)
     {
         this.id = id;
-
         param = ItemParameterList.GetItemStat(id);
-        info = ItemInfoSO.GetItemInfo(param.itemName);
+        info = info ?? new ItemInfo(); // ✔️ 기본만 만들어두고, 실제 표시정보는 Factory가 채움
     }
 
-    public abstract void Use();
+    public virtual void Use() { /* ... */ }
 }

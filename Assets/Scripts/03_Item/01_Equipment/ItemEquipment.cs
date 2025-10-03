@@ -3,10 +3,10 @@ public class ItemEquipment : Item
     public new ItemParameterEquipment param => (ItemParameterEquipment)base.param;
     public int durability;
 
-    public ItemEquipment(int id, int durability = -1) : base(id)
+    public ItemEquipment(int id, int initialDurability = -1) : base(id)
     {
-        if (durability == -1) this.durability = param.maxDurability;
-        else this.durability = durability;
+        int max = param?.maxDurability ?? 0;
+        durability = (initialDurability >= 0) ? initialDurability : max;
     }
 
     public virtual void Equip()
