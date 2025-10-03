@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Item_Icon_Hat_0
+      name: 10002
       rect:
         serializedVersion: 2
         x: 52
@@ -105,7 +105,7 @@ TextureImporter:
         width: 903
         height: 682
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -118,7 +118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Item_Icon_Hat_1
+      name: 10005
       rect:
         serializedVersion: 2
         x: 1135
@@ -126,7 +126,7 @@ TextureImporter:
         width: 787
         height: 739
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Item_Icon_Hat_2
+      name: 10003
       rect:
         serializedVersion: 2
         x: 2111
@@ -147,7 +147,7 @@ TextureImporter:
         width: 891
         height: 723
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Item_Icon_Hat_3
+      name: 10004
       rect:
         serializedVersion: 2
         x: 55
@@ -168,7 +168,7 @@ TextureImporter:
         width: 852
         height: 735
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -181,7 +181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Item_Icon_Hat_4
+      name: 10001
       rect:
         serializedVersion: 2
         x: 1109
@@ -189,7 +189,7 @@ TextureImporter:
         width: 819
         height: 760
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -202,7 +202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Item_Icon_Hat_5
+      name: 10006
       rect:
         serializedVersion: 2
         x: 2184
@@ -210,7 +210,7 @@ TextureImporter:
         width: 790
         height: 722
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -233,12 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Item_Icon_Hat_0: -1667563247
-      Item_Icon_Hat_1: -1092791499
-      Item_Icon_Hat_2: -957928135
-      Item_Icon_Hat_3: -1460345808
-      Item_Icon_Hat_4: -240847269
-      Item_Icon_Hat_5: -2074851130
+      10001: -240847269
+      10002: -1667563247
+      10003: -957928135
+      10004: -1460345808
+      10005: -1092791499
+      10006: -2074851130
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
