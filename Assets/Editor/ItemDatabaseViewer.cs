@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+ï»¿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -12,14 +12,14 @@ public class ItemDatabaseViewer : EditorWindow
 
     void OnEnable()
     {
-        // Å¸ÀÔ ºñ±³ ±İÁö! ¸®½ºÆ® °³¼ö·Î ÆÇ´Ü
+        // ì²« ì˜¤í”ˆ ì‹œ ë¹„ì–´ ìˆìœ¼ë©´ ë¡œë“œ
         if (ItemParameterList.itemStats.Count == 0)
             SafeReload();
     }
 
     void OnGUI()
     {
-        // ¦¡¦¡ Toolbar ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+        // â”€â”€ Toolbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
         {
             if (GUILayout.Button("Reload TSV", EditorStyles.toolbarButton, GUILayout.Width(100)))
@@ -32,19 +32,20 @@ public class ItemDatabaseViewer : EditorWindow
             EditorGUILayout.LabelField($"Count: {ItemParameterList.itemStats.Count}", GUILayout.Width(100));
         }
 
-        // ¦¡¦¡ Header ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+        // â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         using (new EditorGUILayout.HorizontalScope())
         {
             Header("ID", 60);
-            Header("Type", 80);
-            Header("NameKey", 90);
+            Header("Type", 90);
+            Header("Name", 160);         // â† TSVì˜ í‘œì‹œ ì´ë¦„ ì‚¬ìš©
+            Header("Icon", 50);          // â† ì•„ì´ì½˜ ë¯¸ë¦¬ë³´ê¸°
             Header("Weight", 70);
             Header("Effect(Status/Value)", 220);
             GUILayout.FlexibleSpace();
         }
         DrawLine();
 
-        // ¦¡¦¡ Rows ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+        // â”€â”€ Rows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         _scroll = EditorGUILayout.BeginScrollView(_scroll);
         foreach (var p in ItemParameterList.itemStats)
         {
@@ -52,16 +53,24 @@ public class ItemDatabaseViewer : EditorWindow
 
             using (new EditorGUILayout.HorizontalScope())
             {
+                // ID / Type
                 Cell(p.id.ToString(), 60);
-                Cell(p.type.ToString(), 80);
-                Cell(p.itemName.ToString(), 90);
+                Cell(p.type.ToString(), 90);
+
+                // Name(í‘œì‹œìš©): ItemPresentationDB ìš°ì„ , ì—†ìœ¼ë©´ enum í‚¤
+                var pres = ItemPresentationDB.Get(p.id);
+                string nameToShow = pres?.displayName;
+                if (string.IsNullOrEmpty(nameToShow))
+                    nameToShow = p.itemName.ToString(); // fallback (Noneì¼ ìˆ˜ ìˆìŒ)
+                Cell(nameToShow, 160);
+
+                // Icon preview (Sprite ì‹œíŠ¸ì˜ ìŠ¬ë¼ì´ìŠ¤ë§Œ ì˜ë¼ì„œ í‘œì‹œ)
+                DrawSpritePreview(pres?.icon, 40f);
+
+                // Weight
                 Cell(p.weight.ToString("0.##"), 70);
 
-                // ¾ÆÀÌÄÜ Ç¥½Ã (SpriteÀÇ rect·Î Àß¶ó¼­ ¹Ì¸®º¸±â)
-                var pres = ItemPresentationDB.Get(p.id);
-                DrawSpritePreview(pres?.icon, 32f);
-
-
+                // Effect
                 string effect = "-";
                 if (p is ItemParameterEquipment eq)
                     effect = $"{eq.status} / {eq.value}";
@@ -70,14 +79,18 @@ public class ItemDatabaseViewer : EditorWindow
                 else if (p is ItemParameterWater wa)
                     effect = $"Thirst / {wa.value} (Q:{wa.quality})";
 
+                if (ItemParameterList.effect2ById.TryGetValue(p.id, out var e2))
+                    effect += $"  |  {e2.status} / {e2.value}";
+
                 Cell(effect, 220);
+
                 GUILayout.FlexibleSpace();
             }
         }
         EditorGUILayout.EndScrollView();
     }
 
-    // ¦¡¦¡ Helpers ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     static void Header(string text, float w)
     {
         var style = new GUIStyle(EditorStyles.boldLabel) { alignment = TextAnchor.MiddleLeft };
@@ -92,6 +105,22 @@ public class ItemDatabaseViewer : EditorWindow
         EditorGUI.DrawRect(rect, new Color(0, 0, 0, 0.2f));
     }
 
+    static void DrawSpritePreview(Sprite s, float size)
+    {
+        var rect = GUILayoutUtility.GetRect(size, size, GUILayout.Width(size), GUILayout.Height(size));
+        if (s == null)
+        {
+            EditorGUI.DrawRect(rect, new Color(0, 0, 0, 0.08f));
+            GUI.Label(rect, "â€”", EditorStyles.centeredGreyMiniLabel);
+            return;
+        }
+
+        var tex = s.texture;
+        var r = s.rect; // í”½ì…€ ë‹¨ìœ„
+        var uv = new Rect(r.x / tex.width, r.y / tex.height, r.width / tex.width, r.height / tex.height);
+        GUI.DrawTextureWithTexCoords(rect, tex, uv, alphaBlend: true);
+    }
+
     static bool PassFilter(ItemParameter p, string key)
     {
         if (string.IsNullOrEmpty(key)) return true;
@@ -100,6 +129,9 @@ public class ItemDatabaseViewer : EditorWindow
         if (p.id.ToString().Contains(key)) return true;
         if (p.type.ToString().ToLowerInvariant().Contains(key)) return true;
         if (p.itemName.ToString().ToLowerInvariant().Contains(key)) return true;
+
+        var pres = ItemPresentationDB.Get(p.id);
+        if (!string.IsNullOrEmpty(pres?.displayName) && pres.displayName.ToLowerInvariant().Contains(key)) return true;
 
         if (p is ItemParameterEquipment eq)
             return eq.status.ToString().ToLowerInvariant().Contains(key);
@@ -129,22 +161,6 @@ public class ItemDatabaseViewer : EditorWindow
     {
         var windows = Resources.FindObjectsOfTypeAll<ItemDatabaseViewer>();
         foreach (var w in windows) w.Repaint();
-    }
-
-    static void DrawSpritePreview(Sprite s, float size)
-    {
-        var rect = GUILayoutUtility.GetRect(size, size, GUILayout.Width(size), GUILayout.Height(size));
-        if (s == null)
-        {
-            EditorGUI.DrawRect(rect, new Color(0, 0, 0, 0.1f));
-            GUI.Label(rect, "No Icon", EditorStyles.centeredGreyMiniLabel);
-            return;
-        }
-
-        var tex = s.texture;
-        var r = s.rect; // ÇÈ¼¿ ´ÜÀ§
-        var uv = new Rect(r.x / tex.width, r.y / tex.height, r.width / tex.width, r.height / tex.height);
-        GUI.DrawTextureWithTexCoords(rect, tex, uv, alphaBlend: true);
     }
 }
 #endif

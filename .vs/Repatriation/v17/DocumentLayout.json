@@ -7,36 +7,12 @@
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7BD0E1A4-3D0F-2693-E53B-B04F20DD506A}|Assembly-CSharp-Editor.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\editor\\itemdatabaseviewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7BD0E1A4-3D0F-2693-E53B-B04F20DD506A}|Assembly-CSharp-Editor.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\editor\\itemdatabaseviewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7BD0E1A4-3D0F-2693-E53B-B04F20DD506A}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\editor\\itemdatabaseviewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\spritesheeticonresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\spritesheeticonresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itempresentationdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\03_item\\00_common\\itempresentationdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itempresentationdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\01_player\\playerstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\01_player\\playerstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemparameter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemname.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,31 +22,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ItemPresentationDB.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "ItemParameterList.cs",
+              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
+              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
+              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAkwEMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T06:13:14.748Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SpriteSheetIconResolver.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\SpriteSheetIconResolver.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\SpriteSheetIconResolver.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\SpriteSheetIconResolver.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\SpriteSheetIconResolver.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB0AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T06:03:46.269Z"
+              "WhenOpened": "2025-10-03T07:17:13.787Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -80,82 +45,23 @@
               "RelativeDocumentMoniker": "Assets\\Editor\\ItemDatabaseViewer.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Editor\\ItemDatabaseViewer.cs",
               "RelativeToolTip": "Assets\\Editor\\ItemDatabaseViewer.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAADwv4QAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAkwFEAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T05:26:29.468Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PlayerStatus.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\01_Player\\PlayerStatus.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\01_Player\\PlayerStatus.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\01_Player\\PlayerStatus.cs",
-              "RelativeToolTip": "Assets\\Scripts\\01_Player\\PlayerStatus.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA0AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T05:10:48.334Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ItemInfoSO.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:42:01.116Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ItemType.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:41.033Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ItemParameterList.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAkwFIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:31.507Z",
+              "WhenOpened": "2025-10-03T07:15:38.569Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ItemParameter.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAA3AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ItemPresentationDB.cs",
+              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
+              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
+              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemPresentationDB.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:07.152Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ItemName.cs",
-              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",
-              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",
-              "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:40:45.768Z"
+              "WhenOpened": "2025-10-03T06:13:14.748Z",
+              "EditorCaption": ""
             }
           ]
         }

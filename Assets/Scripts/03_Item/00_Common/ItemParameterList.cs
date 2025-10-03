@@ -7,10 +7,12 @@ using UnityEngine;
 /// TSV에서 아이템 파라미터를 읽어와 런타임 DB를 구성한다.
 /// 수치(파라미터)는 itemStats에, 표시정보(이름/설명/아이콘)는 ItemPresentationDB에 등록.
 /// </summary>
+//#define ICON_TEST
 public static class ItemParameterList
 {
     // 런타임에서 참조할 파라미터 목록
     public static readonly List<ItemParameter> itemStats = new();
+    public static readonly Dictionary<int, (Status status, float value)> effect2ById = new();
 
     /// <summary>
     /// StreamingAssets/<paramref name="fileName"/> (기본: Item_data.tsv)을 읽어 아이템을 로드한다.
@@ -23,6 +25,7 @@ public static class ItemParameterList
     public static void LoadFromTSV(string fileName = "Item_data.tsv")
     {
         itemStats.Clear();
+        effect2ById.Clear();   // ← 추가
 
         var path = Path.Combine(Application.streamingAssetsPath, fileName);
         if (!File.Exists(path))
@@ -55,7 +58,14 @@ public static class ItemParameterList
             string detailStr = Safe(c, 4);               // body/elbow/glove/knee/shoes/bag/hat...
             string eff1Str = Safe(c, 5);               // hp/def/spd/wgh/slot/thirst/symptom...
             float eff1Val = ParseFloat(Safe(c, 6), 0f);
-            // effect2는 현 구조에선 미사용(확장 포인트)
+            string eff2Str = Safe(c, 7);
+            float eff2Val = ParseFloat(Safe(c, 8), 0f);
+            if (!string.IsNullOrEmpty(eff2Str))
+            {
+                var s2 = MapStatus(eff2Str);
+                if (!s2.Equals(default(Status)))
+                    effect2ById[id] = (s2, eff2Val);
+            }
             int maxstack = ParseInt(Safe(c, 9), 1);
             float weight = ParseFloat(Safe(c, 10), 0f);
             int quality = ParseInt(Safe(c, 11), 0);
@@ -66,6 +76,7 @@ public static class ItemParameterList
             ItemPresentationDB.Register(id, itemNameStr, description, iconPath);
 
             // 등록 직후
+            #if ICON_TEST
             var key = "Images/ItemIcon/Item_Icon_Hat";
             var test = Resources.LoadAll<Sprite>(key);
             Debug.Log($"[IconTest] '{key}' sprites = {test?.Length ?? 0}");
@@ -77,6 +88,7 @@ public static class ItemParameterList
             // 원래 디버그
             var icon = ItemPresentationDB.Get(id)?.icon;
             Debug.Log($"[TSV->Icon] id={id}, path='{iconPath}', sprite={(icon != null ? icon.name : "NULL")}");
+            #endif
 
             // ItemName enum 매핑(없으면 None 유지)
             ItemName itemName = TryEnum(itemNameStr, out ItemName parsedName) ? parsedName : ItemName.None;
