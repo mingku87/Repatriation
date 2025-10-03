@@ -1,10 +1,10 @@
 index	item_id	item_name	item_type	detail_type	effect_type1	effect_value1	effect_type2	effect_value2	maxstack	weight	quality	buy_price	sell_price	description	icon_path
-1	10001	헌 헬멧	equip	hat	def	10			1	5	20	200	20	낡았지만, 공격을 막는 데 어느 정도 도움이 될 것 같다.	Images/ItemIcon/Item_Icon_Hat:10001
-2	10002	공사장 헬맷	equip	hat	def	15	atk	5	1	5	22	400	40	공사 현장에서 사용되었던 핼멧으로 충격 흡수력이 낮다.	ItemIcon/Item_Icon_Hat:10002
-3	10003	오토바이 헬맷	equip	hat	def	20			1	5	24	600	60	도로 위에서 쓰였던 헬멧으로, 중간 정도의 충격은 막아낼 수 있다.	ItemIcon/Item_Icon_Hat:10003
-4	10004	오래된 소방 핼멧	equip	hat	def	25	atk	10	1	5	26	800	80	오랜 시간 화재 현장을 누볐던 헬멧으로, 타격에 어느 정도 견딜 수 있다.	ItemIcon/Item_Icon_Hat:10004
-5	10005	경찰기동대 헬맷	equip	hat	def	30			1	5	28	1000	100	진압 작전에 사용되던 헬멧으로, 강한 타격도 효과적으로 막아낸다.	ItemIcon/Item_Icon_Hat:10005
-6	10006	전술 헬맷	equip	hat	def	35	atk	15	1	5	30	1500	150	전투를 위해 설계된 고성능 헬멧으로, 뛰어난 방탄성과 충격 흡수력을 지닌다.	ItemIcon/Item_Icon_Hat:10006
+1	10001	헌 헬멧	equip	hat	def	10			1	5	20	200	20	낡았지만, 공격을 막는 데 어느 정도 도움이 될 것 같다.	Images/ItemIcon/Item_Icon_Hat
+2	10002	공사장 헬맷	equip	hat	def	15	atk	5	1	5	22	400	40	공사 현장에서 사용되었던 핼멧으로 충격 흡수력이 낮다.	Images/ItemIcon/Item_Icon_Hat
+3	10003	오토바이 헬맷	equip	hat	def	20			1	5	24	600	60	도로 위에서 쓰였던 헬멧으로, 중간 정도의 충격은 막아낼 수 있다.	Images/ItemIcon/Item_Icon_Hat
+4	10004	오래된 소방 핼멧	equip	hat	def	25	atk	10	1	5	26	800	80	오랜 시간 화재 현장을 누볐던 헬멧으로, 타격에 어느 정도 견딜 수 있다.	Images/ItemIcon/Item_Icon_Hat
+5	10005	경찰기동대 헬맷	equip	hat	def	30			1	5	28	1000	100	진압 작전에 사용되던 헬멧으로, 강한 타격도 효과적으로 막아낸다.	Images/ItemIcon/Item_Icon_Hat
+6	10006	전술 헬맷	equip	hat	def	35	atk	15	1	5	30	1500	150	전투를 위해 설계된 고성능 헬멧으로, 뛰어난 방탄성과 충격 흡수력을 지닌다.	Images/ItemIcon/Item_Icon_Hat
 7	10007	헌 조끼	equip	body	def	15			1	10	20	200	20	오래된 작업복 조끼로, 방어력은 거의 없지만 약한 타격은 막아준다.	
 8	10008	보안 요원 조끼	equip	body	def	20			1	10	22	400	40	낡았지만 구조가 견고해, 기본적인 신체 보호는 가능하다.	
 9	10009	오토바이 조끼	equip	body	def	25			1	10	24	600	60	두꺼운 충격 흡수 패드가 달린 조끼로, 사고 시 충격을 어느 정도 줄여준다.	
