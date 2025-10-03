@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\01_player\\playerstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\01_player\\playerstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,6 +39,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PlayerStatus.cs",
+              "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\01_Player\\PlayerStatus.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\01_Player\\PlayerStatus.cs",
+              "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\01_Player\\PlayerStatus.cs",
+              "RelativeToolTip": "Assets\\Scripts\\01_Player\\PlayerStatus.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T05:10:48.334Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ItemInfoSO.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemInfoSO.cs",
@@ -47,31 +64,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ItemType.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
               "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:41.033Z"
+              "WhenOpened": "2025-10-03T03:41:41.033Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ItemParameterList.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
               "ToolTip": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
               "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwC0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:31.507Z"
+              "WhenOpened": "2025-10-03T03:41:31.507Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ItemParameter.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameter.cs",
@@ -83,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ItemName.cs",
               "DocumentMoniker": "C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\03_Item\\00_Common\\ItemName.cs",

@@ -7,11 +7,11 @@
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\iteminfoso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|c:\\users\\chewo\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\repatriation\\assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|C:\\Users\\chewo\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\Repatriation\\assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC213591-E72E-D36E-9879-40A8D8FFFE5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\03_item\\00_common\\itemparameterlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -55,8 +55,7 @@
               "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:41.033Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T03:41:41.033Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "Assets\\Scripts\\03_Item\\00_Common\\ItemParameterList.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T03:41:31.507Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-03T03:41:31.507Z"
             },
             {
               "$type": "Document",

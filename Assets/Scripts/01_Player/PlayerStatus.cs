@@ -4,14 +4,21 @@ using UnityEngine;
 
 public enum Status
 {
+    //생존 
     HP,
     Thirst,
     Symptom,
+
+    //전투
     Atk,
     AtkRange,
     Def,
     Speed,
     SightRange,
+
+    //인벤토리
+    WGH,
+    Slot,
 }
 
 public class PlayerStatus
