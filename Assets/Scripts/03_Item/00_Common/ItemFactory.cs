@@ -1,42 +1,58 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// 아이템 생성 팩토리 (TSV 기반)
+/// </summary>
 public static class ItemFactory
 {
+    /// <summary>
+    /// 아이템 생성
+    /// value = durability override (장비일 때). -1이면 랜덤 초기화
+    /// </summary>
     public static Item Create(int id, int value = -1)
     {
-        var stat = ItemParameterList.GetItemStat(id);
-        if (stat == null)
+        var param = ItemParameterList.GetItemStat(id);
+        if (param == null)
         {
-            Debug.LogError($"[ItemFactory] Unknown item id: {id}");
+            Debug.LogError($"[ItemFactory] Unknown id {id}");
             return null;
         }
 
         Item item;
-        switch (stat.type)
+        switch (param.type)
         {
-            case ItemType.Equipment: item = new ItemEquipment(id, value); break;
-            case ItemType.Consumable: item = new ItemConsumable(id); break;
-            case ItemType.Water: item = new ItemConsumableWater(id); break;
-            default:
-                Debug.LogError($"[ItemFactory] Unsupported type {stat.type} for id {id}");
-                return null;
+            case ItemType.Equipment:
+                {
+                    var pe = param as ItemParameterEquipment;
+                    var eq = new ItemEquipment(id);
+                    if (value < 0 && pe.maxDurability > 0)
+                        eq.durability = Random.Range(1, pe.maxDurability + 1);
+                    else
+                        eq.durability = Mathf.Clamp(value, 0, pe.maxDurability);
+                    item = eq;
+                    break;
+                }
+
+            case ItemType.Consumable:
+                {
+                    if (param is ItemParameterWater)
+                        item = new ItemConsumableWater(id);
+                    else
+                        item = new ItemConsumable(id);
+                    break;
+                }
+
+            default: // Etc
+                {
+                    item = new Item(id);
+                    break;
+                }
         }
 
-        // TSV기반 표시정보 주입
-        var row = ItemPresentationDB.Get(id);
-        if (row != null)
-        {
-            item.info ??= new ItemInfo();
-            item.info.name = string.IsNullOrEmpty(row.name) ? stat.itemName.ToString() : row.name;
-            item.info.description = row.description ?? string.Empty;
-            item.info.image = row.icon;
-        }
-        else
-        {
-            // row가 없더라도 최소한의 기본값
-            item.info ??= new ItemInfo { name = stat.itemName.ToString(), description = "" };
-        }
+        // 표시 정보 주입
+        var pres = ItemPresentationDB.Get(id);
+        if (pres != null)
+            item.info = new ItemInfo { name = pres.name, description = pres.description, image = pres.icon };
 
         return item;
     }

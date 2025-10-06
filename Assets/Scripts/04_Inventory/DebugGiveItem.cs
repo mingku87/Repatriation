@@ -52,6 +52,6 @@ public class DebugGiveItem : MonoBehaviour
             return;
         }
 
-        InventoryController.Instance.AddItemById(itemId, Mathf.Max(1, count));
+        InventoryController.Instance.inventory.AddItemById(itemId, Mathf.Max(1, count));
     }
 }

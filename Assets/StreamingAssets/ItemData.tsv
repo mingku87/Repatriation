@@ -1,0 +1,12 @@
+index	item_id	item_name	item_type	detail_type	effect_type1	effect_value1	effect_type2	effect_value2	maxstack	weight	quality	buy_price	sell_price	description	icon_path
+1	10001	테스트 헬멧	equip	hat	def	10			1	5	20	200	20	테스트용 모자 장비. 머리를 보호한다.	Images/ItemIcon/Item_Icon_Hat
+2	10002	테스트 조끼	equip	body	def	20			1	8	20	300	30	테스트용 몸통 장비. 상체를 보호한다.	Images/ItemIcon/Item_Icon_Hat
+3	10003	테스트 팔꿈치 보호대	equip	elbow	def	5			1	3	20	150	15	테스트용 팔꿈치 보호대. 팔꿈치를 보호한다.	Images/ItemIcon/Item_Icon_Hat
+4	10004	테스트 장갑	equip	glove	atk	5			1	2	20	150	15	테스트용 장갑. 공격력을 약간 높인다.	Images/ItemIcon/Item_Icon_Hat
+5	10005	테스트 무릎 보호대	equip	knee	def	5	spd	1	1	3	20	150	15	테스트용 무릎 보호대. 이동 시 무릎을 보호한다.	Images/ItemIcon/Item_Icon_Hat
+6	10006	테스트 신발	equip	shoes	spd	3			1	4	20	150	15	테스트용 신발. 이동 속도를 약간 높인다.	Images/ItemIcon/Item_Icon_Hat
+7	10007	테스트 가방	equip	bag	slot	5	wgh	30	1	6	20	150	15	테스트용 가방. 인벤토리 슬롯을 늘린다.	Images/ItemIcon/Item_Icon_Hat
+8	10101	테스트 식량	use	food	hp	10			99	1	10	100	10	테스트용 식량. 체력을 소량 회복한다.	Images/ItemIcon/Item_Icon_Hat
+9	10102	테스트 물	use	water	thirst	10	hp	-2	99	1	10	100	10	테스트용 물. 갈증을 해소하지만 약간의 체력을 잃는다.	Images/ItemIcon/Item_Icon_Hat
+10	10103	테스트 약	use	drug	symptoms	5	thirst	-5	99	1	10	150	15	테스트용 약. 통증을 완화한다.	Images/ItemIcon/Item_Icon_Hat
+11	10201	테스트 부품	etc	other					999	0.5	10	50	5	테스트용 기타 아이템. 제작 재료로 사용된다.	Images/ItemIcon/Item_Icon_Hat

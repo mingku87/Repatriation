@@ -1,14 +1,14 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class ItemPresentationDB
 {
-    // ÇÑ ¾ÆÀÌÅÛÀÇ Ç¥½ÃÁ¤º¸(ÀÌ¸§/¼³¸í/¾ÆÀÌÄÜ)
+    // í•œ ì•„ì´í…œì˜ í‘œì‹œì •ë³´(ì´ë¦„/ì„¤ëª…/ì•„ì´ì½˜)
     public sealed class Row
     {
         public int id;
-        public string name;        // ¡ç ¼Ò¹®ÀÚ name/description/icon ¸¦ »ç¿ëÇÕ´Ï´Ù.
+        public string name;        // â† ì†Œë¬¸ì name/description/icon ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
         public string description;
         public Sprite icon;
     }
@@ -18,11 +18,21 @@ public static class ItemPresentationDB
     public static Row Get(int id)
         => map.TryGetValue(id, out var r) ? r : null;
 
+    // âœ… í—¬í¼ í•¨ìˆ˜ë“¤ ì¶”ê°€
+    public static string GetName(int id)
+        => map.TryGetValue(id, out var r) ? r.name : $"(ì´ë¦„ì—†ìŒ:{id})";
+
+    public static string GetDescription(int id)
+        => map.TryGetValue(id, out var r) ? r.description : string.Empty;
+
+    public static Sprite GetIcon(int id)
+        => map.TryGetValue(id, out var r) ? r.icon : null;
+
     /// <summary>
-    /// TSV ·Î´õ¿¡¼­ È£ÃâÇÕ´Ï´Ù.
-    /// iconPath ¿¹½Ã:
-    ///  - "Images/ItemIcon/Item_Icon_Hat:10012"  (½ºÇÁ¶óÀÌÆ® ½ÃÆ® + Á¶°¢ ÀÌ¸§/ID)
-    ///  - "Images/ItemIcon/Item_Icon_Hat"        (½ÃÆ® ÇÏ³ª¸¸, Ã¹ Á¶°¢ ¶Ç´Â id¿Í °°Àº ÀÌ¸§ ¸ÅÄª)
+    /// TSV ë¡œë”ì—ì„œ í˜¸ì¶œí•©ë‹ˆë‹¤.
+    /// iconPath ì˜ˆì‹œ:
+    ///  - "Images/ItemIcon/Item_Icon_Hat:10012"  (ìŠ¤í”„ë¼ì´íŠ¸ ì‹œíŠ¸ + ì¡°ê° ì´ë¦„/ID)
+    ///  - "Images/ItemIcon/Item_Icon_Hat"        (ì‹œíŠ¸ í•˜ë‚˜ë§Œ, ì²« ì¡°ê° ë˜ëŠ” idì™€ ê°™ì€ ì´ë¦„ ë§¤ì¹­)
     /// </summary>
     public static void Register(int id, string name, string description, string iconPath)
     {
@@ -36,7 +46,7 @@ public static class ItemPresentationDB
         map[id] = row;
     }
 
-    // Resources¿¡¼­ ¾ÆÀÌÄÜÀ» Ã£¾Æ¿É´Ï´Ù. (½½¶óÀÌ½º ½ÃÆ® Áö¿ø)
+    // Resourcesì—ì„œ ì•„ì´ì½˜ì„ ì°¾ì•„ì˜µë‹ˆë‹¤. (ìŠ¬ë¼ì´ìŠ¤ ì‹œíŠ¸ ì§€ì›)
     static Sprite LoadIcon(string iconPath, int id)
     {
         if (string.IsNullOrWhiteSpace(iconPath))
@@ -44,33 +54,33 @@ public static class ItemPresentationDB
 
         Sprite found = null;
 
-        // "path:10012" ÇüÅÂ Ã³¸®
+        // "path:10012" í˜•íƒœ ì²˜ë¦¬
         var parts = iconPath.Split(':');
         var basePath = parts[0].Trim();
         var desiredName = (parts.Length > 1) ? parts[1].Trim() : null;
 
-        // ½ºÇÁ¶óÀÌÆ® ½ÃÆ®/´ÜÀÏ ½ºÇÁ¶óÀÌÆ® ¸ğµÎ Áö¿ø
+        // ìŠ¤í”„ë¼ì´íŠ¸ ì‹œíŠ¸/ë‹¨ì¼ ìŠ¤í”„ë¼ì´íŠ¸ ëª¨ë‘ ì§€ì›
         var all = Resources.LoadAll<Sprite>(basePath);
         if (all != null && all.Length > 0)
         {
-            // 1) "path:Á¶°¢ÀÌ¸§" ÁöÁ¤ ½Ã ¿ì¼± ¸ÅÄª (Á¶°¢ ÀÌ¸§À» ¼ıÀÚ·Î ½áµµ µË´Ï´Ù)
+            // 1) "path:ì¡°ê°ì´ë¦„" ì§€ì • ì‹œ ìš°ì„  ë§¤ì¹­
             if (!string.IsNullOrEmpty(desiredName))
             {
                 found = Array.Find(all, s =>
                     string.Equals(s.name, desiredName, StringComparison.OrdinalIgnoreCase));
             }
 
-            // 2) ¸ø Ã£¾ÒÀ¸¸é id¿Í °°Àº ÀÌ¸§ÀÇ Á¶°¢À» ½Ãµµ (½½¶óÀÌ½ºµéÀÌ 10001,10002 Ã³·³ ÀÌ¸§ÀÎ °æ¿ì)
+            // 2) ëª» ì°¾ì•˜ìœ¼ë©´ idì™€ ê°™ì€ ì´ë¦„ì˜ ì¡°ê°ì„ ì‹œë„
             if (found == null)
                 found = Array.Find(all, s => s.name == id.ToString());
 
-            // 3) ±×·¡µµ ¾øÀ¸¸é Ã¹ Á¶°¢
+            // 3) ê·¸ë˜ë„ ì—†ìœ¼ë©´ ì²« ì¡°ê°
             if (found == null)
                 found = all[0];
         }
         else
         {
-            // ´ÜÀÏ ½ºÇÁ¶óÀÌÆ®(½½¶óÀÌ½º ¾øÀ½) ·Îµå
+            // ë‹¨ì¼ ìŠ¤í”„ë¼ì´íŠ¸(ìŠ¬ë¼ì´ìŠ¤ ì—†ìŒ) ë¡œë“œ
             found = Resources.Load<Sprite>(basePath);
         }
 

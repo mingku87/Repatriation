@@ -1,40 +1,59 @@
-using UnityEngine;
+癤퓎sing UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryDragHandler : MonoBehaviour
 {
-    public static InventoryDragHandler Instance;
+    public static InventoryDragHandler Instance { get; private set; }
 
-    [SerializeField] private Image dragIcon;   // 마우스 따라다닐 아이콘
-    private Canvas canvas;
+    [SerializeField] private Image dragIcon;
 
-    public int fromIndex = -1;  // 드래그 시작한 인벤토리 인덱스
+    bool active;
 
     void Awake()
     {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        canvas = GetComponentInParent<Canvas>();
-        dragIcon.gameObject.SetActive(false);
+
+        if (dragIcon != null)
+        {
+            dragIcon.enabled = false;
+            dragIcon.raycastTarget = false;
+        }
     }
 
-    void Update()
+    public void BeginDrag(Sprite sprite, int fromIndex)
     {
-        if (dragIcon.gameObject.activeSelf)
-            dragIcon.transform.position = Input.mousePosition;
-    }
 
-    public void BeginDrag(Sprite icon, int index)
-    {
-        if (icon == null) return;
-        fromIndex = index;
-        dragIcon.sprite = icon;
+        if (dragIcon == null || sprite == null)
+        {
+            active = false;
+            return;
+        }
+
+        dragIcon.sprite = sprite;
+        dragIcon.enabled = true;
+        dragIcon.raycastTarget = false;
         dragIcon.gameObject.SetActive(true);
+        dragIcon.transform.SetAsLastSibling();
+
+        dragIcon.rectTransform.position = Input.mousePosition;
+        active = true;
     }
 
     public void EndDrag()
     {
-        fromIndex = -1;
-        dragIcon.sprite = null;
-        dragIcon.gameObject.SetActive(false);
+        active = false;
+
+        if (dragIcon != null)
+        {
+            dragIcon.gameObject.SetActive(false);
+            dragIcon.sprite = null;
+        }
+    }
+
+    void Update()
+    {
+        if (active && dragIcon != null)
+            dragIcon.rectTransform.position = Input.mousePosition;
     }
 }

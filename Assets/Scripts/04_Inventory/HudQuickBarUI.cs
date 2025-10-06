@@ -1,35 +1,28 @@
-// HudQuickBarUI.cs
 using UnityEngine;
 
 public class HudQuickBarUI : MonoBehaviour
 {
-    [SerializeField] InventorySlotUI[] quickSlots; // HUD의 5칸(순서대로)
+    [SerializeField] InventorySlotUI[] quickSlots; // 0..4
+    private Inventory _inv;
 
-    Inventory inv;
-
-    public void Bind(Inventory inventory)
+    public void Bind(Inventory inv)
     {
-        inv = inventory;
-        inv.OnChanged += Refresh;
-        Refresh();
-    }
+        if (_inv != null) _inv.OnChanged -= Refresh;
+        _inv = inv;
 
-    void OnDisable()
-    {
-        if (inv != null) inv.OnChanged -= Refresh;
+        for (int i = 0; i < quickSlots.Length; i++)
+        {
+            quickSlots[i].index = i;   // 인벤토리 0~4 미러링
+            quickSlots[i].Clear();
+        }
+
+        if (_inv != null) { _inv.OnChanged += Refresh; Refresh(); }
     }
 
     public void Refresh()
     {
-        if (inv == null || quickSlots == null) return;
-
-        // 인벤토리 0..4칸을 그대로 가져와서 HUD에 표시
+        if (_inv == null) return;
         for (int i = 0; i < quickSlots.Length; i++)
-        {
-            if (i < inv.ActiveSlotCount)
-                quickSlots[i].Set(inv.GetView(i)); // 0~4
-            else
-                quickSlots[i].Clear();
-        }
+            quickSlots[i]?.Set(_inv.GetView(i));
     }
 }
