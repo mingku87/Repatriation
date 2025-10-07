@@ -68,6 +68,7 @@ public class InventoryController : MonoBehaviour
         if (inventory == null) inventory = new Inventory();
         inventory.SetBaseUnlocked(unlockedSlotCount);              // 먼저 해금 수 설정
         inventory.InitSlots(inventory.ActiveSlotCount);            // 해금 수 기준으로 초기화
+        inventory.SetBaseMaxWeight(InventoryConstant.DefaultMaxCarryWeight);
 
         // 3) 장비 모델 준비 (프로젝트에 맞는 생성자를 사용하세요)
         if (equipment == null) equipment = new EquipmentModel();

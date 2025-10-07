@@ -26,6 +26,12 @@ public partial class Inventory
     /// <summary>장비(가방)로 증가하는 보너스 슬롯 수</summary>
     private int _equipBonusSlots = 0;
 
+    /// <summary>기본 최대 적재 중량</summary>
+    private float _baseMaxWeight = InventoryConstant.DefaultMaxCarryWeight;
+
+    /// <summary>장비 보너스로 증가한 적재 중량</summary>
+    private float _equipmentWeightBonus = 0f;
+
     /// <summary>UI 갱신용 이벤트</summary>
     public event Action OnChanged;
 
@@ -132,6 +138,34 @@ public partial class Inventory
     {
         _equipBonusSlots = Mathf.Max(0, bonus);
         RecomputeActiveSlotCount();
+    }
+
+    /// <summary>기본 적재 중량 설정(씬/난이도 초기화 시 호출)</summary>
+    public void SetBaseMaxWeight(float capacity)
+    {
+        capacity = Mathf.Max(1f, capacity);
+        if (!Mathf.Approximately(_baseMaxWeight, capacity))
+        {
+            _baseMaxWeight = capacity;
+            Notify();
+        }
+    }
+
+    /// <summary>장비(가방 등)로 증가한 적재 중량 보너스 설정</summary>
+    public void SetEquipmentWeightBonus(float bonus)
+    {
+        bonus = Mathf.Max(0f, bonus);
+        if (!Mathf.Approximately(_equipmentWeightBonus, bonus))
+        {
+            _equipmentWeightBonus = bonus;
+            Notify();
+        }
+    }
+
+    /// <summary>현재 적용 중인 최대 적재 중량 반환</summary>
+    public float GetMaxWeightCapacity()
+    {
+        return Mathf.Max(1f, _baseMaxWeight + _equipmentWeightBonus);
     }
 
     /// <summary>활성 슬롯 수 재계산 후 변경 시 UI 알림</summary>

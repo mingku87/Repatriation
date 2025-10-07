@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -173,15 +173,34 @@ public class EquipmentModel
         var inv = InventoryController.Instance?.inventory;
         if (inv == null) return;
 
-        int bonus = 0;
+        int slotBonus = 0;
+        float weightBonus = 0f;
+
         foreach (var kv in _equippedBySlot)
         {
             if (kv.Value == null) continue;
-            var ep = kv.Value.param as ItemParameterEquipment;
-            if (ep == null) continue;
-            bonus += Mathf.Max(0, ep.slotBonus);
+            if (kv.Value.param is not ItemParameterEquipment ep) continue;
+
+            slotBonus += Mathf.Max(0, ep.slotBonus);
+            weightBonus += GetWeightBonus(ep.status, ep.value);
+
+            if (ep.extraEffect.HasValue)
+            {
+                var extra = ep.extraEffect.Value;
+                weightBonus += GetWeightBonus(extra.status, extra.value);
+            }
         }
-        inv.SetEquipmentBonusSlots(bonus);
+
+        inv.SetEquipmentBonusSlots(slotBonus);
+        inv.SetEquipmentWeightBonus(weightBonus);
+    }
+
+    private static float GetWeightBonus(Status status, float value)
+    {
+        if (status == Status.WGH)
+            return Mathf.Max(0f, value);
+
+        return 0f;
     }
 
     public bool UnequipToInventoryAt(EquipmentPart part, int inventoryIndex, out string reason)

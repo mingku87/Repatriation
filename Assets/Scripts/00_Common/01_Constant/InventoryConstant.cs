@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public static class InventoryConstant
 {
     public static int MaxQuickSlotCount = 6;
+    public const float DefaultMaxCarryWeight = 100f;
     public static readonly Dictionary<EquipmentPart, List<EquipmentSlot>> AllowedEquipmentSlotsPerPart = new()
     {
         { EquipmentPart.Head,  new(){ EquipmentSlot.Head } },

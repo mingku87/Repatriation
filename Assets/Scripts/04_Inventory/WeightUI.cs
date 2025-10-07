@@ -37,7 +37,10 @@ public class WeightUI : MonoBehaviour
     public void SetMaxCapacity(float value)
     {
         maxCapacity = Mathf.Max(1f, value);
-        Refresh();
+        if (boundInventory != null)
+            boundInventory.SetBaseMaxWeight(maxCapacity);
+        else
+            Refresh();
     }
 
     void Update()
@@ -75,6 +78,7 @@ public class WeightUI : MonoBehaviour
         boundInventory = ctrl.inventory;
         if (boundInventory != null)
         {
+            boundInventory.SetBaseMaxWeight(maxCapacity);
             boundInventory.OnChanged += Refresh;
 
             // 장비 착탈로 가방 보너스/슬롯 변동 시점을 캐치하고 싶으면 장비 모델에도 구독(선택)
@@ -102,8 +106,10 @@ public class WeightUI : MonoBehaviour
         var ctrl = InventoryController.Instance;
         if (ctrl == null || ctrl.inventory == null) return;
 
-        float current = ctrl.inventory.GetInventoryWeightOnly(); // 인벤토리만(장비 제외)
-        float max = Mathf.Max(1f, maxCapacity);
+        var inv = ctrl.inventory;
+
+        float current = inv.GetInventoryWeightOnly(); // 인벤토리만(장비 제외)
+        float max = Mathf.Max(1f, inv.GetMaxWeightCapacity());
 
         if (label != null)
             label.text = $"{Mathf.RoundToInt(current)}/{Mathf.RoundToInt(max)}";
@@ -116,10 +122,10 @@ public class WeightUI : MonoBehaviour
         Debug.Log($"[WeightUI] weight={current}, max={max}, fill={(fill ? fill.fillAmount : -1f)}");
 
         float recomputed = 0f;
-        var inv = ctrl.inventory;
-        for (int i = 0; i < inv.ActiveSlotCount; i++)
+        var debugInv = inv;
+        for (int i = 0; i < debugInv.ActiveSlotCount; i++)
         {
-            var s = inv.slots[i];
+            var s = debugInv.slots[i];
             if (!s.IsEmpty)
             {
                 float w = s.item?.param?.weight ?? 0f;
