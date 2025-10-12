@@ -9,6 +9,9 @@ public class DebugGiveItem : MonoBehaviour
     [Tooltip("획득 수량 (스택 적용)")]
     [SerializeField] private int count = 1;
 
+    [Tooltip("장비 내구도. 음수면 TSV quality(최대 내구도)를 사용")] 
+    [SerializeField] private int durability = -1;
+
     [Header("선택 사항")]
     [Tooltip("InventoryController가 아직 초기화되지 않았으면 자동 초기화 시도")]
     [SerializeField] private bool autoInitController = true;
@@ -36,22 +39,43 @@ public class DebugGiveItem : MonoBehaviour
         var inv = ctrl.inventory;
         if (inv == null) { Debug.LogError("[DebugGiveItem] inventory is null."); return; }
 
-        int remain = inv.AddItemById(itemId, Mathf.Max(1, count));  // 인벤토리에 호출
+        int resolvedDurability = ResolveDurability(itemId, durability);
+
+        int remain = inv.AddItemById(itemId, Mathf.Max(1, count), resolvedDurability);  // 인벤토리에 호출
         if (remain > 0)
             Debug.LogWarning($"{remain}개는 공간 부족/정의 없음으로 미지급");
         else
-            Debug.Log($"지급 완료: id={itemId}, count={count}");
+        {
+            if (resolvedDurability >= 0)
+                Debug.Log($"지급 완료: id={itemId}, count={count}, durability={resolvedDurability}");
+            else
+                Debug.Log($"지급 완료: id={itemId}, count={count}");
+        }
     }
 
     /// <summary>버튼에서 호출: 원하는 ID/개수를 파라미터로 지급(유니티 이벤트에서 쓸 수 있음)</summary>
-    public void GiveWithArgs(int id, int amount)
+    public void GiveWithArgs(int id, int amount, int durabilityOverride = -1)
     {
-        if (InventoryController.Instance == null)
+        var ctrl = InventoryController.Instance;
+        if (ctrl == null)
         {
             Debug.LogError("[DebugGiveItem] InventoryController.Instance == null");
             return;
         }
 
-        InventoryController.Instance.inventory.AddItemById(itemId, Mathf.Max(1, count));
+        int resolvedDurability = ResolveDurability(id, durabilityOverride);
+        ctrl.inventory.AddItemById(id, Mathf.Max(1, amount), resolvedDurability);
+    }
+
+    private static int ResolveDurability(int id, int requested)
+    {
+        if (requested >= 0)
+            return requested;
+
+        var param = ItemParameterList.GetItemStat(id) as ItemParameterEquipment;
+        if (param != null)
+            return param.maxDurability;
+
+        return -1;
     }
 }

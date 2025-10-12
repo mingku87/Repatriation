@@ -94,6 +94,8 @@ public class ItemParameterList : MonoBehaviour
                 float eff2Val = ParseFloat(Get(row, "effect_value2"));
 
                 int maxDur = ParseInt(Get(row, "maxdurability"), 0);
+                if (maxDur <= 0)
+                    maxDur = ParseInt(Get(row, "quality"), maxDur);
                 int decay = ParseInt(Get(row, "durabilitydecayrate"), 0);
 
                 // 장비 파트 매핑(프로젝트 enum에 맞춤: Arms/Hands/Knees/Feet 등)

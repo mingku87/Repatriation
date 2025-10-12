@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -267,6 +267,67 @@ public class EquipmentModel
         return true;
     }
 
+    public bool ConsumeDurability(EquipmentSlot slot, int amount = 1)
+    {
+        if (!_equippedBySlot.TryGetValue(slot, out var item) || item is not ItemEquipment eq)
+            return false;
+
+        return eq.ConsumeDurability(Mathf.Max(1, amount));
+    }
+
+    public bool ConsumeDurability(EquipmentPart part, int amount = 1)
+    {
+        if (!TryGetAllowedSlots(part, out var slots) || slots == null || slots.Count == 0)
+            return false;
+
+        foreach (var slot in slots)
+        {
+            if (ConsumeDurability(slot, amount))
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool OnWeaponAttack()
+    {
+        return ConsumeDurabilityByStatus(Status.Atk, 1);
+    }
+
+    public bool OnArmorHit(EquipmentSlot? slot = null)
+    {
+        if (slot.HasValue && ConsumeDurability(slot.Value, 1))
+            return true;
+
+        return ConsumeDurabilityByStatus(Status.Def, 1);
+    }
+
+    private bool ConsumeDurabilityByStatus(Status status, int amount)
+    {
+        if (_equippedBySlot.Count == 0)
+            return false;
+
+        var orderedSlots = new List<EquipmentSlot>(_equippedBySlot.Keys);
+        orderedSlots.Sort();
+
+        foreach (var slot in orderedSlots)
+        {
+            if (_equippedBySlot.TryGetValue(slot, out var item) && item is ItemEquipment eq)
+            {
+                var eqParam = eq.param;
+                if (eqParam == null) continue;
+
+                if (eqParam.status == status)
+                    return ConsumeDurability(slot, amount);
+
+                if (eqParam.extraEffect.HasValue && eqParam.extraEffect.Value.status == status)
+                    return ConsumeDurability(slot, amount);
+            }
+        }
+
+        return false;
+    }
+
     public bool CanEquip(EquipmentSlot slot, Item item)
     {
         if (item == null || !item.IsEquipment()) return false;
@@ -354,6 +415,47 @@ public class EquipmentModel
         }
 
         reason = "Inventory full";
+        return false;
+    }
+
+    public bool HandleBrokenItem(ItemEquipment eq)
+    {
+        if (eq == null)
+            return false;
+
+        if (!TryFindSlot(eq, out var slot))
+            return false;
+
+        _equippedBySlot.Remove(slot);
+        RecomputeBagBonusToInventory();
+        RaiseChanged();
+        return true;
+    }
+
+    public bool NotifyDurabilityChanged(ItemEquipment eq)
+    {
+        if (eq == null)
+            return false;
+
+        if (!TryFindSlot(eq, out _))
+            return false;
+
+        RaiseChanged();
+        return true;
+    }
+
+    public bool TryFindSlot(Item item, out EquipmentSlot slot)
+    {
+        foreach (var kv in _equippedBySlot)
+        {
+            if (ReferenceEquals(kv.Value, item))
+            {
+                slot = kv.Key;
+                return true;
+            }
+        }
+
+        slot = default;
         return false;
     }
 

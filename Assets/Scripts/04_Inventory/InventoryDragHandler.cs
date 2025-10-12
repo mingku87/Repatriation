@@ -6,6 +6,7 @@ public class InventoryDragHandler : MonoBehaviour
     public static InventoryDragHandler Instance { get; private set; }
 
     [SerializeField] private Image dragIcon;
+    [SerializeField] private Canvas dragCanvas;
 
     bool active;
 
@@ -19,9 +20,17 @@ public class InventoryDragHandler : MonoBehaviour
             dragIcon.enabled = false;
             dragIcon.raycastTarget = false;
         }
+
+        if (dragCanvas == null && dragIcon != null)
+            dragCanvas = dragIcon.canvas;
     }
 
     public void BeginDrag(Sprite sprite, int fromIndex)
+    {
+        BeginDrag(sprite, fromIndex, Input.mousePosition);
+    }
+
+    public void BeginDrag(Sprite sprite, int fromIndex, Vector2 pointerPosition)
     {
 
         if (dragIcon == null || sprite == null)
@@ -36,7 +45,7 @@ public class InventoryDragHandler : MonoBehaviour
         dragIcon.gameObject.SetActive(true);
         dragIcon.transform.SetAsLastSibling();
 
-        dragIcon.rectTransform.position = Input.mousePosition;
+        UpdateIconPosition(pointerPosition);
         active = true;
     }
 
@@ -54,6 +63,31 @@ public class InventoryDragHandler : MonoBehaviour
     void Update()
     {
         if (active && dragIcon != null)
-            dragIcon.rectTransform.position = Input.mousePosition;
+            UpdateIconPosition(Input.mousePosition);
+    }
+
+    void UpdateIconPosition(Vector2 screenPosition)
+    {
+        if (dragIcon == null)
+            return;
+
+        if (dragCanvas == null)
+            dragCanvas = dragIcon.canvas;
+
+        if (dragCanvas != null && dragCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    dragCanvas.transform as RectTransform,
+                    screenPosition,
+                    dragCanvas.worldCamera,
+                    out Vector3 worldPos))
+            {
+                dragIcon.rectTransform.position = worldPos;
+            }
+        }
+        else
+        {
+            dragIcon.rectTransform.position = screenPosition;
+        }
     }
 }

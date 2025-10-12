@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ItemEquipment : Item
 {
     public new ItemParameterEquipment param => (ItemParameterEquipment)base.param;
@@ -20,8 +22,43 @@ public class ItemEquipment : Item
         Player.SetCurrentStatus(param.status, 0);
     }
 
+    public bool ConsumeDurability(int amount = 1)
+    {
+        if (param == null || param.maxDurability <= 0)
+            return false;
+
+        amount = Mathf.Max(1, amount);
+        if (durability <= 0)
+            return false;
+
+        durability = Mathf.Max(0, durability - amount);
+
+        var controller = InventoryController.Instance;
+
+        if (durability <= 0)
+        {
+            if (controller?.equipment != null && controller.equipment.HandleBrokenItem(this))
+                return true;
+
+            if (controller?.inventory != null && controller.inventory.RemoveItemReference(this))
+                return true;
+
+            return true;
+        }
+
+        bool notified = false;
+
+        if (controller?.equipment != null)
+            notified |= controller.equipment.NotifyDurabilityChanged(this);
+
+        if (controller?.inventory != null)
+            notified |= controller.inventory.NotifyDurabilityChanged(this);
+
+        return true;
+    }
+
     public override void Use()
     {
-        durability -= param.durabilityDecayRate;
+        ConsumeDurability();
     }
 }

@@ -67,7 +67,7 @@ public class InventorySlotUI : MonoBehaviour,
     {
         if (icon) { icon.sprite = null; icon.enabled = false; icon.color = kNormal; }
         if (countText) countText.gameObject.SetActive(false);
-        if (durabilityRoot) durabilityRoot.SetActive(false);
+        UpdateDurabilityGauge(visible: false, ratio: 1f);
         if (dragGhost) dragGhost.gameObject.SetActive(false);
     }
 
@@ -101,9 +101,8 @@ public class InventorySlotUI : MonoBehaviour,
             if (v.showCount) countText.text = v.count.ToString();
         }
 
-        if (durabilityRoot) durabilityRoot.SetActive(v.showDurability);
-        if (v.showDurability && durabilityFill)
-            durabilityFill.fillAmount = Mathf.Clamp01(v.durability01);
+        float ratio = Mathf.Clamp01(v.durability01);
+        UpdateDurabilityGauge(v.showDurability && ratio < 1f, ratio);
     }
 
     // ───────── Drag & Drop ─────────
@@ -148,7 +147,7 @@ public class InventorySlotUI : MonoBehaviour,
         sDraggingFrom = index;
         sDraggingSlot = this;
 
-        InventoryDragHandler.Instance?.BeginDrag(sp, index);
+        InventoryDragHandler.Instance?.BeginDrag(sp, index, eventData.position);
         DragContext.BeginFromInventory(index);
 
         if (dragGhost != null)
@@ -271,5 +270,43 @@ public class InventorySlotUI : MonoBehaviour,
         }
         sDraggingFrom = -1;
         sDraggingSlot = null;
+    }
+
+    private void UpdateDurabilityGauge(bool visible, float ratio)
+    {
+        if (!durabilityRoot && !durabilityFill)
+            return;
+
+        if (durabilityRoot)
+            durabilityRoot.SetActive(visible);
+
+        if (!durabilityFill)
+            return;
+
+        EnsureHorizontalFill(durabilityFill);
+
+        durabilityFill.gameObject.SetActive(visible);
+
+        if (!visible)
+        {
+            durabilityFill.enabled = false;
+            durabilityFill.fillAmount = 1f;
+            durabilityFill.color = DurabilityColorUtility.GetColor(1f);
+            return;
+        }
+
+        durabilityFill.enabled = true;
+        durabilityFill.fillAmount = Mathf.Clamp01(ratio);
+        durabilityFill.color = DurabilityColorUtility.GetColor(durabilityFill.fillAmount);
+    }
+
+    private static void EnsureHorizontalFill(Image fill)
+    {
+        if (fill == null)
+            return;
+
+        fill.type = Image.Type.Filled;
+        fill.fillMethod = Image.FillMethod.Horizontal;
+        fill.fillOrigin = (int)Image.OriginHorizontal.Left;
     }
 }

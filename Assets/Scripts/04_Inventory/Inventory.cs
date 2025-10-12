@@ -59,8 +59,24 @@ public partial class Inventory
         public string DisplayName => item?.info?.name ?? item?.param?.itemName.ToString();
 
         public bool IsEquipment => item is ItemEquipment;
-        public int CurDurability => (item as ItemEquipment)?.durability ?? 0;
-        public int MaxDurability => (item as ItemEquipment)?.param?.maxDurability ?? 0;
+        public int CurDurability
+        {
+            get
+            {
+                if (item is ItemEquipment eq)
+                    return Mathf.Max(0, eq.durability);
+                return 0;
+            }
+        }
+        public int MaxDurability
+        {
+            get
+            {
+                if (item is ItemEquipment eq)
+                    return Mathf.Max(0, eq.param?.maxDurability ?? 0);
+                return 0;
+            }
+        }
 
         /// <summary>장비이며 내구도가 소모된 경우에만 게이지 표시</summary>
         public bool NeedDurabilityGauge
@@ -223,9 +239,10 @@ public partial class Inventory
 
     /// <summary>
     /// TSV(DB)에서 id로 파라미터를 찾고, 스택 규칙을 적용하여 아이템을 추가한다.
+    /// valueOverride는 장비 내구도 등 ItemFactory에 전달할 부가 값으로, -1이면 기본값을 사용한다.
     /// 반환값은 남은 개수(0이면 전부 들어간 것).
     /// </summary>
-    public int AddItemById(int id, int count = 1)
+    public int AddItemById(int id, int count = 1, int valueOverride = -1)
     {
         if (count <= 0) return 0;
 
@@ -254,7 +271,7 @@ public partial class Inventory
             int empty = FindEmpty();
             if (empty < 0) break;
 
-            var newItem = ItemFactory.Create(id);
+            var newItem = ItemFactory.Create(id, valueOverride);
             int put = (param.maxstack > 1) ? Mathf.Min(param.maxstack, count) : 1;
 
             slots[empty].item = newItem;
@@ -458,5 +475,38 @@ public partial class Inventory
             slots[index].item = null;
             slots[index].count = 0;
         }
+    }
+
+    public bool RemoveItemReference(Item item)
+    {
+        if (item == null) return false;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (!slots[i].IsEmpty && ReferenceEquals(slots[i].item, item))
+            {
+                slots[i] = new ItemStack();
+                RaiseChanged();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool NotifyDurabilityChanged(Item item)
+    {
+        if (item == null) return false;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (!slots[i].IsEmpty && ReferenceEquals(slots[i].item, item))
+            {
+                RaiseChanged();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

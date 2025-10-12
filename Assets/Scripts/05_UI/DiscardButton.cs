@@ -49,16 +49,28 @@ public class DiscardButton : MonoBehaviour, IDropHandler
             }
             else
             {
-                DiscardQuantityPopup.Instance?.Show(
-                    max: count,
-                    onConfirm: amt =>
-                    {
-                        Debug.Log($"[DiscardButton] 인벤토리 {amt}개 버림");
-                        inv.SubtractAt(drag.inventoryIndex, amt);
-                        inv.RaiseChanged();
-                        EndDrag();
-                    }
-                );
+                var popup = DiscardQuantityPopup.EnsureInstance();
+                if (popup != null)
+                {
+                    popup.Show(
+                        max: count,
+                        onConfirm: amt =>
+                        {
+                            Debug.Log($"[DiscardButton] 인벤토리 {amt}개 버림");
+                            inv.SubtractAt(drag.inventoryIndex, amt);
+                            inv.RaiseChanged();
+                            EndDrag();
+                        },
+                        initialValue: 1
+                    );
+                }
+                else
+                {
+                    Debug.LogWarning("[DiscardButton] DiscardQuantityPopup 인스턴스를 찾을 수 없어 전체 스택을 버립니다.");
+                    inv.TakeAt(drag.inventoryIndex);
+                    inv.RaiseChanged();
+                    EndDrag();
+                }
             }
 
             return;

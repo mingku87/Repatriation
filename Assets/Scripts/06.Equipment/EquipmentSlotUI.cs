@@ -29,7 +29,7 @@ public class EquipmentSlotUI : MonoBehaviour,
     public Image highlightFrame;
 
     [Header("Options")]
-    public bool showDurability = false;
+    public bool showDurability = true;
     public EquipmentPart Part => currentPart;
     public EquipmentSlot slot;
 
@@ -57,9 +57,14 @@ public class EquipmentSlotUI : MonoBehaviour,
         currentPart = defaultPart;
         currentSlot = slotType;
 
+        EnsureDurabilityReferences();
+
         if (icon) icon.enabled = false;
-        if (durabilityRoot) durabilityRoot.SetActive(false);
+        UpdateDurabilityUI(null);
         if (highlightFrame) highlightFrame.enabled = false;
+
+        if (!durabilityRoot && durabilityFill)
+            durabilityRoot = durabilityFill.transform.parent != null ? durabilityFill.transform.parent.gameObject : null;
     }
 
     void OnEnable()
@@ -131,7 +136,7 @@ public class EquipmentSlotUI : MonoBehaviour,
         if (item != null)
         {
             var sprite = item.info?.image;
-            InventoryDragHandler.Instance?.BeginDrag(sprite, -1);
+            InventoryDragHandler.Instance?.BeginDrag(sprite, -1, eventData.position);
         }
     }
 
@@ -246,7 +251,7 @@ public class EquipmentSlotUI : MonoBehaviour,
         if (equipmentModel == null)
         {
             if (icon) { icon.sprite = null; icon.enabled = false; }
-            if (durabilityRoot) durabilityRoot.SetActive(false);
+            UpdateDurabilityUI(null);
             return;
         }
 
@@ -254,7 +259,7 @@ public class EquipmentSlotUI : MonoBehaviour,
         if (item == null)
         {
             if (icon) { icon.sprite = null; icon.enabled = false; }
-            if (durabilityRoot) durabilityRoot.SetActive(false);
+            UpdateDurabilityUI(null);
             return;
         }
 
@@ -264,19 +269,127 @@ public class EquipmentSlotUI : MonoBehaviour,
             icon.enabled = icon.sprite != null;
         }
 
-        if (showDurability && durabilityRoot && durabilityFill)
+        UpdateDurabilityUI(item as ItemEquipment);
+    }
+
+    private void UpdateDurabilityUI(ItemEquipment eq)
+    {
+        EnsureDurabilityReferences();
+
+        bool shouldShow = showDurability && durabilityRoot && durabilityFill && eq != null && eq.param != null;
+
+        if (!shouldShow)
         {
-            var eq = item as ItemEquipment;
-            if (eq != null && eq.param != null && eq.param.maxDurability > 0 && eq.durability < eq.param.maxDurability)
+            if (durabilityRoot)
+                durabilityRoot.SetActive(false);
+            if (durabilityFill)
             {
-                float v = Mathf.Clamp01((float)eq.durability / Mathf.Max(1, eq.param.maxDurability));
-                durabilityRoot.SetActive(true);
-                durabilityFill.fillAmount = v;
+                EnsureHorizontalFill(durabilityFill);
+                durabilityFill.gameObject.SetActive(false);
+                durabilityFill.enabled = false;
+                durabilityFill.fillAmount = 1f;
+                durabilityFill.color = DurabilityColorUtility.GetColor(1f);
+            }
+            return;
+        }
+
+        int maxDur = Mathf.Max(0, eq.param.maxDurability);
+        int curDur = Mathf.Clamp(eq.durability, 0, maxDur);
+
+        if (maxDur <= 0 || curDur >= maxDur)
+        {
+            durabilityRoot.SetActive(false);
+            EnsureHorizontalFill(durabilityFill);
+            durabilityFill.gameObject.SetActive(false);
+            durabilityFill.enabled = false;
+            durabilityFill.fillAmount = 1f;
+            durabilityFill.color = DurabilityColorUtility.GetColor(1f);
+            return;
+        }
+
+        float ratio = Mathf.Clamp01((float)curDur / maxDur);
+        durabilityRoot.SetActive(true);
+        EnsureHorizontalFill(durabilityFill);
+        durabilityFill.gameObject.SetActive(true);
+        durabilityFill.enabled = true;
+        durabilityFill.fillAmount = ratio;
+        durabilityFill.color = DurabilityColorUtility.GetColor(ratio);
+    }
+
+    private static void EnsureHorizontalFill(Image fill)
+    {
+        if (fill == null)
+            return;
+
+        fill.type = Image.Type.Filled;
+        fill.fillMethod = Image.FillMethod.Horizontal;
+        fill.fillOrigin = (int)Image.OriginHorizontal.Left;
+    }
+
+    private void EnsureDurabilityReferences()
+    {
+        if (!durabilityFill)
+        {
+            var images = GetComponentsInChildren<Image>(true);
+            foreach (var image in images)
+            {
+                if (image == null)
+                    continue;
+
+                var go = image.gameObject;
+                if (go == null)
+                    continue;
+
+                var name = go.name;
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
+                if (name.IndexOf("durability", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    name.IndexOf("fill", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    durabilityFill = image;
+                    break;
+                }
+            }
+        }
+
+        if (!durabilityRoot)
+        {
+            if (durabilityFill && durabilityFill.transform && durabilityFill.transform.parent)
+            {
+                durabilityRoot = durabilityFill.transform.parent.gameObject;
             }
             else
             {
-                durabilityRoot.SetActive(false);
+                var transforms = GetComponentsInChildren<Transform>(true);
+                foreach (var tr in transforms)
+                {
+                    if (tr == null)
+                        continue;
+
+                    if (durabilityFill && tr == durabilityFill.transform)
+                        continue;
+
+                    var name = tr.gameObject?.name;
+                    if (string.IsNullOrEmpty(name))
+                        continue;
+
+                    if (name.IndexOf("durability", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        durabilityRoot = tr.gameObject;
+                        break;
+                    }
+                }
             }
         }
+
+        if (durabilityFill)
+            EnsureHorizontalFill(durabilityFill);
+
+        if (durabilityRoot && !durabilityRoot.activeSelf)
+            durabilityRoot.SetActive(false);
+
+        if (durabilityFill && !durabilityFill.gameObject.activeSelf)
+            durabilityFill.gameObject.SetActive(false);
     }
 }

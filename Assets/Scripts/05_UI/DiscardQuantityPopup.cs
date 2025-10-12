@@ -7,6 +7,19 @@ public class DiscardQuantityPopup : MonoBehaviour
 {
     public static DiscardQuantityPopup Instance { get; private set; }
 
+    public static DiscardQuantityPopup EnsureInstance()
+    {
+        if (Instance != null)
+            return Instance;
+
+        Instance = FindObjectOfType<DiscardQuantityPopup>(includeInactive: true);
+
+        if (Instance != null && Instance.root == null)
+            Instance.root = Instance.gameObject;
+
+        return Instance;
+    }
+
     [Header("Root / Title")]
     [SerializeField] private GameObject root;      // Panel 루트
     [SerializeField] private TMP_Text titleLabel;  // "몇 개 버리시겠습니까?"
@@ -19,14 +32,19 @@ public class DiscardQuantityPopup : MonoBehaviour
     [SerializeField] private Button cancelButton;  // 취소
 
     private int _max = 0;
+    private int _min = 0;
     private Action<int> _onConfirm;
+    private bool _activatedSelf = false;
 
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        if (root) root.SetActive(false);
+        if (root == null)
+            root = gameObject;
+
+        SetPopupActive(false);
 
         if (plusButton) plusButton.onClick.AddListener(() => Step(+1));
         if (minusButton) minusButton.onClick.AddListener(() => Step(-1));
@@ -42,71 +60,107 @@ public class DiscardQuantityPopup : MonoBehaviour
         }
     }
 
-    public void Show(int max, Action<int> onConfirm, string title = "몇 개 버리시겠습니까?")
+    public void Show(int max, Action<int> onConfirm, string title = "몇 개 버리시겠습니까?", int initialValue = 1)
     {
         _max = Mathf.Max(0, max);
+        _min = _max > 0 ? 1 : 0;
         _onConfirm = onConfirm;
         if (titleLabel) titleLabel.text = title;
 
-        SetValue(0);           // 기본 0
-        SetOKInteractable(false);
+        int startValue = Mathf.Clamp(initialValue, _min, _max);
+        SetValue(startValue);
+        RefreshState(startValue);
 
-        if (root) root.SetActive(true);
+        SetPopupActive(true);
         transform.SetAsLastSibling();
     }
 
     public void Close()
     {
-        if (root) root.SetActive(false);
+        SetPopupActive(false);
         _onConfirm = null;
     }
 
     private void OnClickOK()
     {
         int val = GetValue();
-        if (val <= 0) return;
-        _onConfirm?.Invoke(Mathf.Clamp(val, 0, _max));
+        if (val < _min) return;
+        _onConfirm?.Invoke(Mathf.Clamp(val, _min, _max));
         Close();
+    }
+
+    private void SetPopupActive(bool active)
+    {
+        if (active && !gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+            _activatedSelf = true;
+        }
+
+        var target = root != null ? root : gameObject;
+        if (target != null && target.activeSelf != active)
+            target.SetActive(active);
+
+        if (!active && _activatedSelf)
+        {
+            if (gameObject.activeSelf)
+                gameObject.SetActive(false);
+            _activatedSelf = false;
+        }
+
+        if (!active && target == gameObject)
+            _activatedSelf = false;
     }
 
     private void Step(int delta)
     {
-        int v = Mathf.Clamp(GetValue() + delta, 0, _max);
+        int v = Mathf.Clamp(GetValue() + delta, _min, _max);
         SetValue(v);
-        SetOKInteractable(v > 0);
+        RefreshState(v);
     }
 
     private void OnInputEndEdit(string s)
     {
         if (!int.TryParse(s, out int v)) v = 0;
-        v = Mathf.Clamp(v, 0, _max);
+        v = Mathf.Clamp(v, _min, _max);
         SetValue(v);
-        SetOKInteractable(v > 0);
+        RefreshState(v);
     }
 
     private void OnInputChanged(string s)
     {
         if (!int.TryParse(s, out int v)) v = 0;
-        v = Mathf.Clamp(v, 0, _max);
-        SetOKInteractable(v > 0);
+        v = Mathf.Clamp(v, _min, _max);
+        RefreshState(v);
     }
 
     private void SetValue(int v)
     {
-        v = Mathf.Clamp(v, 0, _max);
+        v = Mathf.Clamp(v, _min, _max);
         if (input) input.SetTextWithoutNotify(v.ToString());
     }
 
     private int GetValue()
     {
         if (input && int.TryParse(input.text, out int v))
-            return Mathf.Clamp(v, 0, _max);
+            return Mathf.Clamp(v, _min, _max);
         return 0;
     }
 
     private void SetOKInteractable(bool on)
     {
         if (okButton) okButton.interactable = on;
+    }
+
+    private void RefreshState(int value)
+    {
+        SetOKInteractable(value >= _min && value > 0);
+
+        if (plusButton)
+            plusButton.interactable = value < _max;
+
+        if (minusButton)
+            minusButton.interactable = value > _min;
     }
 
     void Update()
