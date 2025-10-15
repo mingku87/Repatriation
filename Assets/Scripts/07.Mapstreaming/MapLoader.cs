@@ -21,8 +21,6 @@ public partial class MapLoader : MonoBehaviour
 
     bool busy, portalLock;
 
-
-    // MapLoader.cs
     public void TryGoThroughFixedRay(Portal portal, Transform who)
     {
         if (who != player) return;
@@ -43,6 +41,9 @@ public partial class MapLoader : MonoBehaviour
 
         var anim = player.GetComponent<Animator>();
         if (anim) anim.SetBool("IsRunning", true);
+
+        // ★ 노클립 ON (원복 함수 받아두기)
+        var restoreNoClip = EnablePlayerNoClip();
 
         GameObject nextGO = null;
         MapChunk nextChunk = null;
@@ -101,11 +102,12 @@ public partial class MapLoader : MonoBehaviour
         CleanupOtherChunks(currentChunk);
 
     CLEANUP:
-        // 공통 마무리(여기는 yield 가능)
+        // 공통 정리
+        restoreNoClip?.Invoke();              // ★ 노클립 OFF(원래대로)
         if (anim) anim.SetBool("IsRunning", false);
-        if (input) input.SetBlocked(false);
+        Player.Instance.SetInputBlocked(false);
 
-        yield return new WaitForSeconds(0.1f); // 재트리거 쿨다운
+        yield return new WaitForSeconds(0.1f);
         portalLock = false;
         busy = false;
     }
@@ -136,5 +138,28 @@ public partial class MapLoader : MonoBehaviour
             if (!go.scene.IsValid() || !go.scene.isLoaded) continue;   // 씬 외/프리팹 에셋 제외
             if (c != keep) Destroy(go);
         }
+    }
+    System.Action EnablePlayerNoClip()
+    {
+        var colliders = player.GetComponents<Collider2D>();
+        var prev = new bool[colliders.Length];
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            prev[i] = colliders[i].isTrigger;
+            colliders[i].isTrigger = true;          // ★ 전환 중엔 벽/타일과 충돌 안 함 (트리거는 유지)
+        }
+
+        var rb = player.GetComponent<Rigidbody2D>();
+        var prevKinematic = rb ? rb.isKinematic : false;
+        if (rb) rb.isKinematic = true;              // 관성/반발 방지(선택)
+
+        // 원복 함수 반환
+        return () =>
+        {
+            for (int i = 0; i < colliders.Length; i++)
+                colliders[i].isTrigger = prev[i];
+            if (rb) rb.isKinematic = prevKinematic;
+        };
     }
 }
