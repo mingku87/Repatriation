@@ -6,6 +6,7 @@ public class Player : SingletonObject<Player>
     public static PlayerSettings constant => PlayerConstant.Settings[InGameManager.difficulty];
     private static PlayerStatusController playerStatusController;
     private Inventory inventory;
+    private bool inputBlocked = false;
 
     void Start()
     {
@@ -35,8 +36,22 @@ public class Player : SingletonObject<Player>
         playerStatusController.UpdatePlayerStatus();
     }
 
+    //MapLoader 등 외부에서 호출
+    public void SetInputBlocked(bool blocked)
+    {
+        inputBlocked = blocked;
+        if (blocked)
+        {
+            // 입력 차단 시, 이동 애니 값은 여기서 만지지 않음
+            // (포탈 전환 코루틴이 방향/러닝 애니를 직접 세팅하도록 남겨 둠)
+        }
+    }
+
     private void Move()
     {
+        //차단 중이면 Update에서 아무 것도 하지 않음
+        if (inputBlocked) return;
+
         float moveX = 0.0f;
         float moveY = 0.0f;
 
