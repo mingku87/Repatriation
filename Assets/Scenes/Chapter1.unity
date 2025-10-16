@@ -7322,12 +7322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 144311344}
   currentChunk: {fileID: 1023086021}
-  rayDistance: 20
-  stopAtObstacle: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  runSpeed: 6
+  rayDistance: 10
+  runSpeed: 10
 --- !u!4 &1497995183
 Transform:
   m_ObjectHideFlags: 0

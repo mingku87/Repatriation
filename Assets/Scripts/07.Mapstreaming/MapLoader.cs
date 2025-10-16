@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public partial class MapLoader : MonoBehaviour
@@ -14,7 +15,7 @@ public partial class MapLoader : MonoBehaviour
     [Header("Ray Settings")]
     [Tooltip("플레이어가 포탈을 통과할 때 이동할 거리 (미터 단위)")]
     [Range(1f, 50f)]
-    public float rayDistance = 20f;   // ← 인스펙터에서 직접 조정 가능!
+    public float rayDistance = 20f;
 
     [Header("Run Settings")]
     public float runSpeed = 6f;
@@ -36,22 +37,35 @@ public partial class MapLoader : MonoBehaviour
         busy = true;
         portalLock = true;
 
-        var input = player.GetComponent<PlayerInputBlocker>();
-        if (input) input.SetBlocked(true);
+        // 대상/컴포넌트 캐시
+        Transform p = (Player.Instance != null) ? Player.Instance.transform : player;
+        Animator anim = null;                // ← 초기화 (CS0165 방지)
+        MoveCamera cam = null;               // ← 초기화
+        System.Action restoreNoClip = null;  // ← 초기화
 
-        var anim = player.GetComponent<Animator>();
+        if (p == null)
+        {
+            Debug.LogError("[Loader] player transform is null");
+            goto CLEANUP_EARLY;
+        }
+
+        anim = p.GetComponent<Animator>();
+        cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
+
+        // ==== 입력 차단 & 러닝 애니 시작 ====
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(true);
         if (anim) anim.SetBool("IsRunning", true);
 
-        // ★ 노클립 ON (원복 함수 받아두기)
-        var restoreNoClip = EnablePlayerNoClip();
+        // ==== 노클립 ON (전환 동안만) ====
+        restoreNoClip = EnablePlayerNoClip();
 
         GameObject nextGO = null;
         MapChunk nextChunk = null;
 
-        // --- 1) 진행 방향 계산 (각도 사용) ---
+        // ==== 1) 진행 방향(각도) 계산 ====
         float rayAngle = portal.customRayAngle;
         if (Mathf.Approximately(rayAngle, 0f))
-            rayAngle = DirUtil.ToRayAngleDeg(portal.direction);   // 기본각 사용
+            rayAngle = DirUtil.ToRayAngleDeg(portal.direction); // 60/120/240/300
 
         Vector2 dir2 = new Vector2(Mathf.Cos(rayAngle * Mathf.Deg2Rad),
                                    Mathf.Sin(rayAngle * Mathf.Deg2Rad)).normalized;
@@ -59,59 +73,91 @@ public partial class MapLoader : MonoBehaviour
 
         if (anim) { anim.SetFloat("MoveX", dir2.x); anim.SetFloat("MoveY", dir2.y); }
 
-        // --- 2) 20m 지점까지 이동 ---
-        Vector3 startPos = player.position;
-        Vector3 endPos = startPos + dir3 * rayDistance;   // rayDistance = 20f
+        // ==== 2) 레이 목표점 ====
+        Vector3 startPos = p.position;
+        Vector3 endPos = startPos + dir3 * rayDistance;
         Debug.DrawLine(startPos, endPos, Color.cyan, 1.5f);
 
-        yield return MoveTo(player, endPos, runSpeed);
-
-        // --- 3) 다음 맵 생성/검증 ---
+        // ==== 3) 다음 맵 생성 & 엔트리 포탈 확보 ====
         nextGO = Instantiate(portal.nextMapPrefab);
         nextChunk = nextGO ? nextGO.GetComponent<MapChunk>() : null;
-        if (!nextChunk)
-        {
-            Debug.LogError("[Loader] nextMapPrefab has no MapChunk");
-            if (nextGO) Destroy(nextGO);
-            goto CLEANUP;        // 실패 시 공통 정리로
-        }
+        if (!nextChunk) { Debug.LogError("[Loader] nextMapPrefab has no MapChunk"); if (nextGO) Destroy(nextGO); goto CLEANUP; }
 
         var entry = nextChunk.FindPortal(portal.entryDirectionOnNext);
-        if (!entry)
-        {
-            Debug.LogError($"[Loader] Missing entry portal {portal.entryDirectionOnNext}");
-            Destroy(nextGO);
-            goto CLEANUP;
-        }
+        if (!entry) { Debug.LogError($"[Loader] Missing entry portal {portal.entryDirectionOnNext}"); Destroy(nextGO); goto CLEANUP; }
 
-        // --- 4) 절대 스냅(엔트리 앵커 == endPos) ---
+        // ==== 4) 절대 스냅: 엔트리 앵커 == endPos ====
         nextChunk.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         nextChunk.transform.localScale = Vector3.one;
-        Vector3 entryAtZero = entry.anchor.position;
+        Vector3 entryAtZero = entry.anchor.position; // nextChunk=(0,0,0) 기준
         nextChunk.transform.position = endPos - entryAtZero;
 
-        // --- 5) 살짝 더 들어가기 ---
-        player.position = entry.anchor.position + dir3 * 0.01f;
-        Vector3 inTarget = entry.anchor.position + dir3 * 1.2f;
-        yield return MoveTo(player, inTarget, runSpeed);
+        // ==== 5) 카메라 '도착 포탈'에 고정 ====
+        if (cam) cam.LockTo(entry.anchor, snap: true);
 
-        // --- 6) 맵 교체 & 정리 ---
-        var prev = currentChunk;
-        currentChunk = nextChunk;
-        if (prev) Destroy(prev.gameObject);
-        CleanupOtherChunks(currentChunk);
+        // ==== 6) 플레이어 20m 지점까지 이동 ====
+        yield return MoveTo(p, endPos, runSpeed);
+
+        // ==== 7) 살짝 안쪽으로 한 걸음 ====
+        p.position = entry.anchor.position + dir3 * 0.01f;
+        Vector3 inTarget = entry.anchor.position + dir3 * 1.2f;
+        yield return MoveTo(p, inTarget, runSpeed);
+
+        // ==== 8) 현재맵 교체 & 정리 ====
+        {
+            var prev = currentChunk;
+            currentChunk = nextChunk;
+            if (prev) Destroy(prev.gameObject);
+            CleanupOtherChunks(currentChunk); // 보험
+        }
 
     CLEANUP:
-        // 공통 정리
-        restoreNoClip?.Invoke();              // ★ 노클립 OFF(원래대로)
-        if (anim) anim.SetBool("IsRunning", false);
-        Player.Instance.SetInputBlocked(false);
+        // ==== 9) 카메라를 다시 플레이어 추적으로 ====
+        if (cam) cam.FollowPlayer(snap: false);
 
-        yield return new WaitForSeconds(0.1f);
+        CLEANUP_EARLY:
+        // ==== 공통 마무리 ====
+        restoreNoClip?.Invoke();                    // 노클립 OFF
+        if (anim) anim.SetBool("IsRunning", false);
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(false);
+
+        yield return new WaitForSeconds(0.1f);      // 재트리거 쿨다운
         portalLock = false;
         busy = false;
     }
 
+    // 플레이어 노클립 ON/OFF 헬퍼 (레이어 안 건드리는 방식)
+    System.Action EnablePlayerNoClip()
+    {
+        // ★ 삼항 연산자 두 피연산자 모두 Transform 로 통일 (CS0173 방지)
+        Transform t = (Player.Instance != null) ? Player.Instance.transform : player;
+
+        var cols = t ? t.GetComponentsInChildren<Collider2D>(includeInactive: false) : null;
+        var rb = t ? t.GetComponent<Rigidbody2D>() : null;
+
+        bool[] prevTrigger = null;
+        bool prevKinematic = false;
+
+        if (cols != null && cols.Length > 0)
+        {
+            prevTrigger = new bool[cols.Length];
+            for (int i = 0; i < cols.Length; i++)
+            {
+                prevTrigger[i] = cols[i].isTrigger;
+                cols[i].isTrigger = true; // 벽/타일 통과
+            }
+        }
+        if (rb) { prevKinematic = rb.isKinematic; rb.isKinematic = true; }
+
+        return () =>
+        {
+            if (cols != null)
+                for (int i = 0; i < cols.Length; i++)
+                    cols[i].isTrigger = prevTrigger != null ? prevTrigger[i] : cols[i].isTrigger;
+
+            if (rb) rb.isKinematic = prevKinematic;
+        };
+    }
 
     IEnumerator MoveTo(Transform t, Vector3 target, float speed)
     {
@@ -123,43 +169,19 @@ public partial class MapLoader : MonoBehaviour
         t.position = target;
     }
 
-    // 기존 하드닝 청소 루틴 유지
     void CleanupOtherChunks(MapChunk keep)
     {
 #if UNITY_2021_3_OR_NEWER
         var all = Resources.FindObjectsOfTypeAll<MapChunk>();
 #else
-    var all = FindObjectsOfType<MapChunk>();
+        var all = FindObjectsOfType<MapChunk>();
 #endif
         foreach (var c in all)
         {
             if (!c) continue;
             var go = c.gameObject;
-            if (!go.scene.IsValid() || !go.scene.isLoaded) continue;   // 씬 외/프리팹 에셋 제외
+            if (!go.scene.IsValid() || !go.scene.isLoaded) continue;
             if (c != keep) Destroy(go);
         }
-    }
-    System.Action EnablePlayerNoClip()
-    {
-        var colliders = player.GetComponents<Collider2D>();
-        var prev = new bool[colliders.Length];
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            prev[i] = colliders[i].isTrigger;
-            colliders[i].isTrigger = true;          // ★ 전환 중엔 벽/타일과 충돌 안 함 (트리거는 유지)
-        }
-
-        var rb = player.GetComponent<Rigidbody2D>();
-        var prevKinematic = rb ? rb.isKinematic : false;
-        if (rb) rb.isKinematic = true;              // 관성/반발 방지(선택)
-
-        // 원복 함수 반환
-        return () =>
-        {
-            for (int i = 0; i < colliders.Length; i++)
-                colliders[i].isTrigger = prev[i];
-            if (rb) rb.isKinematic = prevKinematic;
-        };
     }
 }
