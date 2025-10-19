@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DialogueTable
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTable
+  lines:
+  - index: 1
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 1
+    nextDialogue: 2
+    speakerKind: 1
+    speakerNpcId: NPC001
+    textKey: NPC001_1_01
+  - index: 2
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 2
+    nextDialogue: 3
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_1_02
+  - index: 3
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 3
+    nextDialogue: 4
+    speakerKind: 1
+    speakerNpcId: NPC001
+    textKey: NPC001_1_03
+  - index: 4
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 4
+    nextDialogue: 5
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_1_04
+  - index: 5
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 5
+    nextDialogue: 6
+    speakerKind: 1
+    speakerNpcId: NPC001
+    textKey: NPC001_1_05
+  - index: 6
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 6
+    nextDialogue: 7
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_1_06
+  - index: 7
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 7
+    nextDialogue: 8
+    speakerKind: 1
+    speakerNpcId: NPC001
+    textKey: NPC001_1_07
+  - index: 8
+    npcId: NPC001
+    dialogueType: 1
+    conditionType: 0
+    conditionKey: 
+    dialogueIndex: 8
+    nextDialogue: 0
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_1_08
+  - index: 9
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 10001
+    dialogueIndex: 1
+    nextDialogue: 2
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_01
+  - index: 10
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 2
+    nextDialogue: 3
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_02
+  - index: 11
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 3
+    nextDialogue: 4
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_03
+  - index: 12
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 4
+    nextDialogue: 5
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_04
+  - index: 13
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 5
+    nextDialogue: 6
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_05
+  - index: 14
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 6
+    nextDialogue: 7
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_06
+  - index: 15
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 7
+    nextDialogue: 8
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_07
+  - index: 16
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 8
+    nextDialogue: 9
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_08
+  - index: 17
+    npcId: NPC001
+    dialogueType: 2
+    conditionType: 1
+    conditionKey: 
+    dialogueIndex: 9
+    nextDialogue: 0
+    speakerKind: 0
+    speakerNpcId: 
+    textKey: NPC001_2_09

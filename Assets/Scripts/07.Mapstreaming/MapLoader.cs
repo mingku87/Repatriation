@@ -15,10 +15,10 @@ public partial class MapLoader : MonoBehaviour
     [Header("Ray Settings")]
     [Tooltip("플레이어가 포탈을 통과할 때 이동할 거리 (미터 단위)")]
     [Range(1f, 50f)]
-    public float rayDistance = 20f;
+    public float rayDistance = 10f;
 
     [Header("Run Settings")]
-    public float runSpeed = 6f;
+    public float runSpeed = 10f;
 
     bool busy, portalLock;
 
