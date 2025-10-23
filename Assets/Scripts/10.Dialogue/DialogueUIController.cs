@@ -7,7 +7,7 @@ public class DialogueUIController : MonoBehaviour
 {
     [Header("Root / BG")]
     [SerializeField] GameObject root;       // InGameUI/Dialogue
-    [SerializeField] GameObject bgObject;   // InGameUI/Dialogue/BG (Image 또는 CanvasGroup)
+    [SerializeField] GameObject bgObject;   // InGameUI/Dialogue/BG (Image 풔 CanvasGroup)
 
     CanvasGroup _bgCg;
     Image _bgImg;
@@ -22,41 +22,65 @@ public class DialogueUIController : MonoBehaviour
     [SerializeField] TMP_Text npcName;          // NPCDialogue/Name/Text (TMP)
     [SerializeField] TMP_Text npcText;          // NPCDialogue/Dialogue/Text (TMP)
 
+    [Header("Portraits")]
+    [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] Image playerPortrait;
+    [SerializeField] Image npcPortrait;
+
     [Header("Config")]
     [SerializeField] string defaultPlayerName = "Player";
 
     void Awake()
     {
-        if (!root) root = gameObject; // 이 스크립트를 Dialogue 루트에 붙였다면 자동 할당
+        if (!root) root = gameObject; //  크트 Dialogue 트 牟摸 湄 年
+        if (!dialogueManager)
+            dialogueManager = FindObjectOfType<DialogueManager>();
         if (bgObject)
         {
             _bgCg = bgObject.GetComponent<CanvasGroup>();
             _bgImg = bgObject.GetComponent<Image>();
         }
+
+        if (!playerPortrait)
+            playerPortrait = FindPortraitImage(playerPanel, "Image", "PlayerImage");
+        if (!npcPortrait)
+            npcPortrait = FindPortraitImage(npcPanel, "Image", "NPCImage");
+
         SetActive(false);
+        SetPortrait(playerPortrait, null);
+        SetPortrait(npcPortrait, null);
     }
 
-    // ----- DialogueManager 이벤트에 연결 -----
+    // ----- DialogueManager 遣트  -----
 
-    // 대화 시작: 창 켜기 + 초기화
+    // 화 : 창 畸 + 珂화
     public void OnDialogueStart(string npcId, string dialogueId)
     {
+        if (!dialogueManager)
+            dialogueManager = FindObjectOfType<DialogueManager>();
         SetActive(true);
         ShowPanel(SpeakerKind.Player, false);
         ShowPanel(SpeakerKind.Npc, false);
         if (playerText) playerText.text = "";
         if (npcText) npcText.text = "";
+        SetPortrait(playerPortrait, null);
+        SetPortrait(npcPortrait, null);
     }
 
-    // 한 줄 표시: 화자 패널 토글 + 텍스트 갱신
+    //   표: 화 均  + 灣트
     public void OnShowLine(string speakerName, string text, SpeakerKind who)
     {
+        if (!dialogueManager)
+            dialogueManager = FindObjectOfType<DialogueManager>();
+        Sprite portrait = dialogueManager ? dialogueManager.CurrentSpeakerPortrait : null;
         if (who == SpeakerKind.Player)
         {
             ShowPanel(SpeakerKind.Npc, false);
             ShowPanel(SpeakerKind.Player, true);
             if (playerName) playerName.text = string.IsNullOrEmpty(speakerName) ? defaultPlayerName : speakerName;
             if (playerText) playerText.text = text;
+            SetPortrait(playerPortrait, portrait);
+            SetPortrait(npcPortrait, null);
         }
         else
         {
@@ -64,16 +88,20 @@ public class DialogueUIController : MonoBehaviour
             ShowPanel(SpeakerKind.Npc, true);
             if (npcName) npcName.text = string.IsNullOrEmpty(speakerName) ? "NPC" : speakerName;
             if (npcText) npcText.text = text;
+            SetPortrait(npcPortrait, portrait);
+            SetPortrait(playerPortrait, null);
         }
     }
 
-    // 대화 종료: 창 끄기
+    // 화 : 창
     public void OnDialogueEnd(string npcId, string dialogueId)
     {
         SetActive(false);
+        SetPortrait(playerPortrait, null);
+        SetPortrait(npcPortrait, null);
     }
 
-    // ----- 내부 유틸 -----
+    // -----  틸 -----
     void SetActive(bool on)
     {
         if (root) root.SetActive(on);
@@ -107,8 +135,43 @@ public class DialogueUIController : MonoBehaviour
         }
     }
 
+    Image FindPortraitImage(GameObject panel, params string[] candidateNames)
+    {
+        if (!panel) return null;
+
+        if (candidateNames != null)
+        {
+            foreach (var name in candidateNames)
+            {
+                if (string.IsNullOrEmpty(name)) continue;
+                var t = panel.transform.Find(name);
+                if (t)
+                {
+                    var img = t.GetComponent<Image>();
+                    if (img) return img;
+                }
+            }
+        }
+
+        foreach (var img in panel.GetComponentsInChildren<Image>(true))
+        {
+            if (img == null) continue;
+            return img;
+        }
+
+        return null;
+    }
+
+    void SetPortrait(Image target, Sprite sprite)
+    {
+        if (!target) return;
+
+        target.sprite = sprite;
+        target.enabled = sprite != null;
+    }
+
 #if UNITY_EDITOR
-    // 인스펙터에서 root만 지정해도 BG 자동 탐색 (자식 이름 "BG")
+    // 館沽 root 巒 BG 湄 탐 (黴 見 "BG")
     void OnValidate()
     {
         if (!root) root = gameObject;
@@ -116,6 +179,16 @@ public class DialogueUIController : MonoBehaviour
         {
             var t = root.transform.Find("BG");
             if (t) bgObject = t.gameObject;
+        }
+        if (!playerPortrait && playerPanel)
+        {
+            var tPlayer = playerPanel.transform.Find("Image");
+            if (tPlayer) playerPortrait = tPlayer.GetComponent<Image>();
+        }
+        if (!npcPortrait && npcPanel)
+        {
+            var tNpc = npcPanel.transform.Find("Image");
+            if (tNpc) npcPortrait = tNpc.GetComponent<Image>();
         }
     }
 #endif

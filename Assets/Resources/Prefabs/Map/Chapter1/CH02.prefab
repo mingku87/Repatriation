@@ -5638,6 +5638,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 408707009152504710}
     m_Modifications:
+    - target: {fileID: 937015706295805800, guid: dac4b1f9b3f90284da6ef0876e463b2d, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2884390579552582936, guid: dac4b1f9b3f90284da6ef0876e463b2d, type: 3}
       propertyPath: Owner
       value: 
@@ -5658,6 +5662,14 @@ PrefabInstance:
       propertyPath: entryDirectionOnNext
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3112220708088560346, guid: dac4b1f9b3f90284da6ef0876e463b2d, type: 3}
+      propertyPath: Owner
+      value: 
+      objectReference: {fileID: -689645327056836172}
+    - target: {fileID: 3112220708088560346, guid: dac4b1f9b3f90284da6ef0876e463b2d, type: 3}
+      propertyPath: nextMapPrefab
+      value: 
+      objectReference: {fileID: 1532416983183813219, guid: 50fc0251346739749859d22599d55031, type: 3}
     - target: {fileID: 4233021815201022999, guid: dac4b1f9b3f90284da6ef0876e463b2d, type: 3}
       propertyPath: m_Name
       value: Portal_LeftUP

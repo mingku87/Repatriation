@@ -2148,6 +2148,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CH01
       objectReference: {fileID: 0}
+    - target: {fileID: 1631101819849834534, guid: 50fc0251346739749859d22599d55031, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3517716998644831980, guid: 50fc0251346739749859d22599d55031, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.11
@@ -2208,6 +2212,14 @@ PrefabInstance:
       propertyPath: runOutDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8337848934196113866, guid: 50fc0251346739749859d22599d55031, type: 3}
+      propertyPath: Owner
+      value: 
+      objectReference: {fileID: 1023086022}
+    - target: {fileID: 8337848934196113866, guid: 50fc0251346739749859d22599d55031, type: 3}
+      propertyPath: nextMapPrefab
+      value: 
+      objectReference: {fileID: 1532416983183813219, guid: 7b02622f828fc484e87aa11cceec3c73, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2275,6 +2287,9 @@ MonoBehaviour:
   npcPanel: {fileID: 1465469958}
   npcName: {fileID: 1850325694}
   npcText: {fileID: 1743027203}
+  dialogueManager: {fileID: 0}
+  playerPortrait: {fileID: 1517940812}
+  npcPortrait: {fileID: 57635720}
   defaultPlayerName: "\uCC44\uC6D0"
 --- !u!1001 &365616511
 PrefabInstance:
@@ -10016,8 +10031,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   metaTable: {fileID: 11400000, guid: 15421a63e697b6244b179b3a4aaccabb, type: 2}
   linesTable: {fileID: 11400000, guid: b3406a83161acf7419ca3f464408ca0c, type: 2}
-  localizationProvider: {fileID: 11400000, guid: c7e192927e2e4d349a18ff29f5a5cfae, type: 2}
   conditionServiceBehaviour: {fileID: 0}
+  playerNameOverride: 
   onDialogueStart:
     m_PersistentCalls:
       m_Calls:
@@ -10063,6 +10078,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  playerPortraitResource: Images/NPCStand/Player
+  npcPortraitFolder: Images/NPCStand
+  npcPortraitPrefix: NPCStand
 --- !u!1 &1877265810
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class Player : SingletonObject<Player>
@@ -36,20 +36,19 @@ public class Player : SingletonObject<Player>
         playerStatusController.UpdatePlayerStatus();
     }
 
-    //MapLoader µî ¿ÜºÎ¿¡¼­ È£Ãâ
+    //MapLoader ë“± ì™¸ë¶€ì—ì„œ í˜¸ì¶œ
     public void SetInputBlocked(bool blocked)
     {
         inputBlocked = blocked;
         if (blocked)
         {
-            // ÀÔ·Â Â÷´Ü ½Ã, ÀÌµ¿ ¾Ö´Ï °ªÀº ¿©±â¼­ ¸¸ÁöÁö ¾ÊÀ½
-            // (Æ÷Å» ÀüÈ¯ ÄÚ·çÆ¾ÀÌ ¹æÇâ/·¯´× ¾Ö´Ï¸¦ Á÷Á¢ ¼¼ÆÃÇÏµµ·Ï ³²°Ü µÒ)
+            // ì…ë ¥ ì°¨ë‹¨ ì‹œ, ì´ë™ ì• ë‹ˆ ê°’ì€ ì—¬ê¸°ì„œ ë§Œì§€ì§€ ì•ŠìŒ
+            // (í¬íƒˆ ì „í™˜ ì½”ë£¨í‹´ì´ ë°©í–¥/ëŸ¬ë‹ ì• ë‹ˆë¥¼ ì§ì ‘ ì„¸íŒ…í•˜ë„ë¡ ë‚¨ê²¨ ë‘ )
         }
     }
 
     private void Move()
     {
-        //Â÷´Ü ÁßÀÌ¸é Update¿¡¼­ ¾Æ¹« °Íµµ ÇÏÁö ¾ÊÀ½
         if (inputBlocked) return;
 
         float moveX = 0.0f;
@@ -60,14 +59,33 @@ public class Player : SingletonObject<Player>
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveUp))) moveY = 1.0f;
         if (Input.GetKey(KeySetting.GetKey(PlayerAction.MoveDown))) moveY = -1.0f;
 
+        // ì• ë‹ˆë©”ì´í„°ëŠ” "ì…ë ¥" ê¸°ì¤€ ê·¸ëŒ€ë¡œ ìœ ì§€
         GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveX, moveX);
         GetComponent<Animator>().SetFloat(PlayerConstant.AnimatorFloatMoveY, moveY);
 
-        var moveDirection = new Vector3(moveX, moveY, 0.0f);
-        if (moveDirection != Vector3.zero)
+        Vector3 moveDir = Vector3.zero;
+
+        if (moveX != 0 && moveY != 0)
         {
-            moveDirection.Normalize();
-            transform.position += moveDirection * GetCurrentStatus(Status.Speed) * Time.deltaTime;
+            // âœ… ëŒ€ê°ì„  ì…ë ¥ì¼ ë•Œ ê°ë„ ìŠ¤ëƒ…
+            float angleDeg = 0f;
+            if (moveX > 0 && moveY > 0) angleDeg = 30f;   // â†—
+            else if (moveX > 0 && moveY < 0) angleDeg = 330f;  // â†˜ (ë˜ëŠ” -30ë„)
+            else if (moveX < 0 && moveY > 0) angleDeg = 150f;  // â†–
+            else if (moveX < 0 && moveY < 0) angleDeg = 210f;  // â†™
+
+            float rad = angleDeg * Mathf.Deg2Rad;
+            moveDir = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0f); // ê¸¸ì´ 1
+        }
+        else
+        {
+            // ë‹¨ì¼ ì¶• ì…ë ¥ì€ ê¸°ì¡´ëŒ€ë¡œ (ìƒí•˜ì¢Œìš°)
+            moveDir = new Vector3(moveX, moveY, 0f).normalized;
+        }
+
+        if (moveDir != Vector3.zero)
+        {
+            transform.position += moveDir * GetCurrentStatus(Status.Speed) * Time.deltaTime;
         }
     }
 

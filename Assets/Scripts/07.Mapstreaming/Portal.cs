@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Portal : MonoBehaviour
 {
     [Header("Portal Settings")]
@@ -13,25 +14,31 @@ public class Portal : MonoBehaviour
 
     void Reset()
     {
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
+        var c2d = GetComponent<Collider2D>();
+        c2d.isTrigger = true;
         if (!anchor) anchor = transform;
+        if (!Owner) Owner = GetComponentInParent<MapChunk>();
+    }
+    
+    void OnValidate()
+    {
+        var c2d = GetComponent<Collider2D>();
+        if (c2d && !c2d.isTrigger) c2d.isTrigger = true;
+        if (!anchor) anchor = transform;
+        if (!Owner) Owner = GetComponentInParent<MapChunk>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 충돌한 객체의 루트 GameObject를 가져오기 (Rigidbody2D가 있으면 그것 기준)
-        var who = other.attachedRigidbody ? other.attachedRigidbody.gameObject
-                                          : other.transform.root.gameObject;
+        // NPC 콜라이더가 먼저 닿아도 걸러짐
+        if (!other.CompareTag("Player")) return;
 
-        // Player가 아니면 무시
-        if (!who.CompareTag("Player")) return;
+        // 현재 청크가 아니면 무시
+        if (!MapLoader.Instance || MapLoader.Instance.currentChunk != Owner) return;
 
-        // 현재 맵의 포탈만 반응 (다른 맵 잔여물 방지)
-        if (MapLoader.Instance && MapLoader.Instance.currentChunk != Owner) return;
-
-        // 레이 기반 이동 실행
-        MapLoader.Instance?.TryGoThroughFixedRay(this, who.transform);
+        // 플레이어 Transform 전달
+        MapLoader.Instance.TryGoThroughFixedRay(this, other.attachedRigidbody ?
+            other.attachedRigidbody.transform : other.transform);
 
     }
 

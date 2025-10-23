@@ -40,8 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7479258829608370551}
-  - component: {fileID: 2884390579552582936}
-  - component: {fileID: 5957095637417123312}
   m_Layer: 6
   m_Name: Portal_LeftUP
   m_TagString: Untagged
@@ -66,51 +64,6 @@ Transform:
   - {fileID: 4252889103062189681}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2884390579552582936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233021815201022999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157270e29a1ac7249bba68d062fa8136, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direction: 0
-  customRayAngle: 150
-  nextMapPrefab: {fileID: 0}
-  entryDirectionOnNext: 3
-  anchor: {fileID: 4252889103062189681}
-  Owner: {fileID: 0}
---- !u!50 &5957095637417123312
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233021815201022999}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &5651740504856048360
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +75,8 @@ GameObject:
   - component: {fileID: 1840165239895222010}
   - component: {fileID: 937015706295805800}
   - component: {fileID: 6287542306136077390}
+  - component: {fileID: 3112220708088560346}
+  - component: {fileID: 8095211378297354448}
   m_Layer: 6
   m_Name: wall_01_0
   m_TagString: Untagged
@@ -247,3 +202,48 @@ PolygonCollider2D:
       - {x: 0.50666666, y: -0.33833334}
       - {x: 0.50666666, y: 0.7583333}
   m_UseDelaunayMesh: 0
+--- !u!114 &3112220708088560346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651740504856048360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157270e29a1ac7249bba68d062fa8136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
+  customRayAngle: 150
+  nextMapPrefab: {fileID: 0}
+  entryDirectionOnNext: 3
+  anchor: {fileID: 4252889103062189681}
+  Owner: {fileID: 0}
+--- !u!50 &8095211378297354448
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651740504856048360}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

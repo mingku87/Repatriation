@@ -1,15 +1,17 @@
 using UnityEngine;
 using Game.Dialogue;
 
-[DefaultExecutionOrder(500)] // DialogueManager ÀÌÈÄ¿¡ µ¹°í ½ÍÀ¸¸é ¼ýÀÚ Á¶Àý
+[DefaultExecutionOrder(500)] // DialogueManager Ä¿    
 public class DialogueInputBridge : MonoBehaviour
 {
     private static DialogueInputBridge _instance;
     private DialogueManager manager;
 
+    int _suppressInputFrame = -1;
+
     void Awake()
     {
-        // ½Ì±ÛÅÏ
+        // Ì±
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -21,21 +23,23 @@ public class DialogueInputBridge : MonoBehaviour
 
     void Start()
     {
-        // ¾À¿¡¼­ DialogueManager Ã£¾Æ¼­ ¿¬°á
-        manager = FindObjectOfType<DialogueManager>();
+
+        AttachManager(FindObjectOfType<DialogueManager>());
         if (manager == null)
-            Debug.LogWarning("DialogueInputBridge: DialogueManager¸¦ ¾ÆÁ÷ ¸ø Ã£¾Ò½À´Ï´Ù. ³ªÁß¿¡ »ý±â¸é ÀÚµ¿ ¿¬°áµË´Ï´Ù.");
+            Debug.LogWarning("DialogueInputBridge: DialogueManager   Ã£Ò½Ï´. ß¿  Úµ Ë´Ï´.");
     }
 
     void Update()
     {
-        // ¸Å ÇÁ·¹ÀÓ ´Ê°Ô »ý±ä ¸Å´ÏÀúµµ ÀÚµ¿ ¿¬°á
         if (manager == null)
         {
-            manager = FindObjectOfType<DialogueManager>();
+            AttachManager(FindObjectOfType<DialogueManager>());
         }
 
         if (manager == null || !manager.IsActive) return;
+
+        if (Time.frameCount == _suppressInputFrame)
+            return;
 
         if (Input.GetKeyDown(KeyCode.Space) ||
             Input.GetKeyDown(KeyCode.F) ||
@@ -44,9 +48,36 @@ public class DialogueInputBridge : MonoBehaviour
             manager.Next();
         }
     }
+
+    void AttachManager(DialogueManager dm)
+    {
+        if (manager == dm) return;
+
+        if (manager != null)
+        {
+            manager.onDialogueStart.RemoveListener(OnDialogueStarted);
+        }
+
+        manager = dm;
+
+        if (manager != null)
+        {
+            manager.onDialogueStart.AddListener(OnDialogueStarted);
+        }
+    }
+
+    void OnDialogueStarted(string npcId, string dialogueId)
+    {
+        _suppressInputFrame = Time.frameCount;
+    }
+
+    void OnDestroy()
+    {
+        AttachManager(null);
+    }
 }
 
-// ¢º ¾À¿¡ ¾ø¾îµµ ÀÚµ¿ »ý¼º (¿¡µðÅÍ/ºôµå °øÅë)
+//   îµµ Úµ  (/ )
 public static class DialogueInputBootstrap
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -56,7 +87,7 @@ public static class DialogueInputBootstrap
         {
             var go = new GameObject("DialogueInputBridge (Auto)");
             go.AddComponent<DialogueInputBridge>();
-            // ÇÊ¿äÇÏ¸é ¿©±â¼­ À§Ä¡/°èÃþ Á¶Á¤ °¡´É
+            // Ê¿Ï¸ â¼­ Ä¡/  
         }
     }
 }

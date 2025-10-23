@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Game.Dialogue;  // IDialogueConditionService, IConditionWriteback
@@ -43,12 +44,24 @@ public class DialogueManager : MonoBehaviour
     public bool IsActive { get; private set; }
     public string CurrentNpcId { get; private set; }
     public string CurrentDialogueId { get; private set; }
+    public string CurrentSpeakerNpcId { get; private set; }
+    public Sprite CurrentSpeakerPortrait { get; private set; }
 
     int cursor = -1;
     readonly List<DialogueLine> _activeLines = new();
 
+    [Header("Portraits")]
+    [Tooltip("Resources.Load path for the player's portrait sprite.")]
+    [SerializeField] string playerPortraitResource = "Images/NPCStand/Player";
+    [Tooltip("Resources folder containing NPC portrait sprites.")]
+    [SerializeField] string npcPortraitFolder = "Images/NPCStand";
+    [Tooltip("Prefix used when converting NPC IDs into portrait sprite names (e.g. npc001 → NPCStand_001).")]
+    [SerializeField] string npcPortraitPrefix = "NPCStand";
+
     // Localization 재진입 가드(만일 Localization 쪽에서 역호출되더라도 스택오버 방지)
     bool _resolving;
+    readonly Dictionary<string, Sprite> _portraitCache = new();
+    readonly HashSet<string> _missingPortraitLogged = new(StringComparer.OrdinalIgnoreCase);
 
     // ─────────────────────────────────────────────────────────────
 
@@ -150,29 +163,14 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        var line = _activeLines[cursor];
-        string text = Resolve(line.textKey);
-
-        // (플레이어 이름 오버라이드 지원)
-        string whoName = (line.speakerKind == SpeakerKind.Player)
-            ? playerNameOverride
-            : (string.IsNullOrEmpty(line.speakerNpcId) ? CurrentNpcId : line.speakerNpcId);
-
-        onShowLine?.Invoke(whoName, text, line.speakerKind);
+        DisplayLine(_activeLines[cursor]);
     }
 
     void ShowLineAt(int index)
     {
         if (index < 0 || index >= _activeLines.Count) return;
 
-        var line = _activeLines[index];
-        string text = Resolve(line.textKey);
-
-        string whoName = (line.speakerKind == SpeakerKind.Player)
-            ? playerNameOverride
-            : (string.IsNullOrEmpty(line.speakerNpcId) ? CurrentNpcId : line.speakerNpcId);
-
-        onShowLine?.Invoke(whoName, text, line.speakerKind);
+        DisplayLine(_activeLines[index]);
     }
 
     /// <summary>대화 종료</summary>
@@ -185,6 +183,8 @@ public class DialogueManager : MonoBehaviour
 
         CurrentNpcId = null;
         CurrentDialogueId = null;
+        CurrentSpeakerNpcId = null;
+        CurrentSpeakerPortrait = null;
         _activeLines.Clear();
         cursor = -1;
     }
@@ -223,6 +223,132 @@ public class DialogueManager : MonoBehaviour
                 return m.dialogueId;
 
         return null;
+    }
+
+    void DisplayLine(DialogueLine line)
+    {
+        if (line == null) return;
+
+        string text = Resolve(line.textKey);
+        string npcIdForLine = string.IsNullOrEmpty(line.speakerNpcId) ? CurrentNpcId : line.speakerNpcId;
+        string normalizedNpcId = string.IsNullOrWhiteSpace(npcIdForLine) ? null : npcIdForLine.Trim();
+
+        string whoName = (line.speakerKind == SpeakerKind.Player)
+            ? playerNameOverride
+            : Resolve(normalizedNpcId);
+
+        CurrentSpeakerNpcId = line.speakerKind == SpeakerKind.Player ? null : normalizedNpcId;
+        CurrentSpeakerPortrait = ResolveSpeakerPortrait(line.speakerKind, normalizedNpcId);
+
+        onShowLine?.Invoke(whoName, text, line.speakerKind);
+    }
+
+    Sprite ResolveSpeakerPortrait(SpeakerKind kind, string npcSpeakerId)
+    {
+        if (kind == SpeakerKind.Player)
+            return ResolvePlayerPortrait();
+
+        string npcId = string.IsNullOrEmpty(npcSpeakerId) ? CurrentNpcId : npcSpeakerId;
+        if (string.IsNullOrEmpty(npcId))
+            return null;
+
+        string normalizedId = npcId.Trim();
+        if (normalizedId.Length == 0)
+            return null;
+
+        var candidates = GetNpcPortraitResourcePaths(normalizedId);
+        foreach (var path in candidates)
+        {
+            if (TryGetPortrait(path, out var sprite))
+                return sprite;
+        }
+
+        if (!_missingPortraitLogged.Contains(normalizedId))
+        {
+            _missingPortraitLogged.Add(normalizedId);
+            if (candidates.Count > 0)
+                Debug.LogWarning($"[DM] Portrait not found for NPC '{normalizedId}'. Tried: {string.Join(", ", candidates)}");
+            else
+                Debug.LogWarning($"[DM] Portrait not found for NPC '{normalizedId}'.");
+        }
+
+        return null;
+    }
+
+    Sprite ResolvePlayerPortrait()
+    {
+        var candidates = new List<string>();
+        if (!string.IsNullOrEmpty(playerPortraitResource))
+            candidates.Add(playerPortraitResource);
+
+        // Fallback candidates that cover common folder/name variations
+        candidates.Add("Images/Stand/player");
+        candidates.Add("Images/Stand/Player");
+        candidates.Add("Images/NPCStand/player");
+        candidates.Add("Images/NPCStand/Player");
+
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var path in candidates)
+        {
+            if (string.IsNullOrEmpty(path)) continue;
+            if (!seen.Add(path)) continue;
+            if (TryGetPortrait(path, out var sprite))
+                return sprite;
+        }
+
+        return null;
+    }
+
+    List<string> GetNpcPortraitResourcePaths(string npcId)
+    {
+        var results = new List<string>();
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        string folder = string.IsNullOrEmpty(npcPortraitFolder)
+            ? string.Empty
+            : npcPortraitFolder.TrimEnd('/') + "/";
+
+        string trimmed = npcId.Trim();
+        string suffix = trimmed;
+        if (trimmed.StartsWith("npc", StringComparison.OrdinalIgnoreCase))
+            suffix = trimmed.Substring(3).TrimStart('_');
+
+        string prefix = npcPortraitPrefix ?? string.Empty;
+        string lowerPrefix = prefix.ToLowerInvariant();
+
+        void AddCandidate(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return;
+            string path = folder + name;
+            if (seen.Add(path))
+                results.Add(path);
+        }
+
+        if (!string.IsNullOrEmpty(prefix))
+        {
+            AddCandidate(prefix + suffix);
+            AddCandidate(prefix + "_" + suffix);
+            AddCandidate(lowerPrefix + suffix);
+            AddCandidate(lowerPrefix + "_" + suffix);
+        }
+        AddCandidate(trimmed);
+        AddCandidate(trimmed.ToLowerInvariant());
+        AddCandidate(trimmed.ToUpperInvariant());
+        AddCandidate(suffix);
+        AddCandidate(suffix.ToLowerInvariant());
+        AddCandidate(suffix.ToUpperInvariant());
+
+        return results;
+    }
+
+    bool TryGetPortrait(string resourcePath, out Sprite sprite)
+    {
+        if (_portraitCache.TryGetValue(resourcePath, out sprite))
+            return sprite != null;
+
+        sprite = Resources.Load<Sprite>(resourcePath);
+        _portraitCache[resourcePath] = sprite;
+        return sprite != null;
     }
 
     bool IsConditionPass(DialogueMeta m, string npcId)

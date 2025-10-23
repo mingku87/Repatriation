@@ -24,12 +24,31 @@ public partial class MapLoader : MonoBehaviour
 
     public void TryGoThroughFixedRay(Portal portal, Transform who)
     {
-        if (who != player) return;
+        // 플레이어 찾기 보정
+        var playerTf = (Player.Instance != null) ? Player.Instance.transform : player;
+        if (playerTf == null)
+        {
+            Debug.LogError("[Loader] player reference missing");
+            return;
+        }
+        // 동일성 대신 태그 보정
+        if (who != playerTf && !who.CompareTag("Player")) return;
+
         if (busy || portalLock) { Debug.Log("[Loader] blocked: busy/lock"); return; }
         if (portal.Owner != currentChunk) { Debug.Log("[Loader] blocked: not current chunk"); return; }
         if (!portal.nextMapPrefab) { Debug.LogError("[Loader] nextMapPrefab not set"); return; }
 
         StartCoroutine(CoGoThroughFixedRay(portal));
+    }
+
+    void Start()
+    {
+        if (currentChunk == null)
+        {
+            var first = FindObjectOfType<MapChunk>();
+            if (first) currentChunk = first;
+            else Debug.LogError("[Loader] currentChunk not assigned at start");
+        }
     }
 
     IEnumerator CoGoThroughFixedRay(Portal portal)
