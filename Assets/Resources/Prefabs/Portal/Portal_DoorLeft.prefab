@@ -248,14 +248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f854bad28ee06934088d42316d001297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interiorMapPrefab: {fileID: 0}
+  doorId: 
+  direction: 2
+  customRayAngle: 0
+  rayDistance: 0
+  nextMapPrefab: {fileID: 0}
   entryDirectionOnNext: 0
   anchor: {fileID: 3145194385956544110}
   Owner: {fileID: 0}
-  stepQuadrant: 0
-  angleOffsetDeg: 0
-  stepDistance: 1
-  useKey: 1
-  interactKey: 102
-  localCooldown: 0.15
-  verboseLogs: 1

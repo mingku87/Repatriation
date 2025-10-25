@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public partial class MapLoader : MonoBehaviour
@@ -20,18 +18,85 @@ public partial class MapLoader : MonoBehaviour
     [Header("Run Settings")]
     public float runSpeed = 10f;
 
+    [Header("Bootstrap")]
+    public GameObject initialMapPrefab;
+
     bool busy, portalLock;
 
-    public void TryGoThroughFixedRay(Portal portal, Transform who)
+    void Start()
     {
-        // 플레이어 찾기 보정
-        var playerTf = (Player.Instance != null) ? Player.Instance.transform : player;
-        if (playerTf == null)
+        // 1) 씬에 이미 배치된 MapChunk가 있으면 우선 채택
+        if (currentChunk == null)
         {
-            Debug.LogError("[Loader] player reference missing");
+            var found = FindObjectOfType<MapChunk>();
+            if (found) currentChunk = found;
+        }
+
+        // 2) 그래도 없으면 initialMapPrefab을 인스턴스해서 currentChunk 설정
+        if (currentChunk == null)
+        {
+            if (initialMapPrefab != null)
+            {
+                var inst = Instantiate(initialMapPrefab);
+                currentChunk = inst.GetComponent<MapChunk>();
+            }
+            if (currentChunk == null)
+                Debug.LogError("[Loader] currentChunk not assigned/instantiated");
+        }
+    }
+
+    // 외부(MapChunk.Awake 등)에서 자신을 등록할 수 있도록 공개
+    public void TryAdoptChunk(MapChunk chunk)
+    {
+        if (!chunk) return;
+        if (currentChunk == null) currentChunk = chunk;
+    }
+
+    public MapChunk GetOrFindCurrentChunk()
+    {
+        if (currentChunk) return currentChunk;
+        var found = FindObjectOfType<MapChunk>();
+        if (found) currentChunk = found;
+        return currentChunk;
+    }
+
+    // ================================================================
+    //  프리팹 스테이지 가드 / 안전삭제 유틸
+    // ================================================================
+#if UNITY_EDITOR
+    private bool IsInPrefabStage()
+    {
+        return UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() != null;
+    }
+#else
+    private bool IsInPrefabStage() => false;
+#endif
+
+    private void SafeDestroyChunk(MapChunk chunk)
+    {
+        if (!chunk) return;
+        var go = chunk.gameObject;
+
+        // 씬 인스턴스만 삭제
+        if (!go.scene.IsValid() || !go.scene.isLoaded) return;
+
+#if UNITY_EDITOR
+        if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(go))
+        {
+            Debug.LogWarning("[Loader] Prevented destroying a prefab asset root (Prefab Mode?).");
             return;
         }
-        // 동일성 대신 태그 보정
+#endif
+        Destroy(go);
+    }
+
+    // ================================================================
+    //  포탈 이동 (기존 RayTravel)
+    // ================================================================
+    public void TryGoThroughFixedRay(Portal portal, Transform who)
+    {
+        var playerTf = (Player.Instance != null) ? Player.Instance.transform : player;
+        if (playerTf == null) { Debug.LogError("[Loader] player reference missing"); return; }
         if (who != playerTf && !who.CompareTag("Player")) return;
 
         if (busy || portalLock) { Debug.Log("[Loader] blocked: busy/lock"); return; }
@@ -41,114 +106,219 @@ public partial class MapLoader : MonoBehaviour
         StartCoroutine(CoGoThroughFixedRay(portal));
     }
 
-    void Start()
-    {
-        if (currentChunk == null)
-        {
-            var first = FindObjectOfType<MapChunk>();
-            if (first) currentChunk = first;
-            else Debug.LogError("[Loader] currentChunk not assigned at start");
-        }
-    }
-
     IEnumerator CoGoThroughFixedRay(Portal portal)
     {
+        if (IsInPrefabStage())
+        {
+            Debug.LogError("[Loader] Prefab Mode detected. Exit to a Scene before testing portal travel.");
+            yield break;
+        }
+
         busy = true;
         portalLock = true;
 
-        // 대상/컴포넌트 캐시
         Transform p = (Player.Instance != null) ? Player.Instance.transform : player;
-        Animator anim = null;                // ← 초기화 (CS0165 방지)
-        MoveCamera cam = null;               // ← 초기화
-        System.Action restoreNoClip = null;  // ← 초기화
+        if (!p) { busy = portalLock = false; yield break; }
 
-        if (p == null)
-        {
-            Debug.LogError("[Loader] player transform is null");
-            goto CLEANUP_EARLY;
-        }
+        Animator anim = p.GetComponent<Animator>();
+        MoveCamera cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
+        System.Action restoreNoClip = null;
 
-        anim = p.GetComponent<Animator>();
-        cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
-
-        // ==== 입력 차단 & 러닝 애니 시작 ====
         if (Player.Instance != null) Player.Instance.SetInputBlocked(true);
         if (anim) anim.SetBool("IsRunning", true);
 
-        // ==== 노클립 ON (전환 동안만) ====
         restoreNoClip = EnablePlayerNoClip();
 
-        GameObject nextGO = null;
-        MapChunk nextChunk = null;
-
-        // ==== 1) 진행 방향(각도) 계산 ====
+        // 1) 진행 방향 계산
         float rayAngle = portal.customRayAngle;
         if (Mathf.Approximately(rayAngle, 0f))
-            rayAngle = DirUtil.ToRayAngleDeg(portal.direction); // 60/120/240/300
+            rayAngle = DirUtil.ToRayAngleDeg(portal.direction);
 
-        Vector2 dir2 = new Vector2(Mathf.Cos(rayAngle * Mathf.Deg2Rad),
-                                   Mathf.Sin(rayAngle * Mathf.Deg2Rad)).normalized;
-        Vector3 dir3 = new Vector3(dir2.x, dir2.y, 0f);
+        Vector2 dir2 = new(Mathf.Cos(rayAngle * Mathf.Deg2Rad), Mathf.Sin(rayAngle * Mathf.Deg2Rad));
+        Vector3 dir3 = new(dir2.x, dir2.y, 0f);
 
         if (anim) { anim.SetFloat("MoveX", dir2.x); anim.SetFloat("MoveY", dir2.y); }
 
-        // ==== 2) 레이 목표점 ====
         Vector3 startPos = p.position;
         Vector3 endPos = startPos + dir3 * rayDistance;
         Debug.DrawLine(startPos, endPos, Color.cyan, 1.5f);
 
-        // ==== 3) 다음 맵 생성 & 엔트리 포탈 확보 ====
-        nextGO = Instantiate(portal.nextMapPrefab);
-        nextChunk = nextGO ? nextGO.GetComponent<MapChunk>() : null;
-        if (!nextChunk) { Debug.LogError("[Loader] nextMapPrefab has no MapChunk"); if (nextGO) Destroy(nextGO); goto CLEANUP; }
+        // 2) 다음 맵 생성 (비활성화 후 위치 세팅)
+        GameObject nextGO = Instantiate(portal.nextMapPrefab);
+        nextGO.SetActive(false); // 깜빡임 방지
+        MapChunk nextChunk = nextGO.GetComponent<MapChunk>();
+
+        if (!nextChunk)
+        {
+            Debug.LogError("[Loader] nextMapPrefab has no MapChunk");
+            Destroy(nextGO);
+            goto CLEANUP;
+        }
 
         var entry = nextChunk.FindPortal(portal.entryDirectionOnNext);
-        if (!entry) { Debug.LogError($"[Loader] Missing entry portal {portal.entryDirectionOnNext}"); Destroy(nextGO); goto CLEANUP; }
+        if (!entry)
+        {
+            Debug.LogError($"[Loader] Missing entry portal {portal.entryDirectionOnNext}");
+            Destroy(nextGO);
+            goto CLEANUP;
+        }
 
-        // ==== 4) 절대 스냅: 엔트리 앵커 == endPos ====
         nextChunk.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         nextChunk.transform.localScale = Vector3.one;
-        Vector3 entryAtZero = entry.anchor.position; // nextChunk=(0,0,0) 기준
+        Vector3 entryAtZero = entry.anchor.position; // nextChunk 원점 기준
         nextChunk.transform.position = endPos - entryAtZero;
 
-        // ==== 5) 카메라 '도착 포탈'에 고정 ====
+        yield return null;             // 위치 세팅 프레임 통과
+        nextGO.SetActive(true);        // 이후 프레임에만 보이게
+
+        // 3) 카메라 잠깐 고정
         if (cam) cam.LockTo(entry.anchor, snap: true);
 
-        // ==== 6) 플레이어 20m 지점까지 이동 ====
+        // 4) 이동
         yield return MoveTo(p, endPos, runSpeed);
-
-        // ==== 7) 살짝 안쪽으로 한 걸음 ====
         p.position = entry.anchor.position + dir3 * 0.01f;
         Vector3 inTarget = entry.anchor.position + dir3 * 1.2f;
         yield return MoveTo(p, inTarget, runSpeed);
 
-        // ==== 8) 현재맵 교체 & 정리 ====
+        // 5) 맵 교체
         {
             var prev = currentChunk;
             currentChunk = nextChunk;
-            if (prev) Destroy(prev.gameObject);
-            CleanupOtherChunks(currentChunk); // 보험
+            SafeDestroyChunk(prev);
+            CleanupOtherChunks(currentChunk);
         }
 
     CLEANUP:
-        // ==== 9) 카메라를 다시 플레이어 추적으로 ====
         if (cam) cam.FollowPlayer(snap: false);
 
-        CLEANUP_EARLY:
-        // ==== 공통 마무리 ====
-        restoreNoClip?.Invoke();                    // 노클립 OFF
+        restoreNoClip?.Invoke();
         if (anim) anim.SetBool("IsRunning", false);
         if (Player.Instance != null) Player.Instance.SetInputBlocked(false);
 
-        yield return new WaitForSeconds(0.1f);      // 재트리거 쿨다운
+        yield return new WaitForSeconds(0.1f);
         portalLock = false;
         busy = false;
     }
 
-    // 플레이어 노클립 ON/OFF 헬퍼 (레이어 안 건드리는 방식)
+    // ================================================================
+    //  문(레이) 이동 — 문(anchor) 기준 + 거리 0 허용
+    // ================================================================
+    public void TryDoorRayTravel(DoorPortal door, Transform who)
+    {
+        var playerTf = (Player.Instance != null) ? Player.Instance.transform : player;
+        if (playerTf == null) { Debug.LogError("[Loader/DoorRay] player reference missing"); return; }
+        if (who != playerTf && !who.CompareTag("Player")) return;
+        if (busy || portalLock) { Debug.Log("[Loader/DoorRay] blocked: busy/lock"); return; }
+        if (door.Owner != currentChunk) { Debug.Log("[Loader/DoorRay] blocked: not current chunk"); return; }
+        if (!door.nextMapPrefab) { Debug.LogError("[Loader/DoorRay] nextMapPrefab not set"); return; }
+
+        StartCoroutine(CoDoorRayTravel(door));
+    }
+
+    private IEnumerator CoDoorRayTravel(DoorPortal door)
+    {
+        if (IsInPrefabStage())
+        {
+            Debug.LogError("[Loader] Prefab Mode detected. Exit to a Scene before testing door travel.");
+            yield break;
+        }
+
+        busy = true;
+        portalLock = true;
+
+        Transform p = (Player.Instance != null) ? Player.Instance.transform : player;
+        if (!p) { busy = portalLock = false; yield break; }
+
+        Animator anim = p.GetComponent<Animator>();
+        MoveCamera cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
+        System.Action restoreNoClip = null;
+
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(true);
+        if (anim) anim.SetBool("IsRunning", true);
+
+        restoreNoClip = EnablePlayerNoClip();
+
+        // 1) 방향 계산
+        float rayAngle = door.customRayAngle;
+        if (Mathf.Approximately(rayAngle, 0f))
+            rayAngle = DirUtil.ToRayAngleDeg(door.direction);
+        Vector2 dir2 = new(Mathf.Cos(rayAngle * Mathf.Deg2Rad), Mathf.Sin(rayAngle * Mathf.Deg2Rad));
+        Vector3 dir3 = new(dir2.x, dir2.y, 0f);
+        if (anim) { anim.SetFloat("MoveX", dir2.x); anim.SetFloat("MoveY", dir2.y); }
+
+        // 2) 목표 위치(문 기준, 0 허용)
+        Vector3 basePos = (door.anchor ? door.anchor.position : p.position);
+        float dist = Mathf.Max(door.rayDistance, 0f); // 0 허용
+        Vector3 endPos = basePos + dir3 * dist;
+        Debug.DrawLine(basePos, endPos, Color.yellow, 1.5f);
+
+        // 3) 새 맵 생성
+        GameObject nextGO = Instantiate(door.nextMapPrefab);
+        nextGO.SetActive(false);
+        MapChunk nextChunk = nextGO.GetComponent<MapChunk>();
+
+        if (!nextChunk)
+        {
+            Debug.LogError("[Loader/DoorRay] nextMapPrefab has no MapChunk");
+            Destroy(nextGO);
+            goto CLEANUP;
+        }
+
+        // 4) doorId 매칭 문 찾기 (없으면 entryDirectionOnNext 포탈)
+        DoorPortal targetDoor = nextChunk.FindDoorById(door.doorId);
+        if (!targetDoor)
+            Debug.LogWarning($"[Loader/DoorRay] next map에 doorId '{door.doorId}' 문을 찾지 못했습니다. fallback 사용");
+
+        nextChunk.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        nextChunk.transform.localScale = Vector3.one;
+
+        Vector3 entryAtZero;
+        if (targetDoor)
+            entryAtZero = targetDoor.anchor ? targetDoor.anchor.position : Vector3.zero;
+        else
+        {
+            var fallback = nextChunk.FindPortal(door.entryDirectionOnNext);
+            entryAtZero = fallback ? fallback.anchor.position : Vector3.zero;
+        }
+
+        nextChunk.transform.position = endPos - entryAtZero;
+
+        yield return null;       // 위치 세팅 프레임 통과
+        nextGO.SetActive(true);  // 이후 프레임에만 보이게
+
+        // 5) 카메라 스냅 (가능하면 타겟 도어 앵커로)
+        if (cam)
+        {
+            if (targetDoor && targetDoor.anchor) cam.LockTo(targetDoor.anchor, snap: true);
+        }
+
+        // 6) 플레이어 이동 (문 앞 목표로)
+        yield return MoveTo(p, endPos, runSpeed);
+
+        // 7) 맵 교체
+        {
+            var prev = currentChunk;
+            currentChunk = nextChunk;
+            SafeDestroyChunk(prev);
+            CleanupOtherChunks(currentChunk);
+        }
+
+    CLEANUP:
+        if (cam) cam.FollowPlayer(snap: false);
+        restoreNoClip?.Invoke();
+        if (anim) anim.SetBool("IsRunning", false);
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(false);
+
+        yield return new WaitForSeconds(0.1f);
+        portalLock = false;
+        busy = false;
+    }
+
+    // ================================================================
+    //  공통 유틸
+    // ================================================================
     System.Action EnablePlayerNoClip()
     {
-        // ★ 삼항 연산자 두 피연산자 모두 Transform 로 통일 (CS0173 방지)
         Transform t = (Player.Instance != null) ? Player.Instance.transform : player;
 
         var cols = t ? t.GetComponentsInChildren<Collider2D>(includeInactive: false) : null;
@@ -163,7 +333,7 @@ public partial class MapLoader : MonoBehaviour
             for (int i = 0; i < cols.Length; i++)
             {
                 prevTrigger[i] = cols[i].isTrigger;
-                cols[i].isTrigger = true; // 벽/타일 통과
+                cols[i].isTrigger = true; // 벽 통과
             }
         }
         if (rb) { prevKinematic = rb.isKinematic; rb.isKinematic = true; }
@@ -199,132 +369,8 @@ public partial class MapLoader : MonoBehaviour
         {
             if (!c) continue;
             var go = c.gameObject;
-            if (!go.scene.IsValid() || !go.scene.isLoaded) continue;
+            if (!go.scene.IsValid() || !go.scene.isLoaded) continue; // 에셋/프리팹 제외
             if (c != keep) Destroy(go);
         }
-    }
-
-    
-    public void TryDoorToDoor(DoorPortal from, DoorPortal to, float angleDeg)
-    {
-        const string TAG = "[Loader/Door↔Door]";
-        int step = 0;
-
-        if (!from || !to)
-        {
-            Debug.LogError($"{TAG} S{++step} Null door ref");
-            return;
-        }
-
-        if (busy || portalLock)
-        {
-            Debug.Log($"{TAG} S{++step} blocked: busy/lock");
-            return;
-        }
-
-        // 맵이 다르면 프리팹 인스턴스 교체
-        if (currentChunk != to.Owner)
-        {
-            // 필요한 경우 프리팹 교체
-            if (to.Owner == null && to.targetMapPrefab != null)
-            {
-                var nextGO = Instantiate(to.targetMapPrefab);
-                to.Owner = nextGO.GetComponent<MapChunk>();
-            }
-
-            if (to.Owner)
-            {
-                var prev = currentChunk;
-                currentChunk = to.Owner;
-                if (prev) Destroy(prev.gameObject);
-                CleanupOtherChunks(currentChunk);
-            }
-        }
-
-        StartCoroutine(CoDoorToDoor(from, to, angleDeg));
-    }
-
-    public void TryDoorById(DoorPortal from, string targetDoorId, GameObject targetMapPrefab, float angleDeg)
-    {
-        const string TAG = "[Loader/DoorID]";
-        if (busy || portalLock) { Debug.Log($"{TAG} busy/lock"); return; }
-        if (!from) { Debug.LogError($"{TAG} from is null"); return; }
-
-        // 1) 현재 맵에서 먼저 도착 문 찾기
-        DoorPortal to = currentChunk ? currentChunk.FindDoorById(targetDoorId) : null;
-
-        // 2) 없으면 프리팹 로드
-        if (!to && targetMapPrefab)
-        {
-            var nextGO = Instantiate(targetMapPrefab);
-            var nextChunk = nextGO.GetComponent<MapChunk>();
-            if (!nextChunk)
-            {
-                Debug.LogError($"{TAG} targetMapPrefab에 MapChunk 없음");
-                Destroy(nextGO);
-                return;
-            }
-
-            var prev = currentChunk;
-            currentChunk = nextChunk;
-            if (prev) Destroy(prev.gameObject);
-            CleanupOtherChunks(currentChunk);
-
-            to = currentChunk.FindDoorById(targetDoorId);
-        }
-
-        if (!to)
-        {
-            Debug.LogError($"{TAG} targetDoorId='{targetDoorId}' 문을 찾지 못했습니다.");
-            return;
-        }
-
-        StartCoroutine(CoDoorToDoor(from, to, angleDeg));
-    }
-
-    private IEnumerator CoDoorToDoor(DoorPortal from, DoorPortal to, float angleDeg)
-    {
-        const string TAG = "[Loader/Door↔Door]";
-        int step = 0;
-
-        busy = true; portalLock = true;
-        if (to.verboseLogs)
-            Debug.Log($"{TAG} S{++step} ENTER: from={from.name} → to={to.name}");
-
-        Transform p = (Player.Instance != null) ? Player.Instance.transform : player;
-        if (!p) yield break;
-
-        Animator anim = p.GetComponent<Animator>();
-        MoveCamera cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
-
-        if (Player.Instance != null) Player.Instance.SetInputBlocked(true);
-        if (anim) anim.SetBool("IsRunning", true);
-
-        var restoreNoClip = EnablePlayerNoClip();
-
-        Vector2 dir2 = new(Mathf.Cos(angleDeg * Mathf.Deg2Rad), Mathf.Sin(angleDeg * Mathf.Deg2Rad));
-        Vector3 dir3 = new(dir2.x, dir2.y, 0);
-
-        Vector3 worldFrom = from.anchor ? from.anchor.position : p.position;
-        Vector3 worldTo = to.anchor ? to.anchor.position : p.position;
-
-        // 한 걸음 들어가기
-        Vector3 inTarget = worldFrom + dir3 * from.stepDistance;
-        yield return MoveTo(p, inTarget, runSpeed);
-
-        // 위치 이동
-        p.position = worldTo + dir3 * 0.05f;
-        if (cam) cam.LockTo(to.anchor, snap: true);
-        yield return MoveTo(p, worldTo + dir3 * to.stepDistance, runSpeed);
-
-        if (cam) cam.FollowPlayer(snap: false);
-        restoreNoClip?.Invoke();
-        if (anim) anim.SetBool("IsRunning", false);
-        if (Player.Instance != null) Player.Instance.SetInputBlocked(false);
-
-        yield return new WaitForSeconds(0.08f);
-        portalLock = false; busy = false;
-        if (to.verboseLogs)
-            Debug.Log($"{TAG} S{++step} EXIT: busy={busy} lock={portalLock}");
     }
 }

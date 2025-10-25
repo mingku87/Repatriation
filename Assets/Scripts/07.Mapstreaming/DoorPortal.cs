@@ -1,48 +1,28 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public enum DoorQuadrant
-{
-    RightUp,
-    RightDown,
-    LeftUp,
-    LeftDown
-}
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class DoorPortal : MonoBehaviour
 {
-    private const string TAG = "[Door]";
-
-    [Header("Door Linking by ID")]
-    [Tooltip("이 문을 식별하는 고유 ID (맵 프리팹 내에서 유일)")]
+    [Header("Door ID Linking")]
+    [Tooltip("이 문을 고유하게 식별하는 ID (다음 맵의 같은 ID 문과 연결됨)")]
     public string doorId;
 
-    [Tooltip("도착할 문 ID (상대 맵 프리팹 안의 문 doorId)")]
-    public string targetDoorId;
+    [Header("Door Settings")]
+    public ExitDir direction = ExitDir.RightUp;
+    [Tooltip("문이 쏘는 레이 각도 (도 단위, 0=우측, 90=상, 180=좌, 270=하)")]
+    public float customRayAngle = 0f;
+    [Tooltip("문이 쏘는 레이 거리 (m)")]
+    public float rayDistance = 1f;
 
-    [Tooltip("도착 문이 들어있는 맵 프리팹 (현재 씬에 없으면 Instantiate)")]
-    public GameObject targetMapPrefab;
+    [Header("Map Linking")]
+    [Tooltip("이 문을 통해 들어갈 다음 맵 프리팹")]
+    public GameObject nextMapPrefab;
+    [Tooltip("다음 맵에서 진입할 포탈 방향 (필요시)")]
+    public ExitDir entryDirectionOnNext = ExitDir.LeftDown;
 
-    [Header("1-Step 이동 설정")]
-    public DoorQuadrant stepQuadrant = DoorQuadrant.RightUp;
-    public float angleOffsetDeg = 0f;
-    public float stepDistance = 1.0f;
-
-    [Header("Anchors/Owner")]
+    [Header("References")]
     public Transform anchor;
     public MapChunk Owner;
-
-    [Header("입력/쿨타임")]
-    public bool useKey = true;
-    public KeyCode interactKey = KeyCode.F;
-    public float localCooldown = 0.2f;
-
-    [Header("Debug")]
-    public bool verboseLogs = true;
-
-    bool inTrigger;
-    float cooldownUntil = -1f;
 
     void Reset()
     {
@@ -52,8 +32,10 @@ public class DoorPortal : MonoBehaviour
         if (!Owner) Owner = GetComponentInParent<MapChunk>();
     }
 
-    void Awake()
+    void OnValidate()
     {
+        var c2d = GetComponent<Collider2D>();
+        if (c2d && !c2d.isTrigger) c2d.isTrigger = true;
         if (!anchor) anchor = transform;
         if (!Owner) Owner = GetComponentInParent<MapChunk>();
     }
@@ -61,57 +43,9 @@ public class DoorPortal : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        inTrigger = true;
-        if (!useKey) TryActivate(other);
-    }
+        if (!MapLoader.Instance || MapLoader.Instance.currentChunk != Owner) return;
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (!other.CompareTag("Player")) return;
-        if (useKey && Input.GetKeyDown(interactKey)) TryActivate(other);
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (!other.CompareTag("Player")) return;
-        inTrigger = false;
-    }
-
-    void TryActivate(Collider2D other)
-    {
-        if (Time.unscaledTime < cooldownUntil) return;
-        cooldownUntil = Time.unscaledTime + localCooldown;
-        if (!MapLoader.Instance) return;
-
-        if (MapLoader.Instance.currentChunk != Owner)
-        {
-            if (verboseLogs)
-                Debug.LogWarning($"{TAG} blocked: currentChunk({MapLoader.Instance.currentChunk?.name}) != Owner({Owner?.name})");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(targetDoorId))
-        {
-            Debug.LogError($"{TAG} Missing targetDoorId on {name}");
-            return;
-        }
-
-        float angle = GetFinalAngleDeg();
-        if (verboseLogs)
-            Debug.Log($"{TAG} Enter door {name} → targetDoorId={targetDoorId} angle={angle:F1}");
-
-        MapLoader.Instance.TryDoorById(this, targetDoorId, targetMapPrefab, angle);
-    }
-
-    public float GetFinalAngleDeg()
-    {
-        float baseDeg = stepQuadrant switch
-        {
-            DoorQuadrant.RightUp => 45f,
-            DoorQuadrant.RightDown => -45f,
-            DoorQuadrant.LeftUp => 135f,
-            _ => -135f,
-        };
-        return baseDeg + angleOffsetDeg;
+        var who = other.attachedRigidbody ? other.attachedRigidbody.transform : other.transform;
+        MapLoader.Instance.TryDoorRayTravel(this, who);
     }
 }

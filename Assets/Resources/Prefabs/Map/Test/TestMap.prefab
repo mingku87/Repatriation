@@ -565,11 +565,11 @@ PrefabInstance:
       objectReference: {fileID: 1532416983183813219, guid: 50fc0251346739749859d22599d55031, type: 3}
     - target: {fileID: 7479258829608370551, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 15.55
       objectReference: {fileID: 0}
     - target: {fileID: 7479258829608370551, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -7.24
       objectReference: {fileID: 0}
     - target: {fileID: 7479258829608370551, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: m_LocalPosition.z
@@ -629,18 +629,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f854bad28ee06934088d42316d001297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorId: TestMap_01
-  targetDoorId: CH01_01
-  targetMapPrefab: {fileID: 1532416983183813219, guid: 50fc0251346739749859d22599d55031, type: 3}
-  stepQuadrant: 2
-  angleOffsetDeg: 150
-  stepDistance: 0
+  doorId: CH01_01
+  direction: 3
+  customRayAngle: 330
+  rayDistance: 0
+  nextMapPrefab: {fileID: 1532416983183813219, guid: 50fc0251346739749859d22599d55031, type: 3}
+  entryDirectionOnNext: 3
   anchor: {fileID: 5926371662029985589}
   Owner: {fileID: -4803430934317834980}
-  useKey: 0
-  interactKey: 102
-  localCooldown: 0.15
-  verboseLogs: 1
 --- !u!4 &2184492412880144428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7479258829608370551, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}

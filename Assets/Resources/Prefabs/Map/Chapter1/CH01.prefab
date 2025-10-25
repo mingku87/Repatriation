@@ -5395,6 +5395,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+      propertyPath: direction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: linkedDoor
       value: 
       objectReference: {fileID: 0}
@@ -5411,7 +5415,15 @@ PrefabInstance:
       value: TestMap_01
       objectReference: {fileID: 0}
     - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+      propertyPath: nextMapPrefab
+      value: 
+      objectReference: {fileID: 1189102464262961226, guid: c6e85299284eaf84b9a1c05d55bef3df, type: 3}
+    - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: angleOffsetDeg
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+      propertyPath: customRayAngle
       value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}

@@ -94,13 +94,13 @@ public class GameConditionService : MonoBehaviour, Game.Dialogue.IDialogueCondit
     public bool IsFirstObjectInteract(string objectKey)
     {
         if (string.IsNullOrWhiteSpace(objectKey)) return false;
-        return PlayerPrefs.GetInt(PREF_OBJ + objectKey, 0) == 1; // ← 이후 true
+        return PlayerPrefs.GetInt(PREF_OBJ + objectKey, 0) == 0; // ← 이후 true
     }
 
     public bool IsFirstNpcInteract(string npcId)
     {
         if (string.IsNullOrWhiteSpace(npcId)) return false;
-        return PlayerPrefs.GetInt(PREF_NPC + npcId, 0) == 1; // ← 이후 true
+        return PlayerPrefs.GetInt(PREF_NPC + npcId, 0) == 0; // ← 이후 true
     }
 
     // 기록 업데이트(상호작용 완료 시 호출) — DialogueManager가 대화 시작 성공 시 자동 호출

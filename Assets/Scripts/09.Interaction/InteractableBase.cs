@@ -10,7 +10,7 @@ public interface IInteractable
 public abstract class InteractableBase : MonoBehaviour, IInteractable
 {
     [Header("Interact")]
-    public float interactRadius = 1.8f;
+    public float interactRadius = 1.0f;
     public virtual bool CanInteract(Transform interactor)
         => (interactor.position - transform.position).sqrMagnitude <= interactRadius * interactRadius;
     public abstract void Interact(Transform interactor);

@@ -24,6 +24,16 @@ public class DialogueManager : MonoBehaviour
     [Tooltip("IDialogueConditionService / IConditionWriteback 구현체.\n비워두면 GameConditionService를 자동으로 붙임.")]
     public MonoBehaviour conditionServiceBehaviour;
 
+    // ───────────────── Portraits: 단 한 번만 선언 ─────────────────
+    [Header("Portraits")]
+    [Tooltip("Resources.Load path for the player's portrait sprite.")]
+    [SerializeField] string playerPortraitResource = "images/stand/player"; // 소문자 경로 권장
+    [Tooltip("Resources folder containing NPC portrait sprites.")]
+    [SerializeField] string npcPortraitFolder = "images/stand";
+    [Tooltip("Prefix used when converting NPC IDs into portrait sprite names (e.g. npc001 → npcstand001).")]
+    [SerializeField] string npcPortraitPrefix = "npcstand";
+    // ─────────────────────────────────────────────────────────────
+
     // 외부에서 접근하지 않도록 프로퍼티로 래핑
     IDialogueConditionService Cond =>
         (conditionServiceBehaviour as IDialogueConditionService) ?? _condAuto;
@@ -49,14 +59,6 @@ public class DialogueManager : MonoBehaviour
 
     int cursor = -1;
     readonly List<DialogueLine> _activeLines = new();
-
-    [Header("Portraits")]
-    [Tooltip("Resources.Load path for the player's portrait sprite.")]
-    [SerializeField] string playerPortraitResource = "Images/NPCStand/Player";
-    [Tooltip("Resources folder containing NPC portrait sprites.")]
-    [SerializeField] string npcPortraitFolder = "Images/NPCStand";
-    [Tooltip("Prefix used when converting NPC IDs into portrait sprite names (e.g. npc001 → NPCStand_001).")]
-    [SerializeField] string npcPortraitPrefix = "NPCStand";
 
     // Localization 재진입 가드(만일 Localization 쪽에서 역호출되더라도 스택오버 방지)
     bool _resolving;
@@ -169,7 +171,6 @@ public class DialogueManager : MonoBehaviour
     void ShowLineAt(int index)
     {
         if (index < 0 || index >= _activeLines.Count) return;
-
         DisplayLine(_activeLines[index]);
     }
 
@@ -199,7 +200,7 @@ public class DialogueManager : MonoBehaviour
 
         // 동일 NPC 행만 모으고 index 오름차순
         var rows = metaTable.rows.FindAll(r =>
-            string.Equals(r.npcId, npcId, System.StringComparison.OrdinalIgnoreCase));
+            string.Equals(r.npcId, npcId, StringComparison.OrdinalIgnoreCase));
         rows.Sort((a, b) => a.index.CompareTo(b.index));
 
         // 1) 조건 대화(2) 먼저 검사 (조건 None은 건너뜀)
@@ -301,44 +302,25 @@ public class DialogueManager : MonoBehaviour
 
     List<string> GetNpcPortraitResourcePaths(string npcId)
     {
-        var results = new List<string>();
-        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        // 규칙: npc??? -> images/stand/npcstand???
+        string digits = ExtractDigits(npcId);                 // 예: npc001 -> "001"
+        string fileName = $"npcstand{digits}".ToLowerInvariant();
+        string path = $"images/stand/{fileName}";
+        return new List<string> { path };
+    }
 
-        string folder = string.IsNullOrEmpty(npcPortraitFolder)
-            ? string.Empty
-            : npcPortraitFolder.TrimEnd('/') + "/";
+    string ExtractDigits(string npcId)
+    {
+        if (string.IsNullOrEmpty(npcId)) return "";
+        string s = npcId.Trim();
+        if (s.StartsWith("npc", StringComparison.OrdinalIgnoreCase))
+            s = s.Substring(3);
 
-        string trimmed = npcId.Trim();
-        string suffix = trimmed;
-        if (trimmed.StartsWith("npc", StringComparison.OrdinalIgnoreCase))
-            suffix = trimmed.Substring(3).TrimStart('_');
+        var sb = new System.Text.StringBuilder();
+        foreach (char c in s)
+            if (char.IsDigit(c)) sb.Append(c);
 
-        string prefix = npcPortraitPrefix ?? string.Empty;
-        string lowerPrefix = prefix.ToLowerInvariant();
-
-        void AddCandidate(string name)
-        {
-            if (string.IsNullOrEmpty(name)) return;
-            string path = folder + name;
-            if (seen.Add(path))
-                results.Add(path);
-        }
-
-        if (!string.IsNullOrEmpty(prefix))
-        {
-            AddCandidate(prefix + suffix);
-            AddCandidate(prefix + "_" + suffix);
-            AddCandidate(lowerPrefix + suffix);
-            AddCandidate(lowerPrefix + "_" + suffix);
-        }
-        AddCandidate(trimmed);
-        AddCandidate(trimmed.ToLowerInvariant());
-        AddCandidate(trimmed.ToUpperInvariant());
-        AddCandidate(suffix);
-        AddCandidate(suffix.ToLowerInvariant());
-        AddCandidate(suffix.ToUpperInvariant());
-
-        return results;
+        return sb.Length > 0 ? sb.ToString() : s;
     }
 
     bool TryGetPortrait(string resourcePath, out Sprite sprite)

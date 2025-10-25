@@ -106,4 +106,37 @@ public class InventoryController : MonoBehaviour
         }
         catch { /* UI 컴포넌트가 해당 메서드를 안 가지면 무시 */ }
     }
+
+    /// <summary>
+    /// 조건 시스템(GameConditionService)용: 아이템 ID 보유 여부 확인
+    /// </summary>
+    public bool HasItem(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId) || inventory == null)
+            return false;
+
+        // itemId가 TSV상에서 int라면 int 변환 후 검사
+        if (int.TryParse(itemId, out int id))
+        {
+            for (int i = 0; i < inventory.ActiveSlotCount; i++)
+            {
+                var stack = inventory.slots[i];
+                if (!stack.IsEmpty && stack.item != null && stack.item.id == id)
+                    return true;
+            }
+        }
+        else
+        {
+            // 문자열 ID 기반일 경우
+            for (int i = 0; i < inventory.ActiveSlotCount; i++)
+            {
+                var stack = inventory.slots[i];
+                if (!stack.IsEmpty && stack.item != null &&
+                    stack.item.param != null &&
+                    stack.item.param.id.ToString() == itemId)
+                    return true;
+            }
+        }
+        return false;
+    }
 }
