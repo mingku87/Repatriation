@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 3112220708088560346}
   - component: {fileID: 8095211378297354448}
   m_Layer: 6
-  m_Name: wall_01_0
+  m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4475571479391245309, guid: 0a69859592688404db7cda50ecd68ea0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2fe0ccda2f50cfa49ada3f78846075b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -187,7 +187,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.0133333, y: 1.5166667}
+    oldSize: {x: 1.9866667, y: 2.5733333}
     newSize: {x: 3.04, y: 4.55}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
