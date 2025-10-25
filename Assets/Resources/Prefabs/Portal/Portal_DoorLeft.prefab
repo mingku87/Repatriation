@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 8132015848478484955}
   - component: {fileID: 8487476722429555582}
   - component: {fileID: 8773478529923961400}
-  - component: {fileID: 6873932234718178322}
+  - component: {fileID: 447337269704799661}
   m_Layer: 6
   m_Name: Door
   m_TagString: Untagged
@@ -236,7 +236,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6873932234718178322
+--- !u!114 &447337269704799661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,14 +245,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8748433605832054892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157270e29a1ac7249bba68d062fa8136, type: 3}
+  m_Script: {fileID: 11500000, guid: f854bad28ee06934088d42316d001297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 2
-  customRayAngle: 30
-  nextMapPrefab: {fileID: 0}
-  entryDirectionOnNext: 1
-  anchor: {fileID: 5292328578824365830}
+  interiorMapPrefab: {fileID: 0}
+  entryDirectionOnNext: 0
+  anchor: {fileID: 3145194385956544110}
   Owner: {fileID: 0}
-  mode: 1
-  inPlaceEnterStep: 1
+  stepQuadrant: 0
+  angleOffsetDeg: 0
+  stepDistance: 1
+  useKey: 1
+  interactKey: 102
+  localCooldown: 0.15
+  verboseLogs: 1

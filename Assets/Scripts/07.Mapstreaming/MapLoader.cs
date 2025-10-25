@@ -203,4 +203,128 @@ public partial class MapLoader : MonoBehaviour
             if (c != keep) Destroy(go);
         }
     }
+
+    
+    public void TryDoorToDoor(DoorPortal from, DoorPortal to, float angleDeg)
+    {
+        const string TAG = "[Loader/Door↔Door]";
+        int step = 0;
+
+        if (!from || !to)
+        {
+            Debug.LogError($"{TAG} S{++step} Null door ref");
+            return;
+        }
+
+        if (busy || portalLock)
+        {
+            Debug.Log($"{TAG} S{++step} blocked: busy/lock");
+            return;
+        }
+
+        // 맵이 다르면 프리팹 인스턴스 교체
+        if (currentChunk != to.Owner)
+        {
+            // 필요한 경우 프리팹 교체
+            if (to.Owner == null && to.targetMapPrefab != null)
+            {
+                var nextGO = Instantiate(to.targetMapPrefab);
+                to.Owner = nextGO.GetComponent<MapChunk>();
+            }
+
+            if (to.Owner)
+            {
+                var prev = currentChunk;
+                currentChunk = to.Owner;
+                if (prev) Destroy(prev.gameObject);
+                CleanupOtherChunks(currentChunk);
+            }
+        }
+
+        StartCoroutine(CoDoorToDoor(from, to, angleDeg));
+    }
+
+    public void TryDoorById(DoorPortal from, string targetDoorId, GameObject targetMapPrefab, float angleDeg)
+    {
+        const string TAG = "[Loader/DoorID]";
+        if (busy || portalLock) { Debug.Log($"{TAG} busy/lock"); return; }
+        if (!from) { Debug.LogError($"{TAG} from is null"); return; }
+
+        // 1) 현재 맵에서 먼저 도착 문 찾기
+        DoorPortal to = currentChunk ? currentChunk.FindDoorById(targetDoorId) : null;
+
+        // 2) 없으면 프리팹 로드
+        if (!to && targetMapPrefab)
+        {
+            var nextGO = Instantiate(targetMapPrefab);
+            var nextChunk = nextGO.GetComponent<MapChunk>();
+            if (!nextChunk)
+            {
+                Debug.LogError($"{TAG} targetMapPrefab에 MapChunk 없음");
+                Destroy(nextGO);
+                return;
+            }
+
+            var prev = currentChunk;
+            currentChunk = nextChunk;
+            if (prev) Destroy(prev.gameObject);
+            CleanupOtherChunks(currentChunk);
+
+            to = currentChunk.FindDoorById(targetDoorId);
+        }
+
+        if (!to)
+        {
+            Debug.LogError($"{TAG} targetDoorId='{targetDoorId}' 문을 찾지 못했습니다.");
+            return;
+        }
+
+        StartCoroutine(CoDoorToDoor(from, to, angleDeg));
+    }
+
+    private IEnumerator CoDoorToDoor(DoorPortal from, DoorPortal to, float angleDeg)
+    {
+        const string TAG = "[Loader/Door↔Door]";
+        int step = 0;
+
+        busy = true; portalLock = true;
+        if (to.verboseLogs)
+            Debug.Log($"{TAG} S{++step} ENTER: from={from.name} → to={to.name}");
+
+        Transform p = (Player.Instance != null) ? Player.Instance.transform : player;
+        if (!p) yield break;
+
+        Animator anim = p.GetComponent<Animator>();
+        MoveCamera cam = Camera.main ? Camera.main.GetComponent<MoveCamera>() : null;
+
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(true);
+        if (anim) anim.SetBool("IsRunning", true);
+
+        var restoreNoClip = EnablePlayerNoClip();
+
+        Vector2 dir2 = new(Mathf.Cos(angleDeg * Mathf.Deg2Rad), Mathf.Sin(angleDeg * Mathf.Deg2Rad));
+        Vector3 dir3 = new(dir2.x, dir2.y, 0);
+
+        Vector3 worldFrom = from.anchor ? from.anchor.position : p.position;
+        Vector3 worldTo = to.anchor ? to.anchor.position : p.position;
+
+        // 한 걸음 들어가기
+        Vector3 inTarget = worldFrom + dir3 * from.stepDistance;
+        yield return MoveTo(p, inTarget, runSpeed);
+
+        // 위치 이동
+        p.position = worldTo + dir3 * 0.05f;
+        if (cam) cam.LockTo(to.anchor, snap: true);
+        yield return MoveTo(p, worldTo + dir3 * to.stepDistance, runSpeed);
+
+        if (cam) cam.FollowPlayer(snap: false);
+        restoreNoClip?.Invoke();
+        if (anim) anim.SetBool("IsRunning", false);
+        if (Player.Instance != null) Player.Instance.SetInputBlocked(false);
+
+        yield return new WaitForSeconds(0.08f);
+        portalLock = false; busy = false;
+        if (to.verboseLogs)
+            Debug.Log($"{TAG} S{++step} EXIT: busy={busy} lock={portalLock}");
+    }
 }

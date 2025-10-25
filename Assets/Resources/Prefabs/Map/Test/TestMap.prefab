@@ -547,6 +547,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7008833087345929497}
     m_Modifications:
+    - target: {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+      propertyPath: Owner
+      value: 
+      objectReference: {fileID: -4803430934317834980}
     - target: {fileID: 4233021815201022999, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
       propertyPath: m_Name
       value: Portal_DoorLeft
@@ -599,13 +603,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 447337269704799661, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8748433605832054892, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 596200569706937513}
   m_SourcePrefab: {fileID: 100100000, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+--- !u!1 &68649119785586999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8748433605832054892, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+  m_PrefabInstance: {fileID: 8762678871729572187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &596200569706937513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68649119785586999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f854bad28ee06934088d42316d001297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorId: TestMap_01
+  targetDoorId: CH01_01
+  targetMapPrefab: {fileID: 1532416983183813219, guid: 50fc0251346739749859d22599d55031, type: 3}
+  stepQuadrant: 2
+  angleOffsetDeg: 150
+  stepDistance: 0
+  anchor: {fileID: 5926371662029985589}
+  Owner: {fileID: -4803430934317834980}
+  useKey: 0
+  interactKey: 102
+  localCooldown: 0.15
+  verboseLogs: 1
 --- !u!4 &2184492412880144428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7479258829608370551, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
+  m_PrefabInstance: {fileID: 8762678871729572187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5926371662029985589 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3145194385956544110, guid: 7f41a607f2b241343bedb06bcd25d913, type: 3}
   m_PrefabInstance: {fileID: 8762678871729572187}
   m_PrefabAsset: {fileID: 0}
