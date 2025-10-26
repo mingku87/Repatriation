@@ -15,7 +15,7 @@ public static class LocalizationAutoBootstrap
         var mgr = go.AddComponent<LocalizationManager>();
 
         // 2) Resources/Localization 폴더에서 LocalizationTable 전부 로드
-        var all = Resources.LoadAll<LocalizationTable>("Localization");
+        var all = Resources.LoadAll<LocalizationTable>("");
         if (all != null && all.Length > 0)
         {
             // language 필드로 자동 매칭

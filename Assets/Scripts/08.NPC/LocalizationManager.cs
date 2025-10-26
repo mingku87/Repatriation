@@ -5,13 +5,18 @@ public class LocalizationManager : MonoBehaviour
 {
     public static LocalizationManager Instance { get; private set; }
 
-    [Header("Tables (auto-assigned by bootstrap)")]
+    [Header("Tables (primary)")]
     public LocalizationTable tableKo;
     public LocalizationTable tableEn;
+
+    [Header("Tables (extra, merged to primary)")]
+    public LocalizationTable[] extraKo;   // ← npc, shopnpc 같은 추가 테이블을 여기에
+    public LocalizationTable[] extraEn;
 
     [Header("Current Language")]
     public SystemLanguage language = SystemLanguage.Korean;
 
+    // 내부 맵은 '대문자 키'로 통일하여 대/소문자 무시
     private readonly Dictionary<string, string> _map = new();
 
     public delegate void LanguageChanged();
@@ -23,7 +28,6 @@ public class LocalizationManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // 테이블이 아직 비었을 수 있으니(부트스트랩에서 채워줌) 비었으면 일단 시도
         if (_map.Count == 0) LoadLanguage(language);
     }
 
@@ -31,19 +35,30 @@ public class LocalizationManager : MonoBehaviour
     {
         language = lang;
 
-        LocalizationTable table = null;
-        if (lang == SystemLanguage.English && tableEn != null) table = tableEn;
-        else if (tableKo != null) table = tableKo;
-
-        _map.Clear();
-        if (table != null)
+        // 1) 사용할 테이블 집합 구성
+        var list = new List<LocalizationTable>();
+        if (lang == SystemLanguage.English)
         {
+            if (tableEn != null) list.Add(tableEn);
+            if (extraEn != null) list.AddRange(extraEn);
+        }
+        else
+        {
+            if (tableKo != null) list.Add(tableKo);
+            if (extraKo != null) list.AddRange(extraKo);
+        }
+
+        // 2) 맵 재구축 (키는 모두 대문자 정규화)
+        _map.Clear();
+        foreach (var table in list)
+        {
+            if (table == null || table.entries == null) continue;
             foreach (var e in table.entries)
             {
                 if (string.IsNullOrWhiteSpace(e.key)) continue;
-                var k = e.key.Trim();              // 필요하면 ToUpperInvariant() 통일
+                var k = NormalizeKey(e.key);
                 var v = e.value ?? "";
-                _map[k] = v;
+                _map[k] = v; // 뒤에 오는 테이블이 같은 키면 덮어씀
             }
         }
 
@@ -53,7 +68,10 @@ public class LocalizationManager : MonoBehaviour
     public string GetOrKey(string key)
     {
         if (string.IsNullOrEmpty(key)) return key;
-        var k = key.Trim(); // 필요하면 ToUpperInvariant() 통일
+        var k = NormalizeKey(key);
         return _map.TryGetValue(k, out var v) ? v : key;
     }
+
+    // 공통 정규화: Trim + 대문자 통일
+    private static string NormalizeKey(string s) => s.Trim().ToUpperInvariant();
 }

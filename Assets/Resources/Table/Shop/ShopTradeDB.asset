@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8683f11429dcb6745b46a13df6e82808, type: 3}
+  m_Name: ShopTradeDB
+  m_EditorClassIdentifier: 
+  googleSheetUrl: https://docs.google.com/spreadsheets/d/1Jwwpl5-btHeFGKw86wy97hBHDNrWGZBXDp1DIm1WL0c/edit?gid=36081009#gid=36081009
+  offers:
+  - shopId: shop001
+    itemId: 10001
+    sellItemId: 10201
+    price: 1
+  - shopId: shop001
+    itemId: 10002
+    sellItemId: 10201
+    price: 2
+  - shopId: shop001
+    itemId: 10003
+    sellItemId: 10201
+    price: 3
+  - shopId: shop001
+    itemId: 10004
+    sellItemId: 10201
+    price: 4
+  - shopId: shop001
+    itemId: 10005
+    sellItemId: 10201
+    price: 5
+  - shopId: shop001
+    itemId: 10006
+    sellItemId: 10201
+    price: 6

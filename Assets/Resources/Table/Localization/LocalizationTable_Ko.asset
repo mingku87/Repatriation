@@ -18,7 +18,7 @@ MonoBehaviour:
     value: TEXT
   - key: NPC001
     value: "\uCD5C\uC9C0\uC6B0"
-  - key: NPC002
+  - key: ShopNPC001
     value: "\uD55C\uB300\uC6D0"
   - key: NPC001_1_01
     value: "\uC5B4\uC774, \uC5EC\uD589\uC790! \uC774 \uADFC\uCC98\uB294 \uCC98\uC74C\uC778\uAC00?"
