@@ -3,18 +3,21 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class ShopNPC : NPCInteractable
 {
-    [Header("Shop Identity")]
+    [Header("Shop Info")]
     public string shopId = "shop001";
+
+    // NPCInteractable에 있는 npcId 상속받음
+    // NpcId 프로퍼티로 접근 가능 (protected string npcId; public string NpcId => npcId;)
 
     public override void Interact(Transform interactor)
     {
-        if (ShopUIController.Instance == null)
+        var ui = ShopUIController.Get();
+        if (!ui)
         {
-            Debug.LogWarning("[ShopNPC] ShopUIController가 씬에 없습니다.");
+            Debug.LogWarning("[ShopNPC] ShopUIController 못 찾음");
             return;
         }
 
-        ShopUIController.Instance.OpenForShop(shopId);
-        // 필요하면: 플레이어 이동/입력 잠그기 등 여기서 처리
+        ui.OpenForShop(shopId, NpcId);
     }
 }

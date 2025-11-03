@@ -4,23 +4,26 @@ using Game.Dialogue;
 public class NPCInteractable : InteractableBase
 {
     [Header("Dialogue")]
-    [SerializeField] private string npcId = "NPC001";
+    [SerializeField] protected string npcId = "NPC001";   // ← private → protected
     [SerializeField] private bool lockPlayerWhileTalking = true;
+
+    /// <summary>자식(ShopNPC 등)에서 읽기용으로 쓰기 위한 프로퍼티</summary>
+    public string NpcId => npcId;
 
     private DialogueManager manager;
     private MonoBehaviour playerControllerLike;
 
     // 디바운스
-    float _lastInteractTime;
-    const float InteractCooldown = 0.2f; // 200ms
+    private float _lastInteractTime;
+    private const float InteractCooldown = 0.2f; // 200ms
 
     // 이벤트 중복 등록 방지
-    bool _subscribedEnd;
+    private bool _subscribedEnd;
 
     void Awake()
     {
-        manager = FindObjectOfType<DialogueManager>();
-        // playerControllerLike = FindObjectOfType<PlayerController>();
+        EnsureManager();
+        // playerControllerLike = FindObjectOfType<PlayerController>();  // 프로젝트 입력/이동 컴포넌트 연결 지점
     }
 
     public override void Interact(Transform interactor)
@@ -31,7 +34,7 @@ public class NPCInteractable : InteractableBase
 
         Debug.Log($"[NPC] 대화 시도: {name} ({npcId})", this);
 
-        if (manager == null) manager = FindObjectOfType<DialogueManager>();
+        EnsureManager();
         if (manager == null)
         {
             Debug.LogWarning("[NPCInteractable] DialogueManager가 씬에 없습니다.");
@@ -77,4 +80,11 @@ public class NPCInteractable : InteractableBase
     }
 
     public override string GetPrompt() => "F - 대화";
+
+    // ───────────────────────────────── helpers ─────────────────────────────────
+    private void EnsureManager()
+    {
+        if (manager == null)
+            manager = FindObjectOfType<DialogueManager>();
+    }
 }
