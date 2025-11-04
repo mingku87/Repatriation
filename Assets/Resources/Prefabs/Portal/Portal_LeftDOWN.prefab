@@ -141,7 +141,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2fe0ccda2f50cfa49ada3f78846075b2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -254,5 +254,3 @@ MonoBehaviour:
   entryDirectionOnNext: 2
   anchor: {fileID: 6650385118785805634}
   Owner: {fileID: 0}
-  mode: 0
-  inPlaceEnterStep: 1
