@@ -4518,6 +4518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 680013593}
   - component: {fileID: 680013594}
+  - component: {fileID: 680013595}
   m_Layer: 5
   m_Name: TextBubble
   m_TagString: Untagged
@@ -4565,6 +4566,18 @@ MonoBehaviour:
   minWidth: 120
   maxWidth: 520
   minHeight: 60
+--- !u!225 &680013595
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680013592}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &684916377
 GameObject:
   m_ObjectHideFlags: 0
@@ -5462,7 +5475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0cb70602e9c5bc048b13316671aae1bc, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
