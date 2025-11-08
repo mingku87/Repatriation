@@ -70,6 +70,9 @@ public class InventoryController : MonoBehaviour
         inventory.InitSlots(inventory.ActiveSlotCount);            // 해금 수 기준으로 초기화
         inventory.SetBaseMaxWeight(InventoryConstant.DefaultMaxCarryWeight);
 
+        ShopInventoryBridge.InventoryHandle.Active = inventory;
+        Debug.Log("[InventoryController] ShopInventoryBridge 연결 완료: 인벤 등록됨");
+
         // 3) 장비 모델 준비 (프로젝트에 맞는 생성자를 사용하세요)
         if (equipment == null) equipment = new EquipmentModel();
         // 인벤토리-장비 모델 간 연결이 필요하면 여기에서 해주세요.
